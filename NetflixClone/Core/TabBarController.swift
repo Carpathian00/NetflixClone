@@ -1,0 +1,33 @@
+//
+//  TabBarController.swift
+//  NetflixClone
+//
+//  Created by Adlan Nourindiaz on 06/04/23.
+//
+
+import UIKit
+
+class TabBarController: UITabBarController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViewControllers()
+    }
+    
+    func setupViewControllers() {
+        self.viewControllers = [
+            createController(for: HomeViewController(), title: "Home", image: UIImage(systemName: "house")!),
+            createController(for: ProfileViewController(), title: "Profile", image: UIImage(systemName: "person")!)
+        ]
+    }
+    
+
+    private func createController(for rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController{
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.tabBarItem.title = title
+        navigationController.tabBarItem.image = image
+        
+        return navigationController
+    }
+
+}
