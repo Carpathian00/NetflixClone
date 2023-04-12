@@ -20,7 +20,18 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wT8-Xn-lVg">
                         <rect key="frame" x="0.0" y="0.0" width="82" height="114"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="endgame" translatesAutoresizingMaskIntoConstraints="NO" id="WVQ-ij-ngF">
+                                <rect key="frame" x="0.0" y="0.0" width="82" height="114"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="WVQ-ij-ngF" secondAttribute="bottom" id="GYR-yO-N3V"/>
+                            <constraint firstItem="WVQ-ij-ngF" firstAttribute="leading" secondItem="wT8-Xn-lVg" secondAttribute="leading" id="KYi-0G-E18"/>
+                            <constraint firstAttribute="trailing" secondItem="WVQ-ij-ngF" secondAttribute="trailing" id="bcT-W1-3id"/>
+                            <constraint firstItem="WVQ-ij-ngF" firstAttribute="top" secondItem="wT8-Xn-lVg" secondAttribute="top" id="qoS-Uj-y02"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -36,6 +47,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="endgame" width="1600" height="2264"/>
         <systemColor name="systemCyanColor">
             <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

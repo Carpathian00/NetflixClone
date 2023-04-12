@@ -26,9 +26,10 @@ class SectionCellHeader: UITableViewHeaderFooterView {
     }()
     
     func addSubviews() {
+        self.contentView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        self.contentView.addSubview(headerTitle)
-        self.contentView.addSubview(viewAllButton)
+        contentView.addSubview(headerTitle)
+        contentView.addSubview(viewAllButton)
         
         setupHeaderTitle()
         setupViewAllButton()
@@ -36,10 +37,9 @@ class SectionCellHeader: UITableViewHeaderFooterView {
     
     func setupHeaderTitle() {
         NSLayoutConstraint.activate([
-            headerTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            headerTitle.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             headerTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            headerTitle.trailingAnchor.constraint(equalTo: viewAllButton.leadingAnchor, constant: -10),
-            headerTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            headerTitle.trailingAnchor.constraint(equalTo: viewAllButton.leadingAnchor, constant: 10),
         ])
     }
     

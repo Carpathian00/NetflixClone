@@ -17,6 +17,7 @@ class TabBarController: UITabBarController {
     func setupViewControllers() {
         self.viewControllers = [
             createController(for: HomeViewController(), title: "Home", image: UIImage(systemName: "house")!),
+            createController(for: SearchViewController(), title: "Search", image: UIImage(systemName: "magnifyingglass")!),
             createController(for: ProfileViewController(), title: "Profile", image: UIImage(systemName: "person")!)
         ]
     }

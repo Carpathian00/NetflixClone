@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GenreCollectionViewCell" customModule="NetflixClone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="109" height="59"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="109" height="59"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hVg-8Z-iFW">
+                        <rect key="frame" x="0.0" y="0.0" width="109" height="59"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw5-OW-RR7">
+                                <rect key="frame" x="8" y="8" width="49" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Bw5-OW-RR7" firstAttribute="leading" secondItem="hVg-8Z-iFW" secondAttribute="leading" constant="8" id="P1X-m8-mv7"/>
+                            <constraint firstItem="Bw5-OW-RR7" firstAttribute="top" secondItem="hVg-8Z-iFW" secondAttribute="top" constant="8" id="lKo-xm-fzk"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="hVg-8Z-iFW" secondAttribute="bottom" id="3TL-U3-PIc"/>
+                <constraint firstItem="hVg-8Z-iFW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5xe-Ns-y3U"/>
+                <constraint firstAttribute="trailing" secondItem="hVg-8Z-iFW" secondAttribute="trailing" id="D7s-GW-xK9"/>
+                <constraint firstItem="hVg-8Z-iFW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kmb-Xh-HrV"/>
+            </constraints>
+            <size key="customSize" width="109" height="59"/>
+            <connections>
+                <outlet property="containerView" destination="hVg-8Z-iFW" id="s2X-iU-eqh"/>
+                <outlet property="genreLabel" destination="Bw5-OW-RR7" id="aOe-JK-5YT"/>
+            </connections>
+            <point key="canvasLocation" x="142.30769230769229" y="-8.8862559241706158"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
