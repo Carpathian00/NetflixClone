@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     
     private let homeVM = HomeViewModel()
     private var items: [Item]?
+    private var headerMovie: HeroHeaderView?
     
     var sections = ["Genres", "Popular", "TV Shows", "Action"]
     var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
@@ -41,14 +42,13 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
-        callApi()
         setupNavigationBar()
         setupTable()
         setupTableHeader()
+        callApi()
     }
     
     private func setupNavigationBar() {
-//        navigationController?.navigationBar.setGradientBackground(colors: [.black, .magenta], locations: [0,1])
 //        navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
@@ -81,13 +81,19 @@ class HomeViewController: UIViewController {
     }
     
     private func setupTableHeader() {
-        homeTable.tableHeaderView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
+        self.headerMovie = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+
+        homeTable.tableHeaderView = self.headerMovie
     }
     
     private func callApi() {
         self.homeVM.fetchPopularMoviesData()
         self.homeVM.bindItemData = { movieModel in
             if let model = movieModel {
+                let selectedTitle = model.randomElement()
+                guard let selectedTitle = selectedTitle else { return }
+                self.headerMovie?.configure(with: selectedTitle)
+                
                 self.items = model
             }
             DispatchQueue.main.async {

@@ -21,6 +21,7 @@ class MainTableCell: UITableViewCell {
     }
     
     func setupCollectionView() {
+        moviesCollectionView.showsHorizontalScrollIndicator = false
         moviesCollectionView.delegate = self
         moviesCollectionView.dataSource = self
         moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
@@ -32,7 +33,6 @@ class MainTableCell: UITableViewCell {
         DispatchQueue.main.async { [weak self] in
             self?.moviesCollectionView.reloadData()
         }
-        print("items data: \(self.items)")
     }
     
     

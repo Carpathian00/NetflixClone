@@ -6,31 +6,74 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HeroHeaderView: UIView {
     
-    private let downloadButton: UIButton = {
+    private lazy var barStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false;
+
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 40
         
-        let button = UIButton()
-        button.setTitle("Download", for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1
+        return stackView
+    }()
+    
+    private lazy var saveButton: UIButton = {
+        var container = AttributeContainer()
+        container.font = UIFont.systemFont(ofSize: 14)
+
+        var configuration = UIButton.Configuration.plain()
+        configuration.attributedTitle = AttributedString("Save", attributes: container)
+        configuration.image = UIImage(systemName: "bookmark")
+        
+        configuration.imagePlacement = .top
+        configuration.imagePadding = 8
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 5
+        button.tintColor = .label
+        
         return button
     }()
     
-//    private lazy var saveButton: UIButton {
-//        
-//    }()
+    private lazy var infoButton: UIButton = {
+        var container = AttributeContainer()
+        container.font = UIFont.systemFont(ofSize: 14)
+
+        var configuration = UIButton.Configuration.plain()
+        configuration.attributedTitle = AttributedString("Info", attributes: container)
+        configuration.image = UIImage(systemName: "info.circle")
+        
+        configuration.imagePlacement = .top
+        configuration.imagePadding = 8
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .label
+        
+        return button
+    }()
     
     private let playButton: UIButton = {
-       
-        let button = UIButton()
-        button.setTitle("Play", for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1
+        var container = AttributeContainer()
+        container.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+
+        var configuration = UIButton.Configuration.plain()
+        configuration.attributedTitle = AttributedString("Play", attributes: container)
+        configuration.image = UIImage(systemName: "play.fill")
+        
+        configuration.imagePadding = 8
+        
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .label
+        button.tintColor = UIColor(named: "themeColor1")
+
         button.layer.cornerRadius = 5
         return button
     }()
@@ -60,37 +103,53 @@ class HeroHeaderView: UIView {
         super.init(frame: frame)
         addSubview(heroImageView)
         addGradient()
-        addSubview(playButton)
-        addSubview(downloadButton)
+        addSubview(barStackView)
+        barStackView.addArrangedSubview(saveButton)
+        barStackView.addArrangedSubview(playButton)
+        barStackView.addArrangedSubview(infoButton)
         applyConstraints()
     }
     
     private func applyConstraints() {
         
-        let playButtonConstraints = [
-            playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
-            playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
-            playButton.widthAnchor.constraint(equalToConstant: 120)
-        ]
-            
-        let downloadButtonConstraints = [
-            downloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
-            downloadButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
-            downloadButton.widthAnchor.constraint(equalToConstant: 120)
+        let barStackViewConstraints = [
+            barStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            barStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
         ]
         
+        let saveButtonConstraints = [
+            saveButton.widthAnchor.constraint(equalToConstant: 60),
+            saveButton.heightAnchor.constraint(equalToConstant: 60)
+        ]
+
+        let infoButtonConstraints = [
+            infoButton.widthAnchor.constraint(equalToConstant: 60),
+            infoButton.heightAnchor.constraint(equalToConstant: 60)
+        ]
+        
+        let playButtonConstraints = [
+            playButton.heightAnchor.constraint(equalToConstant: 40),
+            playButton.widthAnchor.constraint(equalToConstant: 120)
+        ]
+        
+        NSLayoutConstraint.activate(barStackViewConstraints)
         NSLayoutConstraint.activate(playButtonConstraints)
-        NSLayoutConstraint.activate(downloadButtonConstraints)
+        NSLayoutConstraint.activate(infoButtonConstraints)
+        NSLayoutConstraint.activate(saveButtonConstraints)
     }
     
-//    public func configure(with model: TitleViewModel) {
-//
-//        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posterURL)") else {
-//            return
-//        }
-//
-//        heroImageView.sd_setImage(with: url, completed: nil)
-//    }
+    public func configure(with model: Item) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath ?? "")") else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            let transformer = SDImageResizingTransformer(size: CGSize(width: super.bounds.width, height: 450), scaleMode: .aspectFill)
+            self.heroImageView.sd_setImage(with: url, placeholderImage: nil, context: [.imageTransformer: transformer])
+        }
+                
+     
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

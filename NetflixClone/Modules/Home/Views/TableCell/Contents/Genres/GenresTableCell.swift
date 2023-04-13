@@ -33,6 +33,7 @@ class GenresTableCell: UITableViewCell {
         
         contentView.addSubview(genresCollectionView)
         
+        genresCollectionView.showsHorizontalScrollIndicator = false
         genresCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             genresCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
