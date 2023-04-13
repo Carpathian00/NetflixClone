@@ -20,6 +20,10 @@ class HeroHeaderView: UIView {
         return button
     }()
     
+//    private lazy var saveButton: UIButton {
+//        
+//    }()
+    
     private let playButton: UIButton = {
        
         let button = UIButton()

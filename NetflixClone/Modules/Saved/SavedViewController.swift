@@ -1,13 +1,13 @@
 //
-//  ProfileViewController.swift
+//  SavedViewController.swift
 //  NetflixClone
 //
-//  Created by Adlan Nourindiaz on 06/04/23.
+//  Created by Adlan Nourindiaz on 12/04/23.
 //
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class SavedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

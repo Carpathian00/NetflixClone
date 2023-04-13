@@ -11,23 +11,11 @@ import UIKit
 class MainTableCell: UITableViewCell {
     
     static let identifier = "MainTableCell"
-    
+    var homeVCDelegate: HomeViewControllerDelegate?
+    private var items: [Item]?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
-    
-//    private lazy var moviesCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.scrollDirection = .horizontal
-//        let cv = MoviesCollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-//        cv.layer.masksToBounds = false
-//        cv.showsHorizontalScrollIndicator = false
-//        return cv
-//    }()
-    
-//    var moviesCollectionView: MoviesCollectionView?
-    
-    
+
     override class func awakeFromNib() {
         self.awakeFromNib()
     }
@@ -36,27 +24,16 @@ class MainTableCell: UITableViewCell {
         moviesCollectionView.delegate = self
         moviesCollectionView.dataSource = self
         moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-        
-//        contentView.addSubview(moviesCollectionView)
-        
-//        moviesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            moviesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            moviesCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            moviesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            moviesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-//            moviesCollectionView.heightAnchor.constraint(equalToConstant: self.frame.width / 2)
-//        ])
-        
-//        if bounds.size != intrinsicContentSize {
-//            self.invalidateIntrinsicContentSize()
-//        }
-        
+          
     }
     
-//    override var intrinsicContentSize: CGSize {
-//        return moviesCollectionView.collectionViewLayout.collectionViewContentSize
-//    }
+    func configure(modelData: [Item]?) {
+        self.items = modelData
+        DispatchQueue.main.async { [weak self] in
+            self?.moviesCollectionView.reloadData()
+        }
+        print("items data: \(self.items)")
+    }
     
     
     
@@ -69,7 +46,7 @@ extension MainTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -78,9 +55,15 @@ extension MainTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
+        if let itemIndex = items?[indexPath.row] {
+            cell.configure(model: itemIndex)
+        }
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.homeVCDelegate?.moveToDetailPage()
+    }
 }
 
 

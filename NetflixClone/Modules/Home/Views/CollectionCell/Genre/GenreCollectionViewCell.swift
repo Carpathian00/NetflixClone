@@ -14,6 +14,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView! {
         didSet {
             containerView.backgroundColor = .magenta
+            containerView.layer.cornerRadius = 5
         }
     }
     

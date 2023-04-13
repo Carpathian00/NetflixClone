@@ -88,7 +88,7 @@ class RightNavBarItems: UIBarButtonItem {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.spacing = 16
+        stackView.spacing = 20
         return stackView
     }()
 

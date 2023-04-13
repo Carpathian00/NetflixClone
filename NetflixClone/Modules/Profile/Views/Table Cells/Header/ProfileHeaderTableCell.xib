@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="285" id="KGk-i7-Jjw" customClass="ProfileHeaderTableCell" customModule="NetflixClone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="WXR-qN-W2g">
+                        <rect key="frame" x="50" y="30" width="220" height="164"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-iH-OPC">
+                                <rect key="frame" x="60" y="0.0" width="100" height="100"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person1" translatesAutoresizingMaskIntoConstraints="NO" id="Q2y-x2-fM0">
+                                        <rect key="frame" x="5" y="5" width="90" height="90"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="90" id="4i0-qf-43p"/>
+                                            <constraint firstAttribute="width" constant="90" id="aOZ-sE-ZdS"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLn-fe-aFP">
+                                        <rect key="frame" x="85" y="85" width="15" height="15"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="15" id="Qg6-HU-LOR"/>
+                                            <constraint firstAttribute="height" constant="15" id="Z6g-Jm-xHh"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="8" minY="5" maxX="8" maxY="5"/>
+                                        <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="pencil" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="CLn-fe-aFP" secondAttribute="trailing" id="JXp-Rg-GQO"/>
+                                    <constraint firstAttribute="bottom" secondItem="CLn-fe-aFP" secondAttribute="bottom" id="YJX-LP-85D"/>
+                                    <constraint firstAttribute="height" constant="100" id="iOy-3t-hhg"/>
+                                    <constraint firstItem="Q2y-x2-fM0" firstAttribute="centerX" secondItem="Pnj-iH-OPC" secondAttribute="centerX" id="m2X-ju-7Kd"/>
+                                    <constraint firstAttribute="width" constant="100" id="oah-7G-VjU"/>
+                                    <constraint firstItem="Q2y-x2-fM0" firstAttribute="centerY" secondItem="Pnj-iH-OPC" secondAttribute="centerY" id="u7P-t5-gFh"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="John Doe" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Luk-YV-7PX">
+                                <rect key="frame" x="0.0" y="124" width="220" height="40"/>
+                                <color key="backgroundColor" name="themeColor1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1fB-6n-PDE"/>
+                                    <constraint firstAttribute="width" constant="220" id="tlg-zb-8AQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="164" id="GfP-qU-KQF"/>
+                            <constraint firstItem="Luk-YV-7PX" firstAttribute="leading" secondItem="WXR-qN-W2g" secondAttribute="leading" id="am4-rT-QPP"/>
+                            <constraint firstAttribute="width" constant="220" id="mzf-lF-l0U"/>
+                            <constraint firstItem="Luk-YV-7PX" firstAttribute="top" secondItem="Pnj-iH-OPC" secondAttribute="bottom" constant="24" id="xyh-Pv-XiB"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="WXR-qN-W2g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="2zw-4F-Zv8"/>
+                    <constraint firstItem="WXR-qN-W2g" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3du-jr-1fK"/>
+                    <constraint firstAttribute="bottom" secondItem="WXR-qN-W2g" secondAttribute="bottom" constant="50" id="ayi-LD-gb7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="editButton" destination="CLn-fe-aFP" id="g4o-9E-iJi"/>
+                <outlet property="imageContainer" destination="Pnj-iH-OPC" id="9yl-Um-RFi"/>
+                <outlet property="nameLabel" destination="Luk-YV-7PX" id="dBt-d1-hV8"/>
+                <outlet property="profileImage" destination="Q2y-x2-fM0" id="Lu1-uN-MnT"/>
+            </connections>
+            <point key="canvasLocation" x="127.69230769230769" y="73.578199052132703"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="pencil" catalog="system" width="128" height="113"/>
+        <image name="person1" width="48" height="42"/>
+        <namedColor name="themeColor1">
+            <color red="0.85258956020670285" green="0.86103104100082861" blue="0.86103104100082861" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

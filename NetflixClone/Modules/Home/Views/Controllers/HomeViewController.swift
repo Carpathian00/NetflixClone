@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HomeViewControllerDelegate {
+    func moveToDetailPage()
+}
+
 enum TableSections: Int {
     case genres = 0
     case movies = 1
@@ -14,7 +18,10 @@ enum TableSections: Int {
 
 class HomeViewController: UIViewController {
     
-    var sections = ["Genres", "Popular"]
+    private let homeVM = HomeViewModel()
+    private var items: [Item]?
+    
+    var sections = ["Genres", "Popular", "TV Shows", "Action"]
     var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
     
     private lazy var homeTable: UITableView = {
@@ -34,15 +41,15 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
+        callApi()
         setupNavigationBar()
         setupTable()
         setupTableHeader()
-
     }
     
     private func setupNavigationBar() {
-//        navigationController?.navigationBar.setGradientBackground(colors: [.black, .clear], locations: [0,1])
-        navigationController?.hidesBarsOnSwipe = true
+//        navigationController?.navigationBar.setGradientBackground(colors: [.black, .magenta], locations: [0,1])
+//        navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
         leftNavigationBarItems.setupLeftNavBarItems()
@@ -58,7 +65,7 @@ class HomeViewController: UIViewController {
         view.addSubview(homeTable)
         
         homeTable.backgroundColor = .systemBackground
-//        homeTable.separatorStyle = .none
+        homeTable.separatorStyle = .none
         homeTable.tableFooterView = UIView(frame: CGRect.zero)
         homeTable.sectionFooterHeight = 0.0
         
@@ -68,8 +75,8 @@ class HomeViewController: UIViewController {
             homeTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             homeTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        self.homeTable.delegate = self
-        self.homeTable.dataSource = self
+        homeTable.delegate = self
+        homeTable.dataSource = self
 
     }
     
@@ -77,6 +84,27 @@ class HomeViewController: UIViewController {
         homeTable.tableHeaderView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
     }
     
+    private func callApi() {
+        self.homeVM.fetchPopularMoviesData()
+        self.homeVM.bindItemData = { movieModel in
+            if let model = movieModel {
+                self.items = model
+            }
+            DispatchQueue.main.async {
+                self.homeTable.reloadData()
+            }
+        }
+    }
+    
+        
+}
+
+extension HomeViewController: HomeViewControllerDelegate {
+    func moveToDetailPage() {
+        let vc = MovieDetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.navigationController?.isNavigationBarHidden = false
+    }
 
 }
 
@@ -113,6 +141,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .movies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
+            cell.configure(modelData: items)
+            cell.homeVCDelegate = self
             return cell
         default:
             return UITableViewCell()
@@ -120,11 +150,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let defaultOffset = view.safeAreaInsets.top
-//        let offset = scrollView.contentOffset.y + defaultOffset
-//
-//        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+           if offsetY > 50 {
+               navigationController?.setNavigationBarHidden(true, animated: true)
+           } else {
+               navigationController?.setNavigationBarHidden(false, animated: true)
+           }
+    }
+
     
 }
