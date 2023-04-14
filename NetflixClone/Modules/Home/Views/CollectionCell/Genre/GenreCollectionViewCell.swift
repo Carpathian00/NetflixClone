@@ -20,7 +20,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var genreLabel: UILabel! {
         didSet {
-            genreLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+            genreLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         }
     }
     
@@ -29,8 +29,8 @@ class GenreCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
-    func configure() {
-        
+    func configure(genreModel: Genre?) {
+        self.genreLabel.text = genreModel?.name
     }
     
 }

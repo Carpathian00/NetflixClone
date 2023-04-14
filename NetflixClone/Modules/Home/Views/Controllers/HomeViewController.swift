@@ -20,11 +20,12 @@ class HomeViewController: UIViewController {
     
     private let homeVM = HomeViewModel()
     private var items: [Item]?
+    private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
     
     var sections = ["Genres", "Popular", "TV Shows", "Action"]
-    var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
-    
+//    var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
+//
     private lazy var homeTable: UITableView = {
         let movieTable = UITableView(frame: .zero, style: .grouped)
         movieTable.translatesAutoresizingMaskIntoConstraints = false
@@ -96,9 +97,17 @@ class HomeViewController: UIViewController {
                 
                 self.items = model
             }
-            DispatchQueue.main.async {
-                self.homeTable.reloadData()
+            
+        }
+        
+        self.homeVM.fetchGenresData()
+        self.homeVM.bindGenreData = { genreModel in
+            if let model = genreModel {
+                self.genres = model
             }
+        }
+        DispatchQueue.main.async {
+            self.homeTable.reloadData()
         }
     }
     
@@ -144,6 +153,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .genres:
             guard let genre = homeTable.dequeueReusableCell(withIdentifier: GenresTableCell.identifier, for: indexPath) as? GenresTableCell else { return UITableViewCell() }
             genre.setupCollectionView()
+            genre.configure(genreModel: genres)
             return genre
         case .movies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }

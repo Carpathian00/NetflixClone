@@ -11,6 +11,8 @@ class GenresTableCell: UITableViewCell {
     
     static let identifier = "GenresTableCell"
     
+    var genres: [Genre]?
+    
     private lazy var genresCollectionView: UICollectionView = {
            let layout = UICollectionViewFlowLayout()
            layout.scrollDirection = .horizontal
@@ -44,6 +46,13 @@ class GenresTableCell: UITableViewCell {
         ])
         
     }
+    
+    func configure(genreModel: [Genre]?) {
+        self.genres = genreModel
+        DispatchQueue.main.async {
+            self.genresCollectionView.reloadData()
+        }
+    }
 }
 
 extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -61,8 +70,9 @@ extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = genresCollectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else { return UICollectionViewCell() }
-        
+        guard let cell = genresCollectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
+            return UICollectionViewCell() }
+        cell.configure(genreModel: genres?[indexPath.row])
         return cell
     }
     
