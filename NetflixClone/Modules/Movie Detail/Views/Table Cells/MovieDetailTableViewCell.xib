@@ -115,6 +115,12 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="itemTitle" destination="rbl-Uu-qIB" id="ROo-EO-FXt"/>
+                <outlet property="overview" destination="afQ-EX-pIT" id="sB5-6G-sEv"/>
+                <outlet property="releaseDate" destination="Vzy-vr-v3A" id="wAN-1m-tBb"/>
+                <outlet property="videoPlayer" destination="56D-9o-hht" id="VVC-aa-Awt"/>
+            </connections>
             <point key="canvasLocation" x="53.846153846153847" y="169.19431279620852"/>
         </tableViewCell>
     </objects>

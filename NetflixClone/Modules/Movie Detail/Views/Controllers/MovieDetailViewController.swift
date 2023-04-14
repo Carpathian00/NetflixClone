@@ -9,6 +9,8 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
 
+    var item: Item?
+    
     private lazy var movieDetailLayout: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -26,8 +28,6 @@ class MovieDetailViewController: UIViewController {
    
     
     private func setupTableView() {
-//        self.navigationController?.isNavigationBarHidden = false
-//        navigationController?.hidesBarsOnSwipe = false
         
         view.addSubview(movieDetailLayout)
         
@@ -46,6 +46,10 @@ class MovieDetailViewController: UIViewController {
         movieDetailLayout.delegate = self
         movieDetailLayout.dataSource = self
     }
+    
+    private func configure(model: Item?) {
+        self.item = model
+    }
 
 
 }
@@ -58,6 +62,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = movieDetailLayout.dequeueReusableCell(withIdentifier: MovieDetailTableViewCell.identifier, for: indexPath) as? MovieDetailTableViewCell else { return UITableViewCell() }
+        cell.configure(dataModel: item)
         return cell
     }
     

@@ -62,7 +62,7 @@ extension MainTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToDetailPage()
+        self.homeVCDelegate?.moveToDetailPage(model: items?[indexPath.row])
     }
 }
 

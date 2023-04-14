@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeViewControllerDelegate {
-    func moveToDetailPage()
+    func moveToDetailPage(model: Item?)
 }
 
 enum TableSections: Int {
@@ -106,8 +106,9 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: HomeViewControllerDelegate {
-    func moveToDetailPage() {
+    func moveToDetailPage(model: Item?) {
         let vc = MovieDetailViewController()
+        vc.item = model
         self.navigationController?.pushViewController(vc, animated: true)
         vc.navigationController?.isNavigationBarHidden = false
     }
