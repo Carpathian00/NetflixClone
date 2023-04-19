@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import WebKit
 
 class MovieDetailViewController: UIViewController {
 
     var item: Item?
+    
+    @IBOutlet weak var videoPlayer: WKWebView!
     
     private lazy var movieDetailLayout: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
@@ -37,7 +40,7 @@ class MovieDetailViewController: UIViewController {
         movieDetailLayout.sectionFooterHeight = 0.0
         
         NSLayoutConstraint.activate([
-            movieDetailLayout.topAnchor.constraint(equalTo: view.topAnchor),
+            movieDetailLayout.topAnchor.constraint(equalTo: videoPlayer.bottomAnchor),
             movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             movieDetailLayout.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             movieDetailLayout.bottomAnchor.constraint(equalTo: view.bottomAnchor)

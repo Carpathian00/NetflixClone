@@ -16,10 +16,6 @@ protocol HomeVMProtocol {
 
 class HomeViewModel: HomeVMProtocol {
     
-    
-    private let baseUrl = "https://api.themoviedb.org/3"
-    private let API_KEY = "00d626f8a69df5cc36ec9689858d16b6"
-    
     private var apiServiceProtocol: APIServiceProtocol?
     
     var bindItemData: (([Item]?) -> ())?
@@ -31,7 +27,7 @@ class HomeViewModel: HomeVMProtocol {
     
     
     func fetchGenresData() {
-        let url = baseUrl + "/genre/movie/list" + "?api_key=\(API_KEY)"
+        let url = APIConfig.baseUrl + "/genre/movie/list" + "?api_key=\(APIConfig.API_KEY)"
         
         self.apiServiceProtocol?.callApi(with: url, model: GenreApiResponse.self, completion: { result in
             print("result of genre: \(result)")
@@ -46,7 +42,7 @@ class HomeViewModel: HomeVMProtocol {
     }
     
     func fetchPopularMoviesData() {
-        let url = baseUrl + "/movie/popular" + "?api_key=\(API_KEY)"
+        let url = APIConfig.baseUrl + "/movie/popular" + "?api_key=\(APIConfig.API_KEY)"
         
         self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
 //            print("result data: \(result)")
