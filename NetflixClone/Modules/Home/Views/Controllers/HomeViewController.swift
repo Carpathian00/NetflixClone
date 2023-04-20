@@ -117,7 +117,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewControllerDelegate {
     func moveToDetailPage(model: Item?) {
         let vc = MovieDetailViewController()
-        vc.item = model
+        vc.configure(model: model)
         self.navigationController?.pushViewController(vc, animated: true)
         vc.navigationController?.isNavigationBarHidden = false
     }

@@ -10,7 +10,10 @@ import WebKit
 
 class MovieDetailViewController: UIViewController {
 
-    var item: Item?
+    private var item: Item?
+    private var trailer: TrailerResult?
+    private let MovieDetailVM = MovieDetailViewModel()
+
     
     @IBOutlet weak var videoPlayer: WKWebView!
     
@@ -26,6 +29,7 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         setupTableView()
+        callApi()
     }
     
    
@@ -49,12 +53,29 @@ class MovieDetailViewController: UIViewController {
         movieDetailLayout.delegate = self
         movieDetailLayout.dataSource = self
     }
+
+    private func callApi() {
+        self.MovieDetailVM.fetchTrailerData(with: self.item?.id)
+        self.MovieDetailVM.bindTrailerData = { trailer in
+            self.trailer = trailer
+            DispatchQueue.main.async { [weak self] in
+                self?.callVideoUrl(key: self?.trailer!.key ?? "")
+            }
+            
+        }
+    }
     
-    private func configure(model: Item?) {
+    private func callVideoUrl(key: String) {
+        guard let url = URL(string: "https://www.youtube.com/embed/\(key)") else {
+            return
+        }
+        self.videoPlayer.load(URLRequest(url: url))
+    }
+    
+    func configure(model: Item?) {
         self.item = model
     }
-
-
+    
 }
 
 extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
