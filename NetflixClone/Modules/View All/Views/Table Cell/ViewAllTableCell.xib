@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="216" id="KGk-i7-Jjw" customClass="ViewAllTableCell" customModule="NetflixClone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="endgame" translatesAutoresizingMaskIntoConstraints="NO" id="5oj-f4-OOU">
+                        <rect key="frame" x="8" y="8" width="217" height="199"/>
+                        <color key="backgroundColor" systemColor="systemGrayColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="199" id="Eyk-Oo-qM9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Avengers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3W-cP-pWQ">
+                        <rect key="frame" x="241" y="8" width="71" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="5oj-f4-OOU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="HHa-L8-oog"/>
+                    <constraint firstItem="5oj-f4-OOU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Ist-M9-kc3"/>
+                    <constraint firstAttribute="trailing" secondItem="E3W-cP-pWQ" secondAttribute="trailing" constant="8" id="RcI-J0-V1W"/>
+                    <constraint firstItem="E3W-cP-pWQ" firstAttribute="leading" secondItem="5oj-f4-OOU" secondAttribute="trailing" constant="16" id="eVH-jg-AWD"/>
+                    <constraint firstAttribute="bottom" secondItem="5oj-f4-OOU" secondAttribute="bottom" constant="8" id="oHU-QI-4dR"/>
+                    <constraint firstItem="E3W-cP-pWQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="pnr-4b-VYY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="itemImage" destination="5oj-f4-OOU" id="M2x-95-exE"/>
+                <outlet property="itemTitle" destination="E3W-cP-pWQ" id="sfQ-6r-EIH"/>
+            </connections>
+            <point key="canvasLocation" x="87.692307692307693" y="49.052132701421797"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="endgame" width="1600" height="2264"/>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

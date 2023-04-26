@@ -27,6 +27,12 @@
 		C64C33B329E7C41000029ABC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = C64C33B229E7C41000029ABC /* SDWebImage */; };
 		C64C33B529E933CB00029ABC /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33B429E933CB00029ABC /* Genre.swift */; };
 		C64C33B829E946DB00029ABC /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */; };
+		C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */; };
+		C6D54C1E29F833D90034C72A /* ViewAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D54C1C29F833D90034C72A /* ViewAllViewController.swift */; };
+		C6D54C1F29F833D90034C72A /* ViewAllViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6D54C1D29F833D90034C72A /* ViewAllViewController.xib */; };
+		C6D54C2429F834B50034C72A /* ViewAllTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D54C2229F834B50034C72A /* ViewAllTableCell.swift */; };
+		C6D54C2529F834B50034C72A /* ViewAllTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6D54C2329F834B50034C72A /* ViewAllTableCell.xib */; };
+		C6D54C2729F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D54C2629F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift */; };
 		C6ED48DC29DE844A0005D25F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ED48DB29DE844A0005D25F /* AppDelegate.swift */; };
 		C6ED48DE29DE844A0005D25F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ED48DD29DE844A0005D25F /* SceneDelegate.swift */; };
 		C6ED48E029DE844A0005D25F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ED48DF29DE844A0005D25F /* ViewController.swift */; };
@@ -80,6 +86,12 @@
 		C64C33AD29E7A30B00029ABC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C64C33B429E933CB00029ABC /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
+		C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllViewModel.swift; sourceTree = "<group>"; };
+		C6D54C1C29F833D90034C72A /* ViewAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllViewController.swift; sourceTree = "<group>"; };
+		C6D54C1D29F833D90034C72A /* ViewAllViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewAllViewController.xib; sourceTree = "<group>"; };
+		C6D54C2229F834B50034C72A /* ViewAllTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllTableCell.swift; sourceTree = "<group>"; };
+		C6D54C2329F834B50034C72A /* ViewAllTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewAllTableCell.xib; sourceTree = "<group>"; };
+		C6D54C2629F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
 		C6ED48D829DE844A0005D25F /* NetflixClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6ED48DB29DE844A0005D25F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6ED48DD29DE844A0005D25F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +212,41 @@
 				C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		C6D54C1A29F833B50034C72A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C6D54C2129F8348D0034C72A /* Controllers */,
+				C6D54C2029F834800034C72A /* Table Cell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C6D54C1B29F833BD0034C72A /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		C6D54C2029F834800034C72A /* Table Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C6D54C2229F834B50034C72A /* ViewAllTableCell.swift */,
+				C6D54C2329F834B50034C72A /* ViewAllTableCell.xib */,
+			);
+			path = "Table Cell";
+			sourceTree = "<group>";
+		};
+		C6D54C2129F8348D0034C72A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C6D54C1C29F833D90034C72A /* ViewAllViewController.swift */,
+				C6D54C1D29F833D90034C72A /* ViewAllViewController.xib */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		C6ED48CF29DE844A0005D25F = {
@@ -326,6 +373,7 @@
 			children = (
 				C6FB28B029E5192C00221FB5 /* NavigationBarGradientView.swift */,
 				C6FB28B429E53E5200221FB5 /* DynamicHeightCollectionView.swift */,
+				C6D54C2629F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -431,6 +479,8 @@
 		C6FB28C429E6477F00221FB5 /* View All */ = {
 			isa = PBXGroup;
 			children = (
+				C6D54C1B29F833BD0034C72A /* View Models */,
+				C6D54C1A29F833B50034C72A /* Views */,
 			);
 			path = "View All";
 			sourceTree = "<group>";
@@ -592,9 +642,11 @@
 				C6ED48E329DE844A0005D25F /* Main.storyboard in Resources */,
 				C6FB28DE29E673CF00221FB5 /* FooterTableCell.xib in Resources */,
 				C6FB28E329E67F4A00221FB5 /* SavedViewController.xib in Resources */,
+				C6D54C2529F834B50034C72A /* ViewAllTableCell.xib in Resources */,
 				C6ED490529DE8A430005D25F /* ProfileViewController.xib in Resources */,
 				C6ED490029DE8A1A0005D25F /* HomeViewController.xib in Resources */,
 				C61066AF29E3BFDD003448A0 /* MovieCollectionViewCell.xib in Resources */,
+				C6D54C1F29F833D90034C72A /* ViewAllViewController.xib in Resources */,
 				C6FB28BE29E63E6F00221FB5 /* GenreCollectionViewCell.xib in Resources */,
 				C6FB28C929E648FC00221FB5 /* SearchViewController.xib in Resources */,
 				C6FB28B329E53A9100221FB5 /* MainTableCell.xib in Resources */,
@@ -654,12 +706,16 @@
 				C64C33B529E933CB00029ABC /* Genre.swift in Sources */,
 				C6FB28BD29E63E6F00221FB5 /* GenreCollectionViewCell.swift in Sources */,
 				C6FB28D729E666CF00221FB5 /* SettingTableCell.swift in Sources */,
+				C6D54C2429F834B50034C72A /* ViewAllTableCell.swift in Sources */,
 				C61066A429E2AC4C003448A0 /* MainTableCell.swift in Sources */,
 				C6FB28B529E53E5200221FB5 /* DynamicHeightCollectionView.swift in Sources */,
 				C6FB28C829E648FC00221FB5 /* SearchViewController.swift in Sources */,
+				C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */,
 				C61066A829E3B213003448A0 /* SectionCellHeader.swift in Sources */,
 				C6FB28D229E651C600221FB5 /* ProfileHeaderTableCell.swift in Sources */,
 				C6ED490429DE8A430005D25F /* ProfileViewController.swift in Sources */,
+				C6D54C1E29F833D90034C72A /* ViewAllViewController.swift in Sources */,
+				C6D54C2729F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift in Sources */,
 				C6ED48FF29DE8A1A0005D25F /* HomeViewController.swift in Sources */,
 				C6FB28E229E67F4A00221FB5 /* SavedViewController.swift in Sources */,
 				C64C33AB29E7984200029ABC /* Item.swift in Sources */,

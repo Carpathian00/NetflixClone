@@ -10,6 +10,9 @@ import SDWebImage
 
 class HeroHeaderView: UIView {
     
+    var homeVCDelegate: HomeViewControllerDelegate?
+    private var headerItem: Item?
+    
     private lazy var barStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false;
@@ -55,6 +58,8 @@ class HeroHeaderView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .label
         
+        button.addTarget(self, action: #selector(tapInfoButton(sender:)), for: .touchUpInside)
+        
         return button
     }()
     
@@ -83,7 +88,7 @@ class HeroHeaderView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "endgame")
+        imageView.backgroundColor = .gray
         return imageView
     }()
     
@@ -139,6 +144,7 @@ class HeroHeaderView: UIView {
     }
     
     public func configure(with model: Item) {
+        self.headerItem = model
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath ?? "")") else {
             return
         }
@@ -149,6 +155,11 @@ class HeroHeaderView: UIView {
         }
                 
      
+    }
+    
+    @objc
+    func tapInfoButton(sender: UIButton) {
+        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true)
     }
     
     override func layoutSubviews() {

@@ -72,6 +72,18 @@ extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = genresCollectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
             return UICollectionViewCell() }
+        if indexPath.row % 5 == 0 {
+            cell.containerView.backgroundColor = .gray
+        } else if indexPath.row % 5 == 1 {
+            cell.containerView.backgroundColor = .orange
+        } else if indexPath.row % 5 == 2 {
+            cell.containerView.backgroundColor = .magenta
+        } else if indexPath.row % 5 == 3 {
+            cell.containerView.backgroundColor = .blue
+        } else if indexPath.row % 5 == 4 {
+            cell.containerView.backgroundColor = .brown
+        }
+        
         cell.configure(genreModel: genres?[indexPath.row])
         return cell
     }

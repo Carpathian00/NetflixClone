@@ -9,6 +9,8 @@ import UIKit
 
 class SectionCellHeader: UITableViewHeaderFooterView {
     static let identifier = "SectionCellHeader"
+    private var sectionIndex: Int?
+    var homeVCDelegate: HomeViewControllerDelegate?
     
     private lazy var headerTitle: UILabel = {
         let lb = UILabel()
@@ -19,9 +21,13 @@ class SectionCellHeader: UITableViewHeaderFooterView {
     
     private lazy var viewAllButton: UIButton = {
         let bt = UIButton(frame: CGRect(x: 0, y: 0, width: 35, height: 25))
-        bt.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+//        bt.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+        bt.setTitle("View All", for: .normal)
+        bt.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         bt.translatesAutoresizingMaskIntoConstraints = false
         bt.tintColor = UIColor.label
+        bt.addTarget(self, action: #selector(tapViewAllButton(sender:)), for: .touchUpInside)
+
         return bt
     }()
     
@@ -39,19 +45,24 @@ class SectionCellHeader: UITableViewHeaderFooterView {
         NSLayoutConstraint.activate([
             headerTitle.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 10),
             headerTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            headerTitle.trailingAnchor.constraint(equalTo: viewAllButton.leadingAnchor, constant: 10),
+            headerTitle.trailingAnchor.constraint(equalTo: viewAllButton.leadingAnchor, constant: -10),
         ])
     }
     
     func setupViewAllButton() {
         NSLayoutConstraint.activate([
-            viewAllButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 10),
+            viewAllButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 14),
             viewAllButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
         ])
     }
     
-    func configure(title: String) {
+    func configure(title: String, index: Int) {
         headerTitle.text = title
+        self.sectionIndex = index
     }
 
+    @objc
+    func tapViewAllButton(sender: UIButton){
+        homeVCDelegate?.moveToViewAllPage(section: self.sectionIndex ?? 0)
+    }
 }

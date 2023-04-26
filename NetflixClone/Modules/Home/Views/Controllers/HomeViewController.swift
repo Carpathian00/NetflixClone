@@ -8,7 +8,8 @@
 import UIKit
 
 protocol HomeViewControllerDelegate {
-    func moveToDetailPage(model: Item?)
+    func moveToDetailPage(model: Item?, fromTableHeader: Bool)
+    func moveToViewAllPage(section: Int)
 }
 
 enum TableSections: Int {
@@ -50,7 +51,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-//        navigationController?.hidesBarsOnSwipe = true
+        navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
         leftNavigationBarItems.setupLeftNavBarItems()
@@ -76,6 +77,9 @@ class HomeViewController: UIViewController {
             homeTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             homeTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
+       
+        
         homeTable.delegate = self
         homeTable.dataSource = self
 
@@ -85,6 +89,7 @@ class HomeViewController: UIViewController {
         self.headerMovie = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
 
         homeTable.tableHeaderView = self.headerMovie
+        headerMovie?.homeVCDelegate = self
     }
     
     private func callApi() {
@@ -96,6 +101,11 @@ class HomeViewController: UIViewController {
                 self.headerMovie?.configure(with: selectedTitle)
                 
                 self.items = model
+                DispatchQueue.main.async { [weak self] in
+                    if self?.items != nil {
+                        self?.homeTable.reloadData()
+                    }
+                }
             }
             
         }
@@ -106,22 +116,33 @@ class HomeViewController: UIViewController {
                 self.genres = model
             }
         }
-        DispatchQueue.main.async {
-            self.homeTable.reloadData()
-        }
+        
+        print("data home page: \(self.items)")
     }
     
         
 }
 
 extension HomeViewController: HomeViewControllerDelegate {
-    func moveToDetailPage(model: Item?) {
+    func moveToDetailPage(model: Item?, fromTableHeader: Bool) {
         let vc = MovieDetailViewController()
         vc.configure(model: model)
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.navigationController?.isNavigationBarHidden = false
+        
+        if fromTableHeader == true {
+            self.navigationController?.present(vc, animated: true)
+        } else {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
 
+    func moveToViewAllPage(section: Int) {
+        let vc = ViewAllViewController()
+        vc.configure(section: section)
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.navigationController?.isNavigationBarHidden = false
+
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -141,7 +162,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = homeTable.dequeueReusableHeaderFooterView(withIdentifier: SectionCellHeader.identifier) as? SectionCellHeader
         header?.addSubviews()
-        header?.configure(title: sections[section])
+        header?.configure(title: sections[section], index: section)
+        header?.homeVCDelegate = self
+
         return header
     }
     
@@ -166,15 +189,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
     
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-           if offsetY > 50 {
-               navigationController?.setNavigationBarHidden(true, animated: true)
-           } else {
-               navigationController?.setNavigationBarHidden(false, animated: true)
-           }
-    }
-
-    
 }

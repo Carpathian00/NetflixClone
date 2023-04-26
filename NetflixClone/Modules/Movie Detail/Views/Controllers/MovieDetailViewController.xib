@@ -26,7 +26,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="250" id="XY5-Ds-gg3"/>
                     </constraints>
-                    <wkWebViewConfiguration key="configuration">
+                    <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                         <wkPreferences key="preferences"/>
                     </wkWebViewConfiguration>
