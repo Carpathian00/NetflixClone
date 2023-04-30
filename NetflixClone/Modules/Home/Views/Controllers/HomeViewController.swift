@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
     }
     
     private func callApi() {
-        self.homeVM.fetchPopularMoviesData()
+        self.homeVM.fetchPopularMoviesData(currentPage: 1)
         self.homeVM.bindItemData = { movieModel in
             if let model = movieModel {
                 let selectedTitle = model.randomElement()
@@ -114,6 +114,11 @@ class HomeViewController: UIViewController {
         self.homeVM.bindGenreData = { genreModel in
             if let model = genreModel {
                 self.genres = model
+                DispatchQueue.main.async { [weak self] in
+                    if self?.genres != nil {
+                        self?.homeTable.reloadData()
+                    }
+                }
             }
         }
         
@@ -139,6 +144,7 @@ extension HomeViewController: HomeViewControllerDelegate {
     func moveToViewAllPage(section: Int) {
         let vc = ViewAllViewController()
         vc.configure(section: section)
+        vc.homeVCDelegate = self
         self.navigationController?.pushViewController(vc, animated: true)
         vc.navigationController?.isNavigationBarHidden = false
 

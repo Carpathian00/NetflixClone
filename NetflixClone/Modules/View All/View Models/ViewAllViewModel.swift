@@ -18,12 +18,12 @@ class ViewAllViewModel {
         self.selectedSection = selectedSection
     }
     
-    func getData() {
+    func getData(currentPage: Int) {
         let section = TableSections(rawValue: selectedSection)
         
         switch section {
         case .movies:
-            self.homeVM.fetchPopularMoviesData()
+            self.homeVM.fetchPopularMoviesData(currentPage: currentPage)
             self.homeVM.bindItemData = { result in
                 self.bindItemData?(result)
             }

@@ -10,8 +10,10 @@ import UIKit
 class ViewAllViewController: UIViewController {
     
     var selectedSection: Int?
+    var homeVCDelegate: HomeViewControllerDelegate?
     private var viewAllVM: ViewAllViewModel?
     private var items = [Item]()
+    private var currentPage = 1
     
     private lazy var viewAllTable: UITableView = {
         let table = UITableView()
@@ -51,7 +53,7 @@ class ViewAllViewController: UIViewController {
     private func setupData() {
         guard let selectedSection = self.selectedSection else { return }
         self.viewAllVM = ViewAllViewModel(selectedSection: selectedSection)
-        self.viewAllVM?.getData()
+        self.viewAllVM?.getData(currentPage: 1)
         self.viewAllVM?.bindItemData = { result in
             guard let resultItems = result else { return }
                 self.items.append(contentsOf: resultItems)
@@ -71,7 +73,7 @@ class ViewAllViewController: UIViewController {
 extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,21 +82,37 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let position = scrollView.contentOffset.y
-
+    func createSpinnerView() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         
-        if position > (viewAllTable.contentSize.height - 100 - scrollView.frame.size.height) {
-            print("fetch")
-            self.viewAllVM?.getData()
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.viewAllTable.tableFooterView = self.createSpinnerView()
+
+        let lastIndex = self.items.count-1
+        if indexPath.row == lastIndex {
+            currentPage += 1
+            self.viewAllVM?.getData(currentPage: self.currentPage)
             self.viewAllVM?.bindItemData = { result in
                 guard let resultItems = result else { return }
-                    self.items.append(contentsOf: resultItems)
-                DispatchQueue.main.async {
-                    
+                self.items.append(contentsOf: resultItems)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.viewAllTable.reloadData()
-                }
+                    self.viewAllTable.tableFooterView = nil
+                })
             }
         }
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false)
+    }
+    
 }

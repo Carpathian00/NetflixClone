@@ -9,6 +9,7 @@ import Foundation
 
 struct ApiResponse:Codable {
     
+    let page: Int?
     let results: [Item]
 }
 

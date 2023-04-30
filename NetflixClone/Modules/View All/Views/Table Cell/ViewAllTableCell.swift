@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ViewAllTableCell: UITableViewCell {
 
@@ -30,6 +31,12 @@ class ViewAllTableCell: UITableViewCell {
     }
 
     func configure(itemModel: Item) {
+        guard let imagePath = itemModel.posterPath else { return }
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w500\(imagePath)")
+
+        self.itemImage.sd_setImage(with: url)
+        
         if itemModel.title == nil {
             self.itemTitle.text = itemModel.originalTitle
         } else {
