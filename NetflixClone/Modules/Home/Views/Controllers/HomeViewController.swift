@@ -17,6 +17,7 @@ enum TableSections: Int {
     case genres = 0
     case popularMovies = 1
     case topRatedMovies = 3
+    case other = 5
 }
 
 class HomeViewController: UIViewController {
@@ -199,8 +200,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         switch sections {
         case .genres:
             return 150
-        case .popularMovies:
-            return UITableView.automaticDimension
         default:
             return UITableView.automaticDimension
         }
@@ -228,6 +227,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             genre.configure(genreModel: genres)
             genre.homeVCDelegate = self
             return genre
+            
         case .popularMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()

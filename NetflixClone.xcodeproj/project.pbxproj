@@ -55,6 +55,11 @@
 		C6ED490029DE8A1A0005D25F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6ED48FE29DE8A1A0005D25F /* HomeViewController.xib */; };
 		C6ED490429DE8A430005D25F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ED490229DE8A430005D25F /* ProfileViewController.swift */; };
 		C6ED490529DE8A430005D25F /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6ED490329DE8A430005D25F /* ProfileViewController.xib */; };
+		C6F6614E2A0245C400B09679 /* UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F6614D2A0245C400B09679 /* UISearchBar.swift */; };
+		C6F661522A0250F700B09679 /* CircularScoreBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F661512A0250F700B09679 /* CircularScoreBar.swift */; };
+		C6F661572A02546800B09679 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F661562A02546800B09679 /* SearchViewModel.swift */; };
+		C6F6615A2A02549C00B09679 /* SearchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F661582A02549C00B09679 /* SearchTableCell.swift */; };
+		C6F6615B2A02549C00B09679 /* SearchTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F661592A02549C00B09679 /* SearchTableCell.xib */; };
 		C6FB28B129E5192C00221FB5 /* NavigationBarGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FB28B029E5192C00221FB5 /* NavigationBarGradientView.swift */; };
 		C6FB28B329E53A9100221FB5 /* MainTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FB28B229E53A9100221FB5 /* MainTableCell.xib */; };
 		C6FB28B529E53E5200221FB5 /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FB28B429E53E5200221FB5 /* DynamicHeightCollectionView.swift */; };
@@ -127,6 +132,11 @@
 		C6ED48FE29DE8A1A0005D25F /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		C6ED490229DE8A430005D25F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C6ED490329DE8A430005D25F /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		C6F6614D2A0245C400B09679 /* UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar.swift; sourceTree = "<group>"; };
+		C6F661512A0250F700B09679 /* CircularScoreBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularScoreBar.swift; sourceTree = "<group>"; };
+		C6F661562A02546800B09679 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C6F661582A02549C00B09679 /* SearchTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableCell.swift; sourceTree = "<group>"; };
+		C6F661592A02549C00B09679 /* SearchTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableCell.xib; sourceTree = "<group>"; };
 		C6FB28B029E5192C00221FB5 /* NavigationBarGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarGradientView.swift; sourceTree = "<group>"; };
 		C6FB28B229E53A9100221FB5 /* MainTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableCell.xib; sourceTree = "<group>"; };
 		C6FB28B429E53E5200221FB5 /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
@@ -248,10 +258,8 @@
 		C637E6252A0018A700896DFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C6FB28C629E648FC00221FB5 /* SearchViewController.swift */,
-				C6FB28C729E648FC00221FB5 /* SearchViewController.xib */,
-				C637E6262A0018C800896DFB /* SearchResultViewController.swift */,
-				C637E6272A0018C800896DFB /* SearchResultViewController.xib */,
+				C6F661542A02543F00B09679 /* Controllers */,
+				C6F661532A02542500B09679 /* Table Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,6 +371,7 @@
 		C6ED48DA29DE844A0005D25F /* NetflixClone */ = {
 			isa = PBXGroup;
 			children = (
+				C6F6614F2A0250D700B09679 /* Extras */,
 				C6ED48F929DE882A0005D25F /* Core */,
 				C6ED48F829DE865F0005D25F /* Extensions */,
 				C6ED48F329DE85AE0005D25F /* Resources */,
@@ -472,6 +481,7 @@
 				C6FB28B029E5192C00221FB5 /* NavigationBarGradientView.swift */,
 				C6FB28B429E53E5200221FB5 /* DynamicHeightCollectionView.swift */,
 				C6D54C2629F844EB0034C72A /* UIViewController+UIGestureRecognizerDelegate.swift */,
+				C6F6614D2A0245C400B09679 /* UISearchBar.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -502,6 +512,42 @@
 				C6FB28CA29E6516C00221FB5 /* Table Cells */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C6F6614F2A0250D700B09679 /* Extras */ = {
+			isa = PBXGroup;
+			children = (
+				C6F661512A0250F700B09679 /* CircularScoreBar.swift */,
+			);
+			path = Extras;
+			sourceTree = "<group>";
+		};
+		C6F661532A02542500B09679 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C6F661582A02549C00B09679 /* SearchTableCell.swift */,
+				C6F661592A02549C00B09679 /* SearchTableCell.xib */,
+			);
+			path = "Table Cells";
+			sourceTree = "<group>";
+		};
+		C6F661542A02543F00B09679 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C637E6262A0018C800896DFB /* SearchResultViewController.swift */,
+				C6FB28C629E648FC00221FB5 /* SearchViewController.swift */,
+				C637E6272A0018C800896DFB /* SearchResultViewController.xib */,
+				C6FB28C729E648FC00221FB5 /* SearchViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C6F661552A02545400B09679 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				C6F661562A02546800B09679 /* SearchViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		C6FB28B629E63CD000221FB5 /* Contents */ = {
@@ -586,6 +632,7 @@
 		C6FB28C529E648BD00221FB5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				C6F661552A02545400B09679 /* View Models */,
 				C637E6252A0018A700896DFB /* Views */,
 			);
 			path = Search;
@@ -748,6 +795,7 @@
 				C6ED490029DE8A1A0005D25F /* HomeViewController.xib in Resources */,
 				C61066AF29E3BFDD003448A0 /* MovieCollectionViewCell.xib in Resources */,
 				C6D54C1F29F833D90034C72A /* ViewAllViewController.xib in Resources */,
+				C6F6615B2A02549C00B09679 /* SearchTableCell.xib in Resources */,
 				C6FB28BE29E63E6F00221FB5 /* GenreCollectionViewCell.xib in Resources */,
 				C6FB28C929E648FC00221FB5 /* SearchViewController.xib in Resources */,
 				C6FB28B329E53A9100221FB5 /* MainTableCell.xib in Resources */,
@@ -806,9 +854,11 @@
 			files = (
 				C64C33B529E933CB00029ABC /* Genre.swift in Sources */,
 				C6FB28BD29E63E6F00221FB5 /* GenreCollectionViewCell.swift in Sources */,
+				C6F6615A2A02549C00B09679 /* SearchTableCell.swift in Sources */,
 				C6FB28D729E666CF00221FB5 /* SettingTableCell.swift in Sources */,
 				C6D54C2429F834B50034C72A /* ViewAllMoviesTableCell.swift in Sources */,
 				C61066A429E2AC4C003448A0 /* MainTableCell.swift in Sources */,
+				C6F6614E2A0245C400B09679 /* UISearchBar.swift in Sources */,
 				C6FB28B529E53E5200221FB5 /* DynamicHeightCollectionView.swift in Sources */,
 				C6FB28C829E648FC00221FB5 /* SearchViewController.swift in Sources */,
 				C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */,
@@ -833,9 +883,11 @@
 				C636120929F0555D004335E3 /* APIConfig.swift in Sources */,
 				C61066B729E3F0A9003448A0 /* LeftNavBarItems.swift in Sources */,
 				C6ED48DC29DE844A0005D25F /* AppDelegate.swift in Sources */,
+				C6F661522A0250F700B09679 /* CircularScoreBar.swift in Sources */,
 				C6EBD81D2A00C76400E27F14 /* GenreMoviesViewModel.swift in Sources */,
 				C6FB28B129E5192C00221FB5 /* NavigationBarGradientView.swift in Sources */,
 				C6ED48DE29DE844A0005D25F /* SceneDelegate.swift in Sources */,
+				C6F661572A02546800B09679 /* SearchViewModel.swift in Sources */,
 				C637E61B29FFDA1700896DFB /* LoginViewController.swift in Sources */,
 				C64C33AE29E7A30B00029ABC /* HomeViewModel.swift in Sources */,
 				C64C33A029E687BA00029ABC /* MovieDetailViewController.swift in Sources */,

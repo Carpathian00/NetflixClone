@@ -21,6 +21,9 @@ class MovieDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+//        let scoreBar = CircularScoreBar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//        scoreBar.percentage = 0.60
+//        contentView.addSubview(scoreBar)
     }
 
     func configure(dataModel: Item?) {

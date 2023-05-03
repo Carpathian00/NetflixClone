@@ -26,7 +26,9 @@ class ViewAllMoviesTableCell: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            itemImage.widthAnchor.constraint(equalToConstant: 131)
+            itemImage.widthAnchor.constraint(equalToConstant: 121),
+            itemImage.heightAnchor.constraint(equalToConstant: 156)
+            
         ])
     }
 

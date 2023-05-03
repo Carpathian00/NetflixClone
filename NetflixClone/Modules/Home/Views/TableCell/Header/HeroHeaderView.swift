@@ -31,7 +31,7 @@ class HeroHeaderView: UIView {
 
         var configuration = UIButton.Configuration.plain()
         configuration.attributedTitle = AttributedString("Save", attributes: container)
-        configuration.image = UIImage(systemName: "bookmark")
+        configuration.image = UIImage(systemName: "plus")
         
         configuration.imagePlacement = .top
         configuration.imagePadding = 8
