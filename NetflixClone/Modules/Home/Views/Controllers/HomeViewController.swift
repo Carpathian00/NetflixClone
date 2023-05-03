@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
     
-    var sections = ["Genres", "Popular", "TV Shows", "Action"]
+    var sections = ["Genres", "Popular Movies", "TV Shows", "Action"]
 //    var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
 //
     private lazy var homeTable: UITableView = {
@@ -52,6 +52,8 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.hidesBarsOnSwipe = true
         

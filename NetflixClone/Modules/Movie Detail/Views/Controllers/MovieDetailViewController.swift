@@ -31,10 +31,10 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as UIGestureRecognizerDelegate
-
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//
+//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as UIGestureRecognizerDelegate
+//
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         videoPlayer.configuration.mediaTypesRequiringUserActionForPlayback = []
         
@@ -43,11 +43,6 @@ class MovieDetailViewController: UIViewController {
         callApi()
     }
     
-    @objc func leftEdgeSwipe(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-       if recognizer.state == .recognized {
-          self.navigationController?.popViewController(animated: true)
-       }
-    }
     
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
@@ -96,15 +91,19 @@ class MovieDetailViewController: UIViewController {
     
     private func callApi() {
         self.MovieDetailVM.fetchTrailerData(with: self.item?.id)
+        
         self.MovieDetailVM.bindTrailerData = { [weak self] trailer in
             if let trailer = trailer {
                 self?.trailer = trailer
-                DispatchQueue.main.async { [weak self] in
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                     self?.callVideoUrl(key: self?.trailer!.key ?? "")
-                    self?.showVideoPlayer()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.showVideoPlayer()
+                    }
                 }
+                
             } else {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     self?.hideVideoPlayer()
                 }
             }
@@ -115,7 +114,10 @@ class MovieDetailViewController: UIViewController {
         guard let url = URL(string: "https://www.youtube.com/embed/\(key)") else {
             return
         }
+        DispatchQueue.main.async {
             self.videoPlayer.load(URLRequest(url: url))
+        }
+            
     }
     
     func configure(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool) {
