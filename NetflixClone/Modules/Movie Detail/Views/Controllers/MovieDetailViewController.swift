@@ -9,18 +9,17 @@ import UIKit
 import WebKit
 
 class MovieDetailViewController: UIViewController {
-
+    
+    private var isPlayOnly: Bool? = true
+    private var fromTableHeader: Bool?
     private var item: Item?
     private var trailer: TrailerResult?
     private let MovieDetailVM = MovieDetailViewModel()
     var didLoadVideo = false
 
+
     
-    @IBOutlet weak var videoPlayer: WKWebView! {
-        didSet {
-            
-        }
-    }
+    @IBOutlet weak var videoPlayer: WKWebView!
     
     private lazy var movieDetailLayout: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
@@ -32,25 +31,10 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let configuration = WKWebViewConfiguration()
-//        configuration.allowsInlineMediaPlayback = true
-//        configuration.mediaTypesRequiringUserActionForPlayback = .audio
-//        let webView = WKWebView(frame: .zero, configuration: configuration)
-//        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(leftEdgeSwipe))
-//        edgePan.edges = .left
-//
-//        view.addGestureRecognizer(edgePan)
 
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as UIGestureRecognizerDelegate
 
-        // Enable gesture to pop the top view controller off the navigation stack
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-
-        // Make an extension for your View Controller
-        
-        // Method to go back
-      
-        
         
         videoPlayer.configuration.mediaTypesRequiringUserActionForPlayback = []
         
@@ -58,46 +42,6 @@ class MovieDetailViewController: UIViewController {
         setupTableView()
         callApi()
     }
-    
-            
-        
-
-        var embedVideoHtml:String {
-            return """
-            <!DOCTYPE html>
-            <html>
-            <body>
-            <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-            <div id="player"></div>
-
-            <script>
-            var tag = document.createElement('script');
-
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            var player;
-            function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-            playerVars: { 'autoplay': 1, 'controls': 0, 'playsinline': 1 },
-            height: '\(videoPlayer.frame.height * 3)',
-            width: '\(videoPlayer.frame.width * 3)',
-            videoId: '\(self.trailer?.key ?? "")',
-            events: {
-            'onReady': onPlayerReady
-            }
-            });
-            }
-
-            function onPlayerReady(event) {
-            event.target.playVideo();
-            }
-            </script>
-            </body>
-            </html>
-            """
-        }
     
     @objc func leftEdgeSwipe(_ recognizer: UIScreenEdgePanGestureRecognizer) {
        if recognizer.state == .recognized {
@@ -109,6 +53,7 @@ class MovieDetailViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .label
     }
     
+    
     private func setupTableView() {
         
         view.addSubview(movieDetailLayout)
@@ -118,29 +63,51 @@ class MovieDetailViewController: UIViewController {
         movieDetailLayout.tableFooterView = UIView(frame: CGRect.zero)
         movieDetailLayout.sectionFooterHeight = 0.0
         
+        if fromTableHeader == true  && isPlayOnly == false {
+            hideVideoPlayer()
+        } else if fromTableHeader == true && isPlayOnly == true {
+            movieDetailLayout.isHidden = true
+        } else {
+           showVideoPlayer()
+        }
+            
+        movieDetailLayout.delegate = self
+        movieDetailLayout.dataSource = self
+    }
+
+    private func hideVideoPlayer() {
+        videoPlayer.isHidden = true
+        NSLayoutConstraint.activate([
+            movieDetailLayout.topAnchor.constraint(equalTo: view.topAnchor),
+            movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            movieDetailLayout.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            movieDetailLayout.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func showVideoPlayer() {
         NSLayoutConstraint.activate([
             movieDetailLayout.topAnchor.constraint(equalTo: videoPlayer.bottomAnchor),
             movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             movieDetailLayout.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             movieDetailLayout.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        movieDetailLayout.delegate = self
-        movieDetailLayout.dataSource = self
     }
-
+    
     private func callApi() {
         self.MovieDetailVM.fetchTrailerData(with: self.item?.id)
-        self.MovieDetailVM.bindTrailerData = { trailer in
-            self.trailer = trailer
-            DispatchQueue.main.async { [weak self] in
-//                if !self!.didLoadVideo {
-//                    self!.videoPlayer.loadHTMLString(self!.embedVideoHtml, baseURL: nil)
-//                    self!.didLoadVideo = true
-//                }
-                self?.callVideoUrl(key: self?.trailer!.key ?? "")
+        self.MovieDetailVM.bindTrailerData = { [weak self] trailer in
+            if let trailer = trailer {
+                self?.trailer = trailer
+                DispatchQueue.main.async { [weak self] in
+                    self?.callVideoUrl(key: self?.trailer!.key ?? "")
+                    self?.showVideoPlayer()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.hideVideoPlayer()
+                }
             }
-            
         }
     }
     
@@ -148,11 +115,13 @@ class MovieDetailViewController: UIViewController {
         guard let url = URL(string: "https://www.youtube.com/embed/\(key)") else {
             return
         }
-        self.videoPlayer.load(URLRequest(url: url))
+            self.videoPlayer.load(URLRequest(url: url))
     }
     
-    func configure(model: Item?) {
+    func configure(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool) {
         self.item = model
+        self.fromTableHeader = fromTableHeader
+        self.isPlayOnly = isPlayOnly
     }
     
 }

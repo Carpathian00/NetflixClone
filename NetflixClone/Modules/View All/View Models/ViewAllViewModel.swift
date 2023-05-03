@@ -12,6 +12,7 @@ class ViewAllViewModel {
     var bindItemData: (([Item]?) -> ())?
     let selectedSection: Int
     private let homeVM = HomeViewModel()
+    private var currentPage: Int?
     
 
     init(selectedSection: Int) {
@@ -19,16 +20,22 @@ class ViewAllViewModel {
     }
     
     func getData(currentPage: Int) {
+        self.currentPage = currentPage
         let section = TableSections(rawValue: selectedSection)
         
         switch section {
         case .movies:
-            self.homeVM.fetchPopularMoviesData(currentPage: currentPage)
-            self.homeVM.bindItemData = { result in
-                self.bindItemData?(result)
-            }
+            getMoviesData()
         default:
             return
+        }
+    }
+    
+    func getMoviesData() {
+        guard let currentPage = self.currentPage else { return }
+        self.homeVM.fetchPopularMoviesData(currentPage: currentPage)
+        self.homeVM.bindItemData = { result in
+            self.bindItemData?(result)
         }
     }
     

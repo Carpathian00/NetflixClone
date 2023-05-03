@@ -10,7 +10,7 @@ import UIKit
 class GenresTableCell: UITableViewCell {
     
     static let identifier = "GenresTableCell"
-    
+    var homeVCDelegate: HomeViewControllerDelegate?
     var genres: [Genre]?
     
     private lazy var genresCollectionView: UICollectionView = {
@@ -58,11 +58,12 @@ class GenresTableCell: UITableViewCell {
 extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        guard let genresCount = genres?.count else { return 0 }
+        return genresCount
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: contentView.frame.width / 3, height: 100)
+        return CGSize(width: contentView.frame.width / 2.8, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -77,16 +78,19 @@ extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewD
         } else if indexPath.row % 5 == 1 {
             cell.containerView.backgroundColor = .orange
         } else if indexPath.row % 5 == 2 {
-            cell.containerView.backgroundColor = .magenta
+            cell.containerView.backgroundColor = .red
         } else if indexPath.row % 5 == 3 {
             cell.containerView.backgroundColor = .blue
         } else if indexPath.row % 5 == 4 {
-            cell.containerView.backgroundColor = .brown
+            cell.containerView.backgroundColor = .systemMint
         }
         
         cell.configure(genreModel: genres?[indexPath.row])
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.homeVCDelegate?.moveToGenreMoviesPage(genre: genres?[indexPath.row])
+    }
     
 }

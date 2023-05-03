@@ -8,8 +8,9 @@
 import UIKit
 
 protocol HomeViewControllerDelegate {
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool)
+    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool)
     func moveToViewAllPage(section: Int)
+    func moveToGenreMoviesPage(genre: Genre?)
 }
 
 enum TableSections: Int {
@@ -51,6 +52,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .never
         navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
@@ -122,23 +124,26 @@ class HomeViewController: UIViewController {
             }
         }
         
-        print("data home page: \(self.items)")
+//        print("data home page: \(self.items)")
     }
     
         
 }
 
 extension HomeViewController: HomeViewControllerDelegate {
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool) {
+    
+    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool) {
         let vc = MovieDetailViewController()
-        vc.configure(model: model)
+        vc.configure(model: model, fromTableHeader: fromTableHeader, isPlayOnly: isPlayOnly)
         
         if fromTableHeader == true {
-            self.navigationController?.present(vc, animated: true)
+            if let sheet = vc.sheetPresentationController {
+                sheet.detents = [.medium()]
+            }
+            self.present(vc, animated: true, completion: nil)
         } else {
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
 
     func moveToViewAllPage(section: Int) {
@@ -149,6 +154,15 @@ extension HomeViewController: HomeViewControllerDelegate {
         vc.navigationController?.isNavigationBarHidden = false
 
     }
+    
+    func moveToGenreMoviesPage(genre: Genre?) {
+        let vc = GenreMoviesViewController()
+        vc.configure(genre: genre)
+        vc.homeVCDelegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.navigationController?.isNavigationBarHidden = false
+    }
+    
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -162,7 +176,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        switch indexPath.section {
+        case 0:
+            return 150
+        case 1:
+            return UITableView.automaticDimension
+        default:
+            return 50
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -183,6 +206,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let genre = homeTable.dequeueReusableCell(withIdentifier: GenresTableCell.identifier, for: indexPath) as? GenresTableCell else { return UITableViewCell() }
             genre.setupCollectionView()
             genre.configure(genreModel: genres)
+            genre.homeVCDelegate = self
             return genre
         case .movies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }

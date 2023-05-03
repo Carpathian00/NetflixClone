@@ -63,7 +63,7 @@ class HeroHeaderView: UIView {
         return button
     }()
     
-    private let playButton: UIButton = {
+    private lazy var playButton: UIButton = {
         var container = AttributeContainer()
         container.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
 
@@ -80,6 +80,9 @@ class HeroHeaderView: UIView {
         button.tintColor = UIColor(named: "themeColor1")
 
         button.layer.cornerRadius = 5
+        
+        button.addTarget(self, action: #selector(tapPlayButton(sender:)), for: .touchUpInside)
+
         return button
     }()
 
@@ -159,7 +162,12 @@ class HeroHeaderView: UIView {
     
     @objc
     func tapInfoButton(sender: UIButton) {
-        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true)
+        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: false)
+    }
+    
+    @objc
+    func tapPlayButton(sender: UIButton) {
+        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: true)
     }
     
     override func layoutSubviews() {

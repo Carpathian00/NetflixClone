@@ -8,9 +8,9 @@
 import UIKit
 import SDWebImage
 
-class ViewAllTableCell: UITableViewCell {
+class ViewAllMoviesTableCell: UITableViewCell {
 
-    static let identifier = "ViewAllTableCell"
+    static let identifier = "ViewAllMoviesTableCell"
     
     @IBOutlet weak var itemTitle: UILabel!
     @IBOutlet weak var itemImage: UIImageView! {
@@ -45,4 +45,8 @@ class ViewAllTableCell: UITableViewCell {
         
     }
     
+    func cancelImageLoad() {
+        self.itemImage.sd_cancelCurrentImageLoad()
+        SDImageCache.shared.clearMemory()
+    }
 }

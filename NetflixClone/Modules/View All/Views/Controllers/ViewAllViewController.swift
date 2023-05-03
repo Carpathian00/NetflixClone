@@ -18,9 +18,9 @@ class ViewAllViewController: UIViewController {
     private lazy var viewAllTable: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.register(UINib(nibName: "ViewAllTableCell", bundle: nil), forCellReuseIdentifier: ViewAllTableCell.identifier)
+        table.register(UINib(nibName: "ViewAllMoviesTableCell", bundle: nil), forCellReuseIdentifier: ViewAllMoviesTableCell.identifier)
         return table
-    }()
+    }() 
     
     
     
@@ -30,9 +30,14 @@ class ViewAllViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupNavBar()
         setupTable()
         setupData()
+    }
+    
+    private func setupNavBar() {
+        print("selected section: \(self.selectedSection ?? 0)")
+        self.navigationController?.navigationBar.tintColor = .label
     }
     
     private func setupTable() {
@@ -54,6 +59,7 @@ class ViewAllViewController: UIViewController {
         guard let selectedSection = self.selectedSection else { return }
         self.viewAllVM = ViewAllViewModel(selectedSection: selectedSection)
         self.viewAllVM?.getData(currentPage: 1)
+        
         self.viewAllVM?.bindItemData = { result in
             guard let resultItems = result else { return }
                 self.items.append(contentsOf: resultItems)
@@ -77,9 +83,12 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = viewAllTable.dequeueReusableCell(withIdentifier: ViewAllTableCell.identifier, for: indexPath) as? ViewAllTableCell else { return UITableViewCell() }
+
+        guard let cell = viewAllTable.dequeueReusableCell(withIdentifier: ViewAllMoviesTableCell.identifier, for: indexPath) as? ViewAllMoviesTableCell else { return UITableViewCell() }
         cell.configure(itemModel: self.items[indexPath.row])
         return cell
+      
+    
     }
     
     func createSpinnerView() -> UIView {
@@ -112,7 +121,14 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false)
+        self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false, isPlayOnly: false)
     }
     
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ViewAllMoviesTableCell {
+            cell.cancelImageLoad()
+        }
+        
+    }
 }

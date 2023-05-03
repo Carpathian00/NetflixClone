@@ -12,6 +12,7 @@ struct GenreApiResponse: Codable {
 }
 
 struct Genre: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
+    var imagePath: String?
 }

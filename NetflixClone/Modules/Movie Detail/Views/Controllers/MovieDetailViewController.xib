@@ -21,10 +21,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjo-3b-XWF">
-                    <rect key="frame" x="0.0" y="47" width="375" height="250"/>
+                    <rect key="frame" x="0.0" y="47" width="375" height="240"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="250" id="XY5-Ds-gg3"/>
+                        <constraint firstAttribute="height" constant="240" id="XY5-Ds-gg3"/>
                     </constraints>
                     <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>

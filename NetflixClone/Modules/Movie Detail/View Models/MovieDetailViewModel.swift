@@ -29,20 +29,26 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
         self.apiServiceProtocol?.callApi(with: url, model: MovieTrailer.self, completion: { result in
             switch result {
             case .success(let success):
+                var trailerData = [TrailerResult]()
                 success.results.forEach { trailer in
                     if trailer.type == "Trailer" && trailer.site == "YouTube" {
-                        self.bindTrailerData?(trailer)
-                        print("trailer data: \(trailer)")
+                        trailerData.append(trailer)
+                        print("bindtrailerdata: \(trailerData)")
                         return
                     }
                 }
+                guard let bindTrailerData = self.bindTrailerData else { return }
+                if !trailerData.isEmpty {
+                    bindTrailerData(trailerData.first)
+                } else {
+                    self.bindTrailerData?(nil)
+                }
             case .failure(let error):
                 print(error.localizedDescription)
+                self.bindTrailerData?(nil)
+
             }
         })
     }
-    
-//    https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
-    
 }
 

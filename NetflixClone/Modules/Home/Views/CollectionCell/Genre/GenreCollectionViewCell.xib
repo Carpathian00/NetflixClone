@@ -21,6 +21,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hVg-8Z-iFW">
                         <rect key="frame" x="0.0" y="0.0" width="109" height="59"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="endgame" translatesAutoresizingMaskIntoConstraints="NO" id="nNu-tG-Uqe">
+                                <rect key="frame" x="0.0" y="0.0" width="109" height="59"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw5-OW-RR7">
                                 <rect key="frame" x="8" y="8" width="49" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -30,8 +33,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="nNu-tG-Uqe" firstAttribute="leading" secondItem="hVg-8Z-iFW" secondAttribute="leading" id="72W-Kd-fXS"/>
+                            <constraint firstItem="nNu-tG-Uqe" firstAttribute="top" secondItem="hVg-8Z-iFW" secondAttribute="top" id="KhW-Ag-Era"/>
                             <constraint firstItem="Bw5-OW-RR7" firstAttribute="leading" secondItem="hVg-8Z-iFW" secondAttribute="leading" constant="8" id="P1X-m8-mv7"/>
                             <constraint firstItem="Bw5-OW-RR7" firstAttribute="top" secondItem="hVg-8Z-iFW" secondAttribute="top" constant="8" id="lKo-xm-fzk"/>
+                            <constraint firstAttribute="bottom" secondItem="nNu-tG-Uqe" secondAttribute="bottom" id="qNr-Zy-nRb"/>
+                            <constraint firstAttribute="trailing" secondItem="nNu-tG-Uqe" secondAttribute="trailing" id="rAO-fN-Xmk"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -46,12 +53,14 @@
             <size key="customSize" width="109" height="59"/>
             <connections>
                 <outlet property="containerView" destination="hVg-8Z-iFW" id="s2X-iU-eqh"/>
+                <outlet property="genreImage" destination="nNu-tG-Uqe" id="piE-Ts-hKu"/>
                 <outlet property="genreLabel" destination="Bw5-OW-RR7" id="aOe-JK-5YT"/>
             </connections>
             <point key="canvasLocation" x="142.30769230769229" y="-8.8862559241706158"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="endgame" width="1600" height="2264"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
