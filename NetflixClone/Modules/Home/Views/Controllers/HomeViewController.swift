@@ -15,19 +15,20 @@ protocol HomeViewControllerDelegate {
 
 enum TableSections: Int {
     case genres = 0
-    case movies = 1
+    case popularMovies = 1
+    case topRatedMovies = 3
 }
 
 class HomeViewController: UIViewController {
     
     private let homeVM = HomeViewModel()
-    private var items: [Item]?
+    private var popularMovies: [Item]?
+    private var TopRatedMovies: [Item]?
     private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
     
-    var sections = ["Genres", "Popular Movies", "TV Shows", "Action"]
-//    var genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family"]
-//
+    var sections = ["Genres", "Popular Movies", "Popular TV Shows", "Top Rated Movies", "Top Rated TV Shows"]
+
     private lazy var homeTable: UITableView = {
         let movieTable = UITableView(frame: .zero, style: .grouped)
         movieTable.translatesAutoresizingMaskIntoConstraints = false
@@ -67,6 +68,10 @@ class HomeViewController: UIViewController {
         navigationItem.setRightBarButton(rightNavigationBarItems, animated: true)
     }
     
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+           return true
+       }
+    
     private func setupTable() {
         view.addSubview(homeTable)
         
@@ -104,9 +109,9 @@ class HomeViewController: UIViewController {
                 guard let selectedTitle = selectedTitle else { return }
                 self.headerMovie?.configure(with: selectedTitle)
                 
-                self.items = model
+                self.popularMovies = model
                 DispatchQueue.main.async { [weak self] in
-                    if self?.items != nil {
+                    if self?.popularMovies != nil {
                         self?.homeTable.reloadData()
                     }
                 }
@@ -126,7 +131,18 @@ class HomeViewController: UIViewController {
             }
         }
         
-//        print("data home page: \(self.items)")
+        self.homeVM.fetchTopRatedMoviesData(currentPage: 1)
+        self.homeVM.bindtopRatedMoviesData = { topRatedMovies in
+            if let model = topRatedMovies {
+                self.TopRatedMovies = model
+                DispatchQueue.main.async { [weak self] in
+                    if self?.TopRatedMovies != nil {
+                        self?.homeTable.reloadData()
+                    }
+                }
+            }
+
+        }
     }
     
         
@@ -178,13 +194,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
+        let sections = TableSections(rawValue: indexPath.section)
+        
+        switch sections {
+        case .genres:
             return 150
-        case 1:
+        case .popularMovies:
             return UITableView.automaticDimension
         default:
-            return 50
+            return UITableView.automaticDimension
         }
         
         
@@ -201,19 +219,26 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let section = TableSections(rawValue: indexPath.section)
+        let sections = TableSections(rawValue: indexPath.section)
         
-        switch section {
+        switch sections {
         case .genres:
             guard let genre = homeTable.dequeueReusableCell(withIdentifier: GenresTableCell.identifier, for: indexPath) as? GenresTableCell else { return UITableViewCell() }
             genre.setupCollectionView()
             genre.configure(genreModel: genres)
             genre.homeVCDelegate = self
             return genre
-        case .movies:
+        case .popularMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: items)
+            cell.configure(modelData: popularMovies)
+            cell.homeVCDelegate = self
+            return cell
+            
+        case .topRatedMovies:
+            guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
+            cell.setupCollectionView()
+            cell.configure(modelData: TopRatedMovies)
             cell.homeVCDelegate = self
             return cell
         default:

@@ -11,6 +11,17 @@ struct ApiResponse:Codable {
     
     let page: Int?
     let results: [Item]
+    let totalPages: Int?
+    let totalResults: Int?
+
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
+
 }
 
 struct Item: Codable {
@@ -26,6 +37,16 @@ struct Item: Codable {
     let releaseDate: String?
     let voteAverage: Double?
     let voteCount: Int?
+    
+    var releaseYear: String? {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "yyyy-MM-dd"
+           if let date = dateFormatter.date(from: releaseDate ?? "") {
+               dateFormatter.dateFormat = "yyyy"
+               return dateFormatter.string(from: date)
+           }
+           return nil
+       }
     
     enum CodingKeys: String, CodingKey {
         case id

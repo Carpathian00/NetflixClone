@@ -30,7 +30,7 @@ class MovieDetailTableViewCell: UITableViewCell {
             self.itemTitle.text = dataModel?.title
         }
         
-        self.releaseDate.text = "Release date: " + (dataModel?.releaseDate ?? "Unknown")
+        self.releaseDate.text = "Release Year: " + (dataModel?.releaseYear ?? "Unknown")
         
         self.overview.text = dataModel?.overview
         

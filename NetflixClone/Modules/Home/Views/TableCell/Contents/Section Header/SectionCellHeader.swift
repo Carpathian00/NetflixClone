@@ -59,9 +59,12 @@ class SectionCellHeader: UITableViewHeaderFooterView {
     func configure(title: String, index: Int) {
         headerTitle.text = title
         self.sectionIndex = index
-        if self.sectionIndex == 0 {
+        let sections = TableSections(rawValue: self.sectionIndex ?? 0)
+        
+        switch sections {
+        case .genres:
             viewAllButton.isHidden = true
-        } else {
+        default:
             viewAllButton.isHidden = false
         }
     }

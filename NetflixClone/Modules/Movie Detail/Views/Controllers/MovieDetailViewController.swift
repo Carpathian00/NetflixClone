@@ -31,11 +31,6 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as UIGestureRecognizerDelegate
-//
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        
         videoPlayer.configuration.mediaTypesRequiringUserActionForPlayback = []
         
         setupNavigationBar()
@@ -91,7 +86,6 @@ class MovieDetailViewController: UIViewController {
     
     private func callApi() {
         self.MovieDetailVM.fetchTrailerData(with: self.item?.id)
-        
         self.MovieDetailVM.bindTrailerData = { [weak self] trailer in
             if let trailer = trailer {
                 self?.trailer = trailer
