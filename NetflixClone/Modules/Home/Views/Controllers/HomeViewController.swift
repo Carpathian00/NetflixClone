@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol HomeViewControllerDelegate {
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool)
-    func moveToViewAllPage(section: Int)
-    func moveToGenreMoviesPage(genre: Genre?)
-}
+
 
 enum TableSections: Int {
     case genres = 0
@@ -22,12 +18,13 @@ enum TableSections: Int {
 
 class HomeViewController: UIViewController {
     
+    
     private let homeVM = HomeViewModel()
     private var popularMovies: [Item]?
     private var TopRatedMovies: [Item]?
     private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
-    
+    var tabBarDelegate: TabBarControllerDelegate?
     var sections = ["Genres", "Popular Movies", "Popular TV Shows", "Top Rated Movies", "Top Rated TV Shows"]
 
     private lazy var homeTable: UITableView = {
@@ -51,6 +48,7 @@ class HomeViewController: UIViewController {
         setupTable()
         setupTableHeader()
         callApi()
+        print("tabBardelegate: \(self.tabBarDelegate)")
     }
     
     private func setupNavigationBar() {
@@ -99,7 +97,8 @@ class HomeViewController: UIViewController {
         self.headerMovie = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
 
         homeTable.tableHeaderView = self.headerMovie
-        headerMovie?.homeVCDelegate = self
+        headerMovie?.homeVCDelegate = self.tabBarDelegate
+        headerMovie?.navigationController = self.navigationController
     }
     
     private func callApi() {
@@ -149,40 +148,6 @@ class HomeViewController: UIViewController {
         
 }
 
-extension HomeViewController: HomeViewControllerDelegate {
-    
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool) {
-        let vc = MovieDetailViewController()
-        vc.configure(model: model, fromTableHeader: fromTableHeader, isPlayOnly: isPlayOnly)
-        
-        if fromTableHeader == true {
-            if let sheet = vc.sheetPresentationController {
-                sheet.detents = [.medium()]
-            }
-            self.present(vc, animated: true, completion: nil)
-        } else {
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-
-    func moveToViewAllPage(section: Int) {
-        let vc = ViewAllViewController()
-        vc.configure(section: section)
-        vc.homeVCDelegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.navigationController?.isNavigationBarHidden = false
-
-    }
-    
-    func moveToGenreMoviesPage(genre: Genre?) {
-        let vc = GenreMoviesViewController()
-        vc.configure(genre: genre)
-        vc.homeVCDelegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.navigationController?.isNavigationBarHidden = false
-    }
-    
-}
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -211,7 +176,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let header = homeTable.dequeueReusableHeaderFooterView(withIdentifier: SectionCellHeader.identifier) as? SectionCellHeader
         header?.addSubviews()
         header?.configure(title: sections[section], index: section)
-        header?.homeVCDelegate = self
+        header?.homeVCDelegate = self.tabBarDelegate
+        header?.navigationController = self.navigationController
 
         return header
     }
@@ -225,21 +191,24 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let genre = homeTable.dequeueReusableCell(withIdentifier: GenresTableCell.identifier, for: indexPath) as? GenresTableCell else { return UITableViewCell() }
             genre.setupCollectionView()
             genre.configure(genreModel: genres)
-            genre.homeVCDelegate = self
+            genre.homeVCDelegate = self.tabBarDelegate
+            genre.navigationController = self.navigationController
             return genre
             
         case .popularMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
             cell.configure(modelData: popularMovies)
-            cell.homeVCDelegate = self
+            cell.homeVCDelegate = self.tabBarDelegate
+            cell.navigationController = self.navigationController
             return cell
             
         case .topRatedMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
             cell.configure(modelData: TopRatedMovies)
-            cell.homeVCDelegate = self
+            cell.homeVCDelegate = self.tabBarDelegate
+            cell.navigationController = self.navigationController
             return cell
         default:
             return UITableViewCell()

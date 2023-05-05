@@ -7,8 +7,18 @@
 
 import UIKit
 
+enum searchTableSections: Int {
+    case trendingMovies = 0
+    case trendingTVs = 1
+}
+
 class SearchViewController: UIViewController {
 
+    private var trendingMovies: [Item]?
+    private var trendingTVs: [Item]?
+    private let searchVM = SearchViewModel()
+    var tabBarDelegate: TabBarControllerDelegate?
+    
     private lazy var searchTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(UINib(nibName: "SearchTableCell", bundle: nil), forCellReuseIdentifier: SearchTableCell.identifier)
@@ -25,7 +35,9 @@ class SearchViewController: UIViewController {
         return controller
     }()
     
-    let sections = ["Top movie searches", "Trending TV Shows"]
+
+    
+    let sections = ["Trending Movie Searches", "Trending TV Shows Searches "]
     
     override func loadView() {
         super.loadView()
@@ -35,6 +47,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         setupNavbar()
         setupTable()
+        callApi()
     }
 
     private func setupNavbar() {
@@ -62,6 +75,35 @@ class SearchViewController: UIViewController {
         searchTable.delegate = self
         searchTable.dataSource = self
     }
+    
+    private func callApi() {
+        trendingMoviesApi()
+        trendingTVsApi()
+    }
+    
+    private func trendingMoviesApi() {
+        self.searchVM.fetchTrendingMoviesData()
+        self.searchVM.bindTrendingMoviesData = { trendingMoviesResult in
+            self.trendingMovies = trendingMoviesResult
+
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
+    
+    private func trendingTVsApi() {
+        self.searchVM.fetchTrendingTvsData()
+        self.searchVM.bindTrendingTVsData = { trendingTVsResult in
+            self.trendingTVs = trendingTVsResult
+            print("search result: \(self.trendingTVs)")
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
+    
+    
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
@@ -75,7 +117,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 80
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -87,8 +129,39 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = searchTable.dequeueReusableCell(withIdentifier: SearchTableCell.identifier, for: indexPath) as? SearchTableCell else { return UITableViewCell() }
-        return cell
+        let sections = searchTableSections(rawValue: indexPath.section)
+
+        switch sections {
+            
+        case .trendingMovies:
+            guard let moviesCell = searchTable.dequeueReusableCell(withIdentifier: SearchTableCell.identifier, for: indexPath) as? SearchTableCell else { return UITableViewCell() }
+            moviesCell.configure(itemModel: self.trendingMovies?[indexPath.row])
+            return moviesCell
+
+        case .trendingTVs:
+            guard let tvsCell = searchTable.dequeueReusableCell(withIdentifier: SearchTableCell.identifier, for: indexPath) as? SearchTableCell else { return UITableViewCell() }
+            tvsCell.configure(itemModel: self.trendingTVs?[indexPath.row])
+            return tvsCell
+
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let navigationController = self.navigationController else { return }
+        let sections = searchTableSections(rawValue: indexPath.section)
+        
+        switch sections {
+        case .trendingMovies:
+            self.tabBarDelegate?.moveToDetailPage(model: self.trendingMovies?[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
+        case .trendingTVs:
+            self.tabBarDelegate?.moveToDetailPage(model: self.trendingTVs?[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
+        default:
+            print("error")
+        }
+        
+
     }
     
 }

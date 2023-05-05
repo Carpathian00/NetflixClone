@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    var tabBarDelegate: TabBarControllerDelegate?
+    
     private lazy var profileLayout: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +96,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return setting
         case 2:
             guard let footer = profileLayout.dequeueReusableCell(withIdentifier: FooterTableCell.identifier, for: indexPath) as? FooterTableCell else { return UITableViewCell() }
+            footer.tabBarDelegate = self.tabBarDelegate
+            guard let navigationController = self.navigationController else { return UITableViewCell() }
+            footer.navigationController = navigationController
             return footer
 
         default:

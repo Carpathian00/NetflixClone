@@ -10,7 +10,8 @@ import UIKit
 class GenresTableCell: UITableViewCell {
     
     static let identifier = "GenresTableCell"
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
+    var navigationController: UINavigationController?
     var genres: [Genre]?
     
     private lazy var genresCollectionView: UICollectionView = {
@@ -90,7 +91,8 @@ extension GenresTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToGenreMoviesPage(genre: genres?[indexPath.row])
+        guard let navigationController = self.navigationController else { return }
+        self.homeVCDelegate?.moveToGenreMoviesPage(genre: genres?[indexPath.row], navCon: navigationController)
     }
     
 }

@@ -32,17 +32,17 @@ class ViewAllMoviesTableCell: UITableViewCell {
         ])
     }
 
-    func configure(itemModel: Item) {
-        guard let imagePath = itemModel.posterPath else { return }
+    func configure(itemModel: Item?) {
+        guard let imagePath = itemModel?.posterPath else { return }
         
         let url = URL(string: "https://image.tmdb.org/t/p/w500\(imagePath)")
 
         self.itemImage.sd_setImage(with: url)
         
-        if itemModel.title == nil {
-            self.itemTitle.text = itemModel.originalTitle
+        if itemModel?.originalTitle == nil {
+            self.itemTitle.text = itemModel?.originalName
         } else {
-            self.itemTitle.text = itemModel.title
+            self.itemTitle.text = itemModel?.originalTitle
         }
         
     }

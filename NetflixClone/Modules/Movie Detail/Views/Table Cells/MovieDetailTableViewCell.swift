@@ -27,10 +27,10 @@ class MovieDetailTableViewCell: UITableViewCell {
     }
 
     func configure(dataModel: Item?) {
-        if dataModel?.title == nil {
-            self.itemTitle.text = dataModel?.originalTitle
+        if dataModel?.originalTitle == nil {
+            self.itemTitle.text = dataModel?.originalName
         } else {
-            self.itemTitle.text = dataModel?.title
+            self.itemTitle.text = dataModel?.originalTitle
         }
         
         self.releaseDate.text = "Release Year: " + (dataModel?.releaseYear ?? "Unknown")

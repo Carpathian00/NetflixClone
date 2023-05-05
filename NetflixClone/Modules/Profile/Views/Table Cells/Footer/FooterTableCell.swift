@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class FooterTableCell: UITableViewCell {
 
     static let identifier = "FooterTableCell"
+    var tabBarDelegate: TabBarControllerDelegate?
+    var navigationController: UINavigationController?
     
     @IBOutlet weak var logoutButton: UIButton! {
         didSet {
@@ -29,6 +32,17 @@ class FooterTableCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func tapLogOutButton(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            print("logout tapped: \(self.tabBarDelegate)")
+            guard let navigationController = self.navigationController else { return }
+            self.tabBarDelegate?.moveToLoginPage(navCon: navigationController)
+        } catch {
+            print("print error")
+        }
     }
     
 }

@@ -13,7 +13,9 @@ class GenreMoviesViewController: UIViewController {
     private var genre: Genre?
     private var items = [Item]()
     private var currentPage = 1
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
+
+    
 
     
     private lazy var genreMoviesTable: UITableView = {
@@ -38,6 +40,11 @@ class GenreMoviesViewController: UIViewController {
     
     private func setupTable() {
         view.addSubview(genreMoviesTable)
+        
+        genreMoviesTable.backgroundColor = .systemBackground
+        genreMoviesTable.separatorStyle = .none
+        genreMoviesTable.tableFooterView = UIView(frame: CGRect.zero)
+        genreMoviesTable.sectionFooterHeight = 0.0
         
         NSLayoutConstraint.activate([
             genreMoviesTable.topAnchor.constraint(equalTo: view.topAnchor),
@@ -107,7 +114,8 @@ extension GenreMoviesViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToDetailPage(model: items[indexPath.row], fromTableHeader: false, isPlayOnly: false)
+        guard let navigationController = self.navigationController else { return }
+        self.homeVCDelegate?.moveToDetailPage(model: items[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
     }
     
     

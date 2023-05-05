@@ -10,7 +10,9 @@ import UIKit
 class SectionCellHeader: UITableViewHeaderFooterView {
     static let identifier = "SectionCellHeader"
     private var sectionIndex: Int?
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
+    var navigationController: UINavigationController?
+
     
     private lazy var headerTitle: UILabel = {
         let lb = UILabel()
@@ -71,6 +73,7 @@ class SectionCellHeader: UITableViewHeaderFooterView {
 
     @objc
     func tapViewAllButton(sender: UIButton){
-        homeVCDelegate?.moveToViewAllPage(section: self.sectionIndex ?? 0)
+        guard let navigationController = self.navigationController else { return }
+        homeVCDelegate?.moveToViewAllPage(section: self.sectionIndex ?? 0, navCon: navigationController)
     }
 }

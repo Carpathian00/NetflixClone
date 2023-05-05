@@ -10,7 +10,7 @@ import UIKit
 class ViewAllViewController: UIViewController {
     
     var selectedSection: Int?
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
     private var viewAllVM: ViewAllViewModel?
     private var items = [Item]()
     private var currentPage = 1
@@ -42,6 +42,11 @@ class ViewAllViewController: UIViewController {
     
     private func setupTable() {
         view.addSubview(viewAllTable)
+        
+        viewAllTable.backgroundColor = .systemBackground
+        viewAllTable.separatorStyle = .none
+        viewAllTable.tableFooterView = UIView(frame: CGRect.zero)
+        viewAllTable.sectionFooterHeight = 0.0
         
         NSLayoutConstraint.activate([
             viewAllTable.topAnchor.constraint(equalTo: view.topAnchor),
@@ -122,7 +127,8 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false, isPlayOnly: false)
+        guard let navigationController = self.navigationController else { return }
+        self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
     }
     
     

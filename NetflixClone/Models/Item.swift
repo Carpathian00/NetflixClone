@@ -27,8 +27,8 @@ struct ApiResponse:Codable {
 struct Item: Codable {
     
     let id: Int?
-    let title: String?
     let originalTitle: String?
+    let originalName: String?
     let overview: String?
     let posterPath: String?
     let backdropPath: String?
@@ -50,8 +50,8 @@ struct Item: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id
-        case title
         case originalTitle = "original_title"
+        case originalName = "original_name"
         case overview
         case posterPath = "poster_path"
         case backdropPath = "backdrop_path"
@@ -61,6 +61,7 @@ struct Item: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
+    
     
 }
 

@@ -11,7 +11,8 @@ import UIKit
 class MainTableCell: UITableViewCell {
     
     static let identifier = "MainTableCell"
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
+    var navigationController: UINavigationController?
     private var items: [Item]?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
@@ -62,7 +63,8 @@ extension MainTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.homeVCDelegate?.moveToDetailPage(model: items?[indexPath.row], fromTableHeader: false, isPlayOnly: false)
+        guard let navigationController = self.navigationController else { return }
+        self.homeVCDelegate?.moveToDetailPage(model: items?[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
     }
 }
 

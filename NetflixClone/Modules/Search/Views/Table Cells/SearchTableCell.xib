@@ -18,16 +18,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="350" height="96"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="endgame" translatesAutoresizingMaskIntoConstraints="NO" id="RgX-1F-LgH">
-                        <rect key="frame" x="8" y="5" width="140" height="80"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RgX-1F-LgH">
+                        <rect key="frame" x="8" y="5" width="120" height="70"/>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="140" id="0sy-ka-4wi"/>
-                            <constraint firstAttribute="height" constant="80" id="pYz-pe-kBN"/>
+                            <constraint firstAttribute="width" constant="120" id="0sy-ka-4wi"/>
+                            <constraint firstAttribute="height" constant="70" id="pYz-pe-kBN"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Squid Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-C5-KJV">
-                        <rect key="frame" x="156" y="34.666666666666664" width="142" height="21"/>
+                        <rect key="frame" x="136" y="29.666666666666671" width="162" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="jsh-FM-QeA"/>
                         </constraints>
@@ -67,13 +67,12 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="endgame" width="1600" height="2264"/>
         <image name="play.circle" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

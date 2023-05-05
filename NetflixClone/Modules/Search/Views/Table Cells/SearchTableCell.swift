@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchTableCell: UITableViewCell {
 
@@ -25,4 +26,29 @@ class SearchTableCell: UITableViewCell {
         contentView.layer.backgroundColor = UIColor.black.cgColor
     }
 
+    
+    func configure(itemModel: Item?) {
+        guard let imagePath = itemModel?.posterPath else { return }
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w500\(imagePath)")
+
+        self.itemImage.sd_setImage(with: url)
+        
+        if itemModel?.originalTitle == nil {
+            self.itemTitle.text = itemModel?.originalName
+        } else {
+            self.itemTitle.text = itemModel?.originalTitle
+        }
+        
+    }
+    
+    func cancelImageLoad() {
+        self.itemImage.sd_cancelCurrentImageLoad()
+        SDImageCache.shared.clearMemory()
+    }
+
+    
+    
+    
+    
 }

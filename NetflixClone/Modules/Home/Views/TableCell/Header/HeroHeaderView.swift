@@ -10,8 +10,10 @@ import SDWebImage
 
 class HeroHeaderView: UIView {
     
-    var homeVCDelegate: HomeViewControllerDelegate?
+    var homeVCDelegate: TabBarControllerDelegate?
     private var headerItem: Item?
+    var navigationController: UINavigationController?
+
     
     private lazy var barStackView: UIStackView = {
         let stackView = UIStackView()
@@ -162,12 +164,14 @@ class HeroHeaderView: UIView {
     
     @objc
     func tapInfoButton(sender: UIButton) {
-        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: false)
+        guard let navigationController = self.navigationController else { return }
+        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: false, navCon: navigationController)
     }
     
     @objc
     func tapPlayButton(sender: UIButton) {
-        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: true)
+        guard let navigationController = self.navigationController else { return }
+        homeVCDelegate?.moveToDetailPage(model: self.headerItem, fromTableHeader: true, isPlayOnly: true, navCon: navigationController)
     }
     
     override func layoutSubviews() {
