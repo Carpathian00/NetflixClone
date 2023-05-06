@@ -124,7 +124,7 @@ class SignUpViewController: UIViewController {
     }
     
     private func setupError(text: String) {
-        var errorMessage = Utilities.createErrorLabel(text: text)
+        let errorMessage = Utilities.createErrorLabel(text: text)
 
         if errorShown == false {
             errorShown = true

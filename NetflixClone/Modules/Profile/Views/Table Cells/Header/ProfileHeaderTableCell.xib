@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="WXR-qN-W2g">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WXR-qN-W2g">
                         <rect key="frame" x="50" y="30" width="220" height="164"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-iH-OPC">
@@ -31,45 +30,26 @@
                                             <constraint firstAttribute="width" constant="90" id="aOZ-sE-ZdS"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLn-fe-aFP">
-                                        <rect key="frame" x="85" y="85" width="15" height="15"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="15" id="Qg6-HU-LOR"/>
-                                            <constraint firstAttribute="height" constant="15" id="Z6g-Jm-xHh"/>
-                                        </constraints>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="contentEdgeInsets" minX="8" minY="5" maxX="8" maxY="5"/>
-                                        <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="pencil" catalog="system"/>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="CLn-fe-aFP" secondAttribute="trailing" id="JXp-Rg-GQO"/>
-                                    <constraint firstAttribute="bottom" secondItem="CLn-fe-aFP" secondAttribute="bottom" id="YJX-LP-85D"/>
                                     <constraint firstAttribute="height" constant="100" id="iOy-3t-hhg"/>
                                     <constraint firstItem="Q2y-x2-fM0" firstAttribute="centerX" secondItem="Pnj-iH-OPC" secondAttribute="centerX" id="m2X-ju-7Kd"/>
                                     <constraint firstAttribute="width" constant="100" id="oah-7G-VjU"/>
                                     <constraint firstItem="Q2y-x2-fM0" firstAttribute="centerY" secondItem="Pnj-iH-OPC" secondAttribute="centerY" id="u7P-t5-gFh"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="John Doe" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Luk-YV-7PX">
-                                <rect key="frame" x="0.0" y="124" width="220" height="40"/>
-                                <color key="backgroundColor" name="themeColor1"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="1fB-6n-PDE"/>
-                                    <constraint firstAttribute="width" constant="220" id="tlg-zb-8AQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkb-Kx-pOc">
+                                <rect key="frame" x="0.0" y="116" width="220" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" constant="164" id="GfP-qU-KQF"/>
-                            <constraint firstItem="Luk-YV-7PX" firstAttribute="leading" secondItem="WXR-qN-W2g" secondAttribute="leading" id="am4-rT-QPP"/>
+                            <constraint firstAttribute="trailing" secondItem="Hkb-Kx-pOc" secondAttribute="trailing" id="Ubg-q4-owo"/>
+                            <constraint firstItem="Hkb-Kx-pOc" firstAttribute="leading" secondItem="WXR-qN-W2g" secondAttribute="leading" id="XcV-nF-uq2"/>
                             <constraint firstAttribute="width" constant="220" id="mzf-lF-l0U"/>
-                            <constraint firstItem="Luk-YV-7PX" firstAttribute="top" secondItem="Pnj-iH-OPC" secondAttribute="bottom" constant="24" id="xyh-Pv-XiB"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -81,19 +61,14 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="editButton" destination="CLn-fe-aFP" id="g4o-9E-iJi"/>
                 <outlet property="imageContainer" destination="Pnj-iH-OPC" id="9yl-Um-RFi"/>
-                <outlet property="nameLabel" destination="Luk-YV-7PX" id="dBt-d1-hV8"/>
+                <outlet property="nameLabel" destination="Hkb-Kx-pOc" id="kme-9N-Qjq"/>
                 <outlet property="profileImage" destination="Q2y-x2-fM0" id="Lu1-uN-MnT"/>
             </connections>
             <point key="canvasLocation" x="127.69230769230769" y="73.578199052132703"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="person1" width="48" height="42"/>
-        <namedColor name="themeColor1">
-            <color red="0.85258956020670285" green="0.86103104100082861" blue="0.86103104100082861" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
     </resources>
 </document>

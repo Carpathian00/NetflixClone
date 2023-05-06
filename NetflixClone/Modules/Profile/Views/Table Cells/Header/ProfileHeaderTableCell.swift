@@ -22,7 +22,7 @@ class ProfileHeaderTableCell: UITableViewCell {
             editButton.layer.cornerRadius = 2
         }
     }
-    @IBOutlet weak var nameLabel: UITextField!
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

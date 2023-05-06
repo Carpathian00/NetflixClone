@@ -33,7 +33,6 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
                 success.results.forEach { trailer in
                     if trailer.type == "Trailer" && trailer.site == "YouTube" {
                         trailerData.append(trailer)
-                        print("bindtrailerdata: \(trailerData)")
                         return
                     }
                 }

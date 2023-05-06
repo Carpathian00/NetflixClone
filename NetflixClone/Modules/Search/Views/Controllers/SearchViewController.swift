@@ -12,11 +12,16 @@ enum searchTableSections: Int {
     case trendingTVs = 1
 }
 
+enum SearchRequestType: String {
+    case movie = "movie"
+    case tv = "tv"
+}
+
 class SearchViewController: UIViewController {
 
+    private var searchVM = SearchViewModel()
     private var trendingMovies: [Item]?
     private var trendingTVs: [Item]?
-    private let searchVM = SearchViewModel()
     var tabBarDelegate: TabBarControllerDelegate?
     
     private lazy var searchTable: UITableView = {
@@ -27,15 +32,13 @@ class SearchViewController: UIViewController {
     }()
     
     private lazy var searchController: UISearchController = {
-        let controller = UISearchController()
+        let controller = UISearchController(searchResultsController: SearchResultViewController())
         controller.searchBar.placeholder = "Search"
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.setCenteredPlaceholder()
         controller.searchBar.tintColor = .label
         return controller
     }()
-    
-
     
     let sections = ["Trending Movie Searches", "Trending TV Shows Searches "]
     
@@ -53,7 +56,7 @@ class SearchViewController: UIViewController {
     private func setupNavbar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.searchBar.delegate = self
+            searchController.searchBar.delegate = self
 
     }
     
@@ -74,6 +77,7 @@ class SearchViewController: UIViewController {
         
         searchTable.delegate = self
         searchTable.dataSource = self
+        searchController.searchResultsUpdater = self
     }
     
     private func callApi() {
@@ -96,7 +100,6 @@ class SearchViewController: UIViewController {
         self.searchVM.fetchTrendingTvsData()
         self.searchVM.bindTrendingTVsData = { trendingTVsResult in
             self.trendingTVs = trendingTVsResult
-            print("search result: \(self.trendingTVs)")
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
@@ -164,6 +167,52 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
     
+}
+
+extension SearchViewController: UISearchResultsUpdating, SearchResultVCDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        let searchBar = searchController.searchBar
+        
+        guard let query = searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+              query.trimmingCharacters(in: .whitespaces).count >= 3,
+              let resultController = searchController.searchResultsController as? SearchResultViewController else {
+            return
+        }
+         
+        resultController.delegate = self
+        
+        searchVM.fetchSearchData(query: query, type: SearchRequestType.movie.rawValue)
+        searchVM.bindMovieSearchResultData = { result in
+            DispatchQueue.main.async {
+                if result != nil {
+                    resultController.movieResults = result
+                    resultController.searchResultsCollectionView.reloadData()
+                }
+            }
+        }
+        
+        searchVM.fetchSearchData(query: query, type: SearchRequestType.tv.rawValue)
+        searchVM.bindTvShowsSearchResultData = { result in
+            DispatchQueue.main.async {
+                if result != nil {
+                    resultController.tvShowResults = result
+                    resultController.searchResultsCollectionView.reloadData()
+                }
+            }
+        }
+        
+    }
+    
+    func didTapSearchResultCell(itemModel: Item?) {
+        guard let navCon = self.navigationController else { return }
+        self.tabBarDelegate?.moveToDetailPage(model: itemModel, fromTableHeader: false, isPlayOnly: false, navCon: navCon)
+    }
+    
+
+
 }
 
 extension SearchViewController: UISearchBarDelegate {

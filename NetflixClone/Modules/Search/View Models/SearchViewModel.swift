@@ -13,6 +13,8 @@ class SearchViewModel {
     
     var bindTrendingMoviesData: (([Item]?) -> ())?
     var bindTrendingTVsData: (([Item]?) -> ())?
+    var bindMovieSearchResultData: (([Item]?) -> ())?
+    var bindTvShowsSearchResultData: (([Item]?) -> ())?
     
     init() {
         self.apiServiceProtocol = APIService()
@@ -45,5 +47,26 @@ class SearchViewModel {
             }
         })
     }
+    
+    func fetchSearchData(query: String?, type: String) {
+        guard let query = query else { return }
+        
+        let url = APIConfig.baseUrl + "/search/\(type)" + "?api_key=\(APIConfig.API_KEY)" + "&query=\(query)"
+        
+        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
+            switch result {
+            case .success(let itemResult):
+                if type == SearchRequestType.movie.rawValue {
+                    self.bindMovieSearchResultData?(itemResult.results)
+                } else {
+                    self.bindTvShowsSearchResultData?(itemResult.results)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    
 
 }

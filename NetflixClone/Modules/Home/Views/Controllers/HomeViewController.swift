@@ -12,7 +12,9 @@ import UIKit
 enum TableSections: Int {
     case genres = 0
     case popularMovies = 1
+    case popularTvShows = 2
     case topRatedMovies = 3
+    case topRatedTvShows = 4
     case other = 5
 }
 
@@ -21,7 +23,9 @@ class HomeViewController: UIViewController {
     
     private let homeVM = HomeViewModel()
     private var popularMovies: [Item]?
+    private var popularTvShows: [Item]?
     private var TopRatedMovies: [Item]?
+    private var topRatedTvShows: [Item]?
     private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
     var tabBarDelegate: TabBarControllerDelegate?
@@ -48,7 +52,6 @@ class HomeViewController: UIViewController {
         setupTable()
         setupTableHeader()
         callApi()
-        print("tabBardelegate: \(self.tabBarDelegate)")
     }
     
     private func setupNavigationBar() {
@@ -103,7 +106,7 @@ class HomeViewController: UIViewController {
     
     private func callApi() {
         self.homeVM.fetchPopularMoviesData(currentPage: 1)
-        self.homeVM.bindItemData = { movieModel in
+        self.homeVM.bindPopularMoviesData = { movieModel in
             if let model = movieModel {
                 let selectedTitle = model.randomElement()
                 guard let selectedTitle = selectedTitle else { return }
@@ -131,6 +134,19 @@ class HomeViewController: UIViewController {
             }
         }
         
+        self.homeVM.fetchPopularTvShowsData(currentPage: 1)
+        self.homeVM.bindPopularTvShowsData = { popularTvShows in
+            if let model = popularTvShows {
+                self.popularTvShows = model
+                DispatchQueue.main.async { [weak self] in
+                    if self?.popularTvShows != nil {
+                        self?.homeTable.reloadData()
+                    }
+                }
+            }
+
+        }
+        
         self.homeVM.fetchTopRatedMoviesData(currentPage: 1)
         self.homeVM.bindtopRatedMoviesData = { topRatedMovies in
             if let model = topRatedMovies {
@@ -143,6 +159,21 @@ class HomeViewController: UIViewController {
             }
 
         }
+
+        self.homeVM.fetchTopRatedTvShowsData(currentPage: 1)
+        self.homeVM.bindTopRatedTvShowsData = { topRatedTvShows in
+            if let model = topRatedTvShows {
+                self.topRatedTvShows = model
+                DispatchQueue.main.async { [weak self] in
+                    if self?.topRatedTvShows != nil {
+                        self?.homeTable.reloadData()
+                    }
+                }
+            }
+
+        }
+
+        
     }
     
         
@@ -203,6 +234,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.navigationController = self.navigationController
             return cell
             
+        case .popularTvShows:
+            guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
+            cell.setupCollectionView()
+            cell.configure(modelData: popularTvShows)
+            cell.homeVCDelegate = self.tabBarDelegate
+            cell.navigationController = self.navigationController
+            return cell
+            
         case .topRatedMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
@@ -210,6 +249,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
+            
+        case .topRatedTvShows:
+            guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
+            cell.setupCollectionView()
+            cell.configure(modelData: topRatedTvShows)
+            cell.homeVCDelegate = self.tabBarDelegate
+            cell.navigationController = self.navigationController
+            return cell
+
         default:
             return UITableViewCell()
         }

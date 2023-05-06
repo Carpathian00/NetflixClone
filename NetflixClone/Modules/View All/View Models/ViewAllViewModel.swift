@@ -10,7 +10,6 @@ import Foundation
 class ViewAllViewModel {
     
     var bindItemData: (([Item]?) -> ())?
-    var bindTopRatedMoviesData: (([Item]?) -> ())?
     let selectedSection: Int
     private let homeVM = HomeViewModel()
     private var currentPage: Int?
@@ -26,20 +25,33 @@ class ViewAllViewModel {
         
         switch section {
         case .popularMovies:
-            getMoviesData()
+            getPopularMoviesData()
+        case .popularTvShows:
+            getPopularTvShowsData()
         case .topRatedMovies:
             getTopRatedMoviesData()
+        case .topRatedTvShows:
+            getTopRatedTvShowsData()
         default:
             return
         }
     }
     
-    func getMoviesData() {
+    func getPopularMoviesData() {
         guard let currentPage = self.currentPage else { return }
         self.homeVM.fetchPopularMoviesData(currentPage: currentPage)
-        self.homeVM.bindItemData = { result in
+        self.homeVM.bindPopularMoviesData = { result in
             self.bindItemData?(result)
         }
+    }
+    
+    func getPopularTvShowsData() {
+        guard let currentPage = self.currentPage else { return }
+        self.homeVM.fetchPopularTvShowsData(currentPage: currentPage)
+        self.homeVM.bindPopularTvShowsData = { result in
+            self.bindItemData?(result)
+        }
+
     }
     
     func getTopRatedMoviesData() {
@@ -48,6 +60,15 @@ class ViewAllViewModel {
         self.homeVM.bindtopRatedMoviesData = { result in
             self.bindItemData?(result)
         }
+    }
+    
+    func getTopRatedTvShowsData() {
+        guard let currentPage = self.currentPage else { return }
+        self.homeVM.fetchTopRatedTvShowsData(currentPage: currentPage)
+        self.homeVM.bindTopRatedTvShowsData = { result in
+            self.bindItemData?(result)
+        }
+
     }
     
     

@@ -8,22 +8,29 @@
 import Foundation
 
 protocol HomeVMProtocol {
-    var bindItemData: (([Item]?) -> ())? { get set }
+    var bindPopularMoviesData: (([Item]?) -> ())? { get set }
     var bindGenreData: (([Genre]?) -> ())? { get set }
     var bindtopRatedMoviesData: (([Item]?) -> ())? { get set }
+    var bindPopularTvShowsData: (([Item]?) -> ())? { get set }
+    var bindTopRatedTvShowsData: (([Item]?) -> ())? { get set }
     func fetchPopularMoviesData(currentPage: Int)
     func fetchAPopularMovieInAGenre(with genreId: Int, completion: @escaping (Item?) -> Void)
     func fetchGenresData()
     func fetchTopRatedMoviesData(currentPage: Int)
+    func fetchPopularTvShowsData(currentPage: Int)
+    func fetchTopRatedTvShowsData(currentPage: Int)
 }
 
 class HomeViewModel: HomeVMProtocol {
     
+    
     private var apiServiceProtocol: APIServiceProtocol?
     
-    var bindItemData: (([Item]?) -> ())?
+    var bindPopularMoviesData: (([Item]?) -> ())?
     var bindGenreData: (([Genre]?) -> ())?
     var bindtopRatedMoviesData: (([Item]?) -> ())?
+    var bindPopularTvShowsData: (([Item]?) -> ())?
+    var bindTopRatedTvShowsData: (([Item]?) -> ())?
     
     init() {
         self.apiServiceProtocol = APIService()
@@ -64,8 +71,8 @@ class HomeViewModel: HomeVMProtocol {
             switch result {
             case .success(let apiResponse):
                 
-                if apiResponse.results.count >= 3 {
-                    completion(apiResponse.results[2])
+                if apiResponse.results.count >= 5 {
+                    completion(apiResponse.results[4])
                 } else {
                     completion(nil)
                 }
@@ -83,15 +90,30 @@ class HomeViewModel: HomeVMProtocol {
             self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
                 switch result {
                 case .success(let success):
-                    self.bindItemData?(success.results)
+                    self.bindPopularMoviesData?(success.results)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             })
     }
     
+    func fetchPopularTvShowsData(currentPage: Int) {
+        let url = APIConfig.baseUrl + "/tv/popular" + "?api_key=\(APIConfig.API_KEY)" + "&page=\(currentPage)"
+        
+        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
+            switch result {
+            case .success(let success):
+                self.bindPopularTvShowsData?(success.results)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    
+    
     func fetchTopRatedMoviesData(currentPage: Int) {
-        let url = APIConfig.baseUrl + "/discover/movie" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US" + "&sort_by=vote_average.desc" + "&page=\(currentPage)&vote_average.gte=7.4" + "&release_date.gte=2020" + "&vote_count.gte=1200" + "&release_date.lte=2023"
+        let url = APIConfig.baseUrl + "/discover/movie" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US" + "&sort_by=popularity.desc" + "&page=\(currentPage)&vote_average.gte=7.4" + "&release_date.gte=2020" + "&vote_count.gte=1200" + "&release_date.lte=2023"
         
         self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
             switch result {
@@ -101,7 +123,20 @@ class HomeViewModel: HomeVMProtocol {
                 print(error.localizedDescription)
             }
         })
-        
-        
     }
+    
+    func fetchTopRatedTvShowsData(currentPage: Int) {
+        let url = APIConfig.baseUrl + "/discover/tv" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US" + "&sort_by=popularity.desc" + "&page=\(currentPage)&vote_average.gte=7.4" + "&release_date.gte=2020" + "&vote_count.gte=1200" + "&release_date.lte=2023"
+        
+        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
+            switch result {
+            case .success(let topMovies):
+                self.bindTopRatedTvShowsData?(topMovies.results)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+
 }

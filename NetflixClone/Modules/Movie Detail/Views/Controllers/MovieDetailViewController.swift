@@ -35,7 +35,7 @@ class MovieDetailViewController: UIViewController {
         
         setupNavigationBar()
         setupTableView()
-        callApi()
+//        callApi()
     }
     
     
@@ -118,6 +118,7 @@ class MovieDetailViewController: UIViewController {
         self.item = model
         self.fromTableHeader = fromTableHeader
         self.isPlayOnly = isPlayOnly
+        callApi()
     }
     
 }

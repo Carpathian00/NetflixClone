@@ -37,7 +37,6 @@ class FooterTableCell: UITableViewCell {
     @IBAction func tapLogOutButton(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            print("logout tapped: \(self.tabBarDelegate)")
             guard let navigationController = self.navigationController else { return }
             self.tabBarDelegate?.moveToLoginPage(navCon: navigationController)
         } catch {
