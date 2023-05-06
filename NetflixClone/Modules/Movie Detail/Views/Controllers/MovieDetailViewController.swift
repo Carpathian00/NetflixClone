@@ -13,6 +13,8 @@ class MovieDetailViewController: UIViewController {
     private var isPlayOnly: Bool? = true
     private var fromTableHeader: Bool?
     private var item: Item?
+    private var movieDetail: MovieDetail?
+    private var tvShowDetail: TvDetail?
     private var trailer: TrailerResult?
     private let MovieDetailVM = MovieDetailViewModel()
     var didLoadVideo = false
@@ -102,6 +104,29 @@ class MovieDetailViewController: UIViewController {
                 }
             }
         }
+        
+        if item?.originalName == nil {
+            self.MovieDetailVM.fetchMovieDetail(with: item?.id)
+            self.MovieDetailVM.bindMovieDetailData = { movieDetail in
+                if let movieDetail = movieDetail {
+                    self.movieDetail = movieDetail
+                    DispatchQueue.main.async {
+                        self.movieDetailLayout.reloadData()
+                    }
+                }
+            }
+        } else {
+            self.MovieDetailVM.fetchTvDetail(with: item?.id)
+            self.MovieDetailVM.bindTvShowsData = { tvDetail in
+                if let tvDetail = tvDetail {
+                    self.tvShowDetail = tvDetail
+                    DispatchQueue.main.async {
+                        self.movieDetailLayout.reloadData()
+                    }
+                }
+            }
+        }
+        
     }
     
     private func callVideoUrl(key: String) {
@@ -131,7 +156,12 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = movieDetailLayout.dequeueReusableCell(withIdentifier: MovieDetailTableViewCell.identifier, for: indexPath) as? MovieDetailTableViewCell else { return UITableViewCell() }
-        cell.configure(dataModel: item)
+        if movieDetail != nil {
+            cell.configureByMovie(dataModel: item, detailModel: movieDetail)
+        } else {
+            cell.configureByTv(dataModel: item, detailModel: tvShowDetail)
+        }
+        
         return cell
     }
     

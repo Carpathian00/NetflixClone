@@ -9,22 +9,27 @@ import Foundation
 
 protocol MovieDetailVMProtocol {
     var bindTrailerData: ((TrailerResult?) -> ())? { get set }
-    func fetchTrailerData(with movieId: Int?)
+    var bindMovieDetailData: ((MovieDetail?) -> ())? { get set }
+    var bindTvShowsData: ((TvDetail?) -> ())? { get set }
+    func fetchTrailerData(with id: Int?)
+    func fetchMovieDetail(with movieId: Int?)
+    func fetchTvDetail(with tvId: Int?)
 }
 
 class MovieDetailViewModel: MovieDetailVMProtocol {
-    
     private var apiServiceProtocol: APIServiceProtocol?
     
     var bindTrailerData: ((TrailerResult?) -> ())?
+    var bindMovieDetailData: ((MovieDetail?) -> ())?
+    var bindTvShowsData: ((TvDetail?) -> ())?
     
     init() {
         self.apiServiceProtocol = APIService()
     }
     
     
-    func fetchTrailerData(with movieId: Int?) {
-        let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)/videos" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+    func fetchTrailerData(with id: Int?) {
+        let url = APIConfig.baseUrl + "/movie/\(id ?? 0)/videos" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
         
         self.apiServiceProtocol?.callApi(with: url, model: MovieTrailer.self, completion: { result in
             switch result {
@@ -49,5 +54,40 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
             }
         })
     }
+    
+    func fetchMovieDetail(with movieId: Int?) {
+        let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+        
+        self.apiServiceProtocol?.callApi(with: url, model: MovieDetail.self, completion: { result in
+            print("Movie detail result: \(movieId)")
+
+            switch result {
+            case .success(let movieDetail):
+                self.bindMovieDetailData?(movieDetail)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    func fetchTvDetail(with tvId: Int?) {
+        let url = APIConfig.baseUrl + "/tv/\(tvId ?? 0)" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+        
+        self.apiServiceProtocol?.callApi(with: url, model: TvDetail.self, completion: { result in
+
+            switch result {
+            case .success(let tvDetail):
+                self.bindTvShowsData?(tvDetail)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+
+
+    }
+    
+
+    
+    
 }
 

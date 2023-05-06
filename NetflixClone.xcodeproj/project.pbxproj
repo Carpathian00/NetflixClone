@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C60922732A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922722A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift */; };
+		C60922752A066AE90076E7E8 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922742A066AE90076E7E8 /* MovieDetail.swift */; };
+		C60922772A0696770076E7E8 /* TvDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922762A0696770076E7E8 /* TvDetail.swift */; };
 		C61066A429E2AC4C003448A0 /* MainTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61066A329E2AC4C003448A0 /* MainTableCell.swift */; };
 		C61066A629E39F1A003448A0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C61066A529E39F1A003448A0 /* GoogleService-Info.plist */; };
 		C61066A829E3B213003448A0 /* SectionCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61066A729E3B213003448A0 /* SectionCellHeader.swift */; };
@@ -87,6 +89,8 @@
 		3C8200695D2684E1089027DF /* Pods-NetflixClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixClone.debug.xcconfig"; path = "Target Support Files/Pods-NetflixClone/Pods-NetflixClone.debug.xcconfig"; sourceTree = "<group>"; };
 		B1593A984EAC966AAD114464 /* Pods-NetflixClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixClone.release.xcconfig"; path = "Target Support Files/Pods-NetflixClone/Pods-NetflixClone.release.xcconfig"; sourceTree = "<group>"; };
 		C60922722A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionSectionCell.swift; sourceTree = "<group>"; };
+		C60922742A066AE90076E7E8 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
+		C60922762A0696770076E7E8 /* TvDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvDetail.swift; sourceTree = "<group>"; };
 		C61066A329E2AC4C003448A0 /* MainTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableCell.swift; sourceTree = "<group>"; };
 		C61066A529E39F1A003448A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C61066A729E3B213003448A0 /* SectionCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCellHeader.swift; sourceTree = "<group>"; };
@@ -444,6 +448,8 @@
 				C64C33AA29E7984200029ABC /* Item.swift */,
 				C64C33B429E933CB00029ABC /* Genre.swift */,
 				C636120629F05280004335E3 /* MovieTrailer.swift */,
+				C60922742A066AE90076E7E8 /* MovieDetail.swift */,
+				C60922762A0696770076E7E8 /* TvDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -899,11 +905,13 @@
 				C6FB28E229E67F4A00221FB5 /* SavedViewController.swift in Sources */,
 				C64C33AB29E7984200029ABC /* Item.swift in Sources */,
 				C64C33B829E946DB00029ABC /* MovieDetailViewModel.swift in Sources */,
+				C60922752A066AE90076E7E8 /* MovieDetail.swift in Sources */,
 				C61066AA29E3B98F003448A0 /* HeroHeaderView.swift in Sources */,
 				C6ED48E029DE844A0005D25F /* ViewController.swift in Sources */,
 				C61066B529E3F094003448A0 /* RightNavBarItems.swift in Sources */,
 				C6ED48FB29DE88590005D25F /* TabBarController.swift in Sources */,
 				C6FB28BA29E63E1500221FB5 /* GenresTableCell.swift in Sources */,
+				C60922772A0696770076E7E8 /* TvDetail.swift in Sources */,
 				C61066AE29E3BFDD003448A0 /* MovieCollectionViewCell.swift in Sources */,
 				C637E62429FFDA4700896DFB /* SignUpViewModel.swift in Sources */,
 				C636120929F0555D004335E3 /* APIConfig.swift in Sources */,

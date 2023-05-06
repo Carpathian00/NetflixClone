@@ -26,19 +26,31 @@ class MovieDetailTableViewCell: UITableViewCell {
 //        contentView.addSubview(scoreBar)
     }
 
-    func configure(dataModel: Item?) {
+    func configureByMovie(dataModel: Item?, detailModel: MovieDetail?) {
         if dataModel?.originalTitle == nil {
             self.itemTitle.text = dataModel?.originalName
         } else {
             self.itemTitle.text = dataModel?.originalTitle
         }
         
-        self.releaseDate.text = "Release Year: " + (dataModel?.releaseYear ?? "Unknown")
+        self.releaseDate.text = "Release Year: " + (detailModel?.releaseYear ?? "Unknown")
         
-        self.overview.text = dataModel?.overview
-        
+        self.overview.text = detailModel?.overview
         
     }
    
+    func configureByTv(dataModel: Item?, detailModel: TvDetail?) {
+        if dataModel?.originalTitle == nil {
+            self.itemTitle.text = dataModel?.originalName
+        } else {
+            self.itemTitle.text = dataModel?.originalTitle
+        }
+        
+        self.releaseDate.text = "Last Air Date: " + (detailModel?.lastAirDate ?? "Unknown")
+        
+        self.overview.text = detailModel?.overview
+        
+    }
+
     
 }
