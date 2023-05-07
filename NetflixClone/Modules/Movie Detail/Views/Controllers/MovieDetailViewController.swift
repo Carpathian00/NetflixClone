@@ -43,6 +43,8 @@ class MovieDetailViewController: UIViewController {
     
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .label
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     

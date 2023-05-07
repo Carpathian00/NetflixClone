@@ -30,6 +30,7 @@ class HomeViewController: UIViewController {
     private var headerMovie: HeroHeaderView?
     var tabBarDelegate: TabBarControllerDelegate?
     var sections = ["Genres", "Popular Movies", "Popular TV Shows", "Top Rated Movies", "Top Rated TV Shows"]
+    let refreshControl = UIRefreshControl()
 
     private lazy var homeTable: UITableView = {
         let movieTable = UITableView(frame: .zero, style: .grouped)
@@ -57,7 +58,6 @@ class HomeViewController: UIViewController {
     private func setupNavigationBar() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
-        navigationItem.largeTitleDisplayMode = .never
         navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
@@ -75,6 +75,10 @@ class HomeViewController: UIViewController {
        }
     
     private func setupTable() {
+        homeTable.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+
+        
         view.addSubview(homeTable)
         
         homeTable.backgroundColor = .systemBackground
@@ -94,6 +98,11 @@ class HomeViewController: UIViewController {
         homeTable.delegate = self
         homeTable.dataSource = self
 
+    }
+    
+    @objc func refreshData() {
+        callApi()
+        refreshControl.endRefreshing()
     }
     
     private func setupTableHeader() {

@@ -23,14 +23,14 @@ class ProfileViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupNavigationBar()
         setupTable()
     }
 
     private func setupNavigationBar() {
 //        navigationController?.navigationBar.setGradientBackground(colors: [.black, .clear], locations: [0,1])
-        navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.navigationBar.isHidden = true
         
         let leftNavigationBarItems = LeftNavBarItems()
         leftNavigationBarItems.setupLeftNavBarItems()

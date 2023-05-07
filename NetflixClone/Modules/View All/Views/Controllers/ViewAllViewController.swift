@@ -38,6 +38,17 @@ class ViewAllViewController: UIViewController {
     private func setupNavBar() {
         print("selected section: \(self.selectedSection ?? 0)")
         self.navigationController?.navigationBar.tintColor = .label
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        if selectedSection == TableSections.popularMovies.rawValue {
+            title = "Popular Movies"
+        } else if selectedSection == TableSections.popularTvShows.rawValue {
+            title = "Popular TV Shows"
+        } else if selectedSection == TableSections.topRatedMovies.rawValue {
+            title = "Top Rated Movies"
+        } else if selectedSection == TableSections.topRatedTvShows.rawValue {
+            title = "Top Rated TV Shows"
+        }
     }
     
     private func setupTable() {

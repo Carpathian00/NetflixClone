@@ -33,7 +33,7 @@ class CircularScoreBar: UIView {
         trackLayer.path = trackPath.cgPath
         trackLayer.lineWidth = lineWidth
         trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.strokeColor = UIColor.lightGray.cgColor
+        trackLayer.strokeColor = UIColor.clear.cgColor
         layer.addSublayer(trackLayer)
         
         // Draw progress layer
@@ -41,7 +41,7 @@ class CircularScoreBar: UIView {
         progressLayer.path = progressPath.cgPath
         progressLayer.lineWidth = lineWidth
         progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.strokeColor = UIColor.blue.cgColor
+        progressLayer.strokeColor = UIColor.systemRed.cgColor
         layer.addSublayer(progressLayer)
         
         // Add percentage label

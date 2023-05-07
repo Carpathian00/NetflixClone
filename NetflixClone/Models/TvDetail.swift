@@ -35,6 +35,22 @@ struct TvDetail: Codable {
     let voteAverage: Double?
     let voteCount: Int?
 
+    var formattedLastAirDate: String? {
+            guard let lastAirDate = lastAirDate else { return nil }
+            
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd"
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "dd MMMM yyyy"
+            
+            if let date = dateFormatterGet.date(from: lastAirDate) {
+                return dateFormatterPrint.string(from: date)
+            } else {
+                return nil
+            }
+        }
+
     
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"

@@ -40,7 +40,6 @@
 		C64C33B829E946DB00029ABC /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */; };
 		C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */; };
 		C6CEAB4E2A04B96C00E8F02D /* SearchResultCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CEAB4C2A04B96C00E8F02D /* SearchResultCollectionCell.swift */; };
-		C6CEAB4F2A04B96C00E8F02D /* SearchResultCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6CEAB4D2A04B96C00E8F02D /* SearchResultCollectionCell.xib */; };
 		C6D54C1E29F833D90034C72A /* ViewAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D54C1C29F833D90034C72A /* ViewAllViewController.swift */; };
 		C6D54C1F29F833D90034C72A /* ViewAllViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6D54C1D29F833D90034C72A /* ViewAllViewController.xib */; };
 		C6D54C2429F834B50034C72A /* ViewAllMoviesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D54C2229F834B50034C72A /* ViewAllMoviesTableCell.swift */; };
@@ -120,7 +119,6 @@
 		C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllViewModel.swift; sourceTree = "<group>"; };
 		C6CEAB4C2A04B96C00E8F02D /* SearchResultCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionCell.swift; sourceTree = "<group>"; };
-		C6CEAB4D2A04B96C00E8F02D /* SearchResultCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCollectionCell.xib; sourceTree = "<group>"; };
 		C6D54C1C29F833D90034C72A /* ViewAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllViewController.swift; sourceTree = "<group>"; };
 		C6D54C1D29F833D90034C72A /* ViewAllViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewAllViewController.xib; sourceTree = "<group>"; };
 		C6D54C2229F834B50034C72A /* ViewAllMoviesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllMoviesTableCell.swift; sourceTree = "<group>"; };
@@ -201,6 +199,14 @@
 				C60922722A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift */,
 			);
 			path = "Collection Section Cell";
+			sourceTree = "<group>";
+		};
+		C60922782A06A85E0076E7E8 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				C6F661512A0250F700B09679 /* CircularScoreBar.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		C61066A229E2ABFD003448A0 /* TableCell */ = {
@@ -313,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				C6CEAB4C2A04B96C00E8F02D /* SearchResultCollectionCell.swift */,
-				C6CEAB4D2A04B96C00E8F02D /* SearchResultCollectionCell.xib */,
 			);
 			path = "Collection Cells";
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 		C6ED48DA29DE844A0005D25F /* NetflixClone */ = {
 			isa = PBXGroup;
 			children = (
+				C60922782A06A85E0076E7E8 /* Themes */,
 				C6F6614F2A0250D700B09679 /* Helpers */,
 				C6ED48F929DE882A0005D25F /* Core */,
 				C6ED48F829DE865F0005D25F /* Extensions */,
@@ -548,7 +554,6 @@
 		C6F6614F2A0250D700B09679 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C6F661512A0250F700B09679 /* CircularScoreBar.swift */,
 				C6DED6CA2A03980B00C4E586 /* Utilities.swift */,
 			);
 			path = Helpers;
@@ -819,7 +824,6 @@
 				C6ED48E529DE844C0005D25F /* Assets.xcassets in Resources */,
 				C6ED48E329DE844A0005D25F /* Main.storyboard in Resources */,
 				C6FB28DE29E673CF00221FB5 /* FooterTableCell.xib in Resources */,
-				C6CEAB4F2A04B96C00E8F02D /* SearchResultCollectionCell.xib in Resources */,
 				C6FB28E329E67F4A00221FB5 /* SavedViewController.xib in Resources */,
 				C637E62229FFDA3600896DFB /* SignUpViewController.xib in Resources */,
 				C6D54C2529F834B50034C72A /* ViewAllMoviesTableCell.xib in Resources */,

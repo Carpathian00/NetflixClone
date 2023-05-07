@@ -14,9 +14,6 @@ class GenreMoviesViewController: UIViewController {
     private var items = [Item]()
     private var currentPage = 1
     var homeVCDelegate: TabBarControllerDelegate?
-
-    
-
     
     private lazy var genreMoviesTable: UITableView = {
         let table = UITableView()
@@ -35,6 +32,9 @@ class GenreMoviesViewController: UIViewController {
     private func setupNavBar() {
         title = self.genre?.name
         self.navigationController?.navigationBar.tintColor = .label
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
     }
 
     
