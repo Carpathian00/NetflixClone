@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import SDWebImage
 
 class MovieDetailViewController: UIViewController {
     
@@ -19,8 +20,8 @@ class MovieDetailViewController: UIViewController {
     private let MovieDetailVM = MovieDetailViewModel()
     var didLoadVideo = false
 
-
     
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var videoPlayer: WKWebView!
     
     private lazy var movieDetailLayout: UITableView = {
@@ -31,12 +32,21 @@ class MovieDetailViewController: UIViewController {
         return table
     }()
     
+//    private lazy var imageView: UIImageView = {
+//        let imgView = UIImageView()
+//        imgView.translatesAutoresizingMaskIntoConstraints = false
+//        imgView.contentMode = .scaleAspectFill
+//        return imgView
+//    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         videoPlayer.configuration.mediaTypesRequiringUserActionForPlayback = []
         
         setupNavigationBar()
         setupTableView()
+        addImage()
+
 //        callApi()
     }
     
@@ -59,6 +69,7 @@ class MovieDetailViewController: UIViewController {
         
         if fromTableHeader == true  && isPlayOnly == false {
             hideVideoPlayer()
+            hideImageView()
         } else if fromTableHeader == true && isPlayOnly == true {
             movieDetailLayout.isHidden = true
         } else {
@@ -71,15 +82,40 @@ class MovieDetailViewController: UIViewController {
 
     private func hideVideoPlayer() {
         videoPlayer.isHidden = true
+        showImageView()
+    }
+    
+    private func showImageView() {
+        imageView.isHidden = false
+        NSLayoutConstraint.activate([
+            movieDetailLayout.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            movieDetailLayout.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            movieDetailLayout.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        addImage()
+
+    }
+    
+    private func hideImageView () {
+        imageView.isHidden = true
         NSLayoutConstraint.activate([
             movieDetailLayout.topAnchor.constraint(equalTo: view.topAnchor),
             movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             movieDetailLayout.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             movieDetailLayout.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+    }
+    
+    private func addImage() {
+        let url = URL(string: "https://image.tmdb.org/t/p/w500\(item?.posterPath ?? "")")
+        print("image url https://image.tmdb.org/t/p/w500\(item?.posterPath ?? "")")
+        imageView.sd_setImage(with: url)
     }
     
     private func showVideoPlayer() {
+        imageView.isHidden = true
         NSLayoutConstraint.activate([
             movieDetailLayout.topAnchor.constraint(equalTo: videoPlayer.bottomAnchor),
             movieDetailLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),

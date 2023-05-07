@@ -23,7 +23,7 @@ class SettingTableCell: UITableViewCell {
     }
     @IBOutlet weak var settingLabel: UILabel! {
         didSet {
-            settingLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            settingLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         }
     }
     
@@ -32,6 +32,24 @@ class SettingTableCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         selectionStyle = .none
+    }
+    
+    func configure(index: Int?) {
+        if index == 0 {
+            setSetting(image: UIImage(systemName: "person")!, text: "Account")
+        } else if index == 1 {
+            setSetting(image: UIImage(systemName: "eye")!, text: "Appearance")
+        } else if index == 2 {
+            setSetting(image: UIImage(systemName: "bell")!, text: "Notification")
+        } else {
+            setSetting(image: UIImage(systemName: "lock")!, text: "Security")
+        }
+    }
+    
+    private func setSetting(image: UIImage, text: String) {
+        self.settingIcon.image = image
+        self.settingLabel.text = text
+
     }
 
     

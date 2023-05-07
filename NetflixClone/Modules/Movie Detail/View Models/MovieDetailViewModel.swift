@@ -59,8 +59,6 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
         let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
         
         self.apiServiceProtocol?.callApi(with: url, model: MovieDetail.self, completion: { result in
-            print("Movie detail result: \(movieId)")
-
             switch result {
             case .success(let movieDetail):
                 self.bindMovieDetailData?(movieDetail)

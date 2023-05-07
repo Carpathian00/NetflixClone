@@ -9,11 +9,14 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    private var profileVM = ProfileViewModel()
+    private var profileData: Profile?
     var tabBarDelegate: TabBarControllerDelegate?
     
     private lazy var profileLayout: UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
+        let table = UITableView(frame: .zero, style: .grouped)
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.register(SectionCellHeader.self, forHeaderFooterViewReuseIdentifier: SectionCellHeader.identifier)
         table.register(UINib(nibName: "ProfileHeaderTableCell", bundle: nil), forCellReuseIdentifier: ProfileHeaderTableCell.identifier)
         table.register(UINib(nibName: "SettingTableCell", bundle: nil), forCellReuseIdentifier: SettingTableCell.identifier)
         table.register(UINib(nibName: "FooterTableCell", bundle: nil), forCellReuseIdentifier: FooterTableCell.identifier)
@@ -25,21 +28,30 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
+        fetchData()
         setupTable()
     }
 
     private func setupNavigationBar() {
-//        navigationController?.navigationBar.setGradientBackground(colors: [.black, .clear], locations: [0,1])
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Profile"
         
-        let leftNavigationBarItems = LeftNavBarItems()
-        leftNavigationBarItems.setupLeftNavBarItems()
-        
-        let rightNavigationBarItems = RightNavBarItems()
-        rightNavigationBarItems.setupBarItem()
-        
-        navigationItem.setLeftBarButton(leftNavigationBarItems, animated: true)
-        navigationItem.setRightBarButton(rightNavigationBarItems, animated: true)
+    }
+    
+    private func fetchData() {
+        profileVM.fetchData { result in
+            switch result {
+            case .success(let profile):
+                self.profileData = profile
+                DispatchQueue.main.async {
+                    self.profileLayout.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func setupTable() {
@@ -49,7 +61,9 @@ class ProfileViewController: UIViewController {
         profileLayout.separatorStyle = .none
         profileLayout.tableFooterView = UIView(frame: CGRect.zero)
         profileLayout.sectionFooterHeight = 0.0
-        
+        profileLayout.backgroundColor = UIColor.clear;
+        profileLayout.backgroundView = nil;
+
         NSLayoutConstraint.activate([
             profileLayout.topAnchor.constraint(equalTo: view.topAnchor),
             profileLayout.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -60,8 +74,6 @@ class ProfileViewController: UIViewController {
         profileLayout.delegate = self
         profileLayout.dataSource = self
     }
-    
-
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -86,13 +98,29 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 1:
+            let header = profileLayout.dequeueReusableHeaderFooterView(withIdentifier: SectionCellHeader.identifier) as? SectionCellHeader
+            header?.addSubviews()
+            header?.configure(title: "Settings", index: 0)
+
+            return header
+        default:
+            return UITableViewHeaderFooterView()
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
             guard let header = profileLayout.dequeueReusableCell(withIdentifier: ProfileHeaderTableCell.identifier, for: indexPath) as? ProfileHeaderTableCell else { return UITableViewCell() }
+            header.configure(profileModel: self.profileData)
             return header
         case 1:
             guard let setting = profileLayout.dequeueReusableCell(withIdentifier: SettingTableCell.identifier, for: indexPath) as? SettingTableCell else { return UITableViewCell() }
+            setting.configure(index: indexPath.row)
             return setting
         case 2:
             guard let footer = profileLayout.dequeueReusableCell(withIdentifier: FooterTableCell.identifier, for: indexPath) as? FooterTableCell else { return UITableViewCell() }

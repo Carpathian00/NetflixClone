@@ -13,6 +13,7 @@ class MainTableCell: UITableViewCell {
     static let identifier = "MainTableCell"
     var homeVCDelegate: TabBarControllerDelegate?
     var navigationController: UINavigationController?
+    private var isTopRated: Bool?
     private var items: [Item]?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
@@ -29,7 +30,8 @@ class MainTableCell: UITableViewCell {
           
     }
     
-    func configure(modelData: [Item]?) {
+    func configure(modelData: [Item]?, isTopRated: Bool) {
+        self.isTopRated = isTopRated
         self.items = modelData
         DispatchQueue.main.async { [weak self] in
             self?.moviesCollectionView.reloadData()
@@ -51,13 +53,19 @@ extension MainTableCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.width / 3, height: 199)
+        
+        if self.isTopRated == true {
+            return CGSize(width: self.frame.width / 2, height: 199)
+        } else {
+            return CGSize(width: self.frame.width / 3, height: 199)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         if let itemIndex = items?[indexPath.row] {
-            cell.configure(model: itemIndex)
+            cell.configure(model: itemIndex, isTopRated: self.isTopRated ?? false, rank: indexPath.row)
         }
         return cell
     }

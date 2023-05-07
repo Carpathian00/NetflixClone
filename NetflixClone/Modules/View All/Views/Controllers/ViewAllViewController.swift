@@ -101,7 +101,7 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = viewAllTable.dequeueReusableCell(withIdentifier: ViewAllMoviesTableCell.identifier, for: indexPath) as? ViewAllMoviesTableCell else { return UITableViewCell() }
-        cell.configure(itemModel: self.items[indexPath.row])
+        cell.configure(itemModel: self.items[indexPath.row], section: self.selectedSection, index: indexPath.row + 1)
         return cell
       
     

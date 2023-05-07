@@ -115,14 +115,12 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let resultSections = searchResultTableSections(rawValue: indexPath.section)
-        print("resultsections \(resultSections)")
-        
         switch resultSections {
         case .movies:
             guard let cell = searchResultsCollectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
             
             if let movieResults = self.movieResults, movieResults.count > indexPath.row {
-                cell.configure(model: movieResults[indexPath.row])
+                cell.configure(model: movieResults[indexPath.row], isTopRated: false, rank: indexPath.row)
             } else {
                 print("kosong indexnya")
             }
@@ -131,7 +129,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
             guard let cell = searchResultsCollectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell()}
             
             if let tvResults = self.tvShowResults, tvResults.count > indexPath.row {
-                cell.configure(model: tvResults[indexPath.row])
+                cell.configure(model: tvResults[indexPath.row], isTopRated: false, rank: indexPath.row)
             } else {
                 print("kosong indexnya")
             }

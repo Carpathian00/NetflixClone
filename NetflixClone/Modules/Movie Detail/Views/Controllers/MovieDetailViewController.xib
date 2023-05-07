@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieDetailViewController" customModule="NetflixClone" customModuleProvider="target">
             <connections>
+                <outlet property="imageView" destination="lZ0-pY-0Mo" id="X6k-0H-2Fh"/>
                 <outlet property="videoPlayer" destination="jjo-3b-XWF" id="RDB-ta-LKU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -31,6 +32,12 @@
                         <wkPreferences key="preferences"/>
                     </wkWebViewConfiguration>
                 </wkWebView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lZ0-pY-0Mo">
+                    <rect key="frame" x="0.0" y="47" width="375" height="300"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="r6W-oK-JGu"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -38,6 +45,9 @@
                 <constraint firstItem="jjo-3b-XWF" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0QR-v6-mNz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jjo-3b-XWF" secondAttribute="trailing" id="0QZ-7T-XIZ"/>
                 <constraint firstItem="jjo-3b-XWF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="2hW-1H-siW"/>
+                <constraint firstItem="lZ0-pY-0Mo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="SVd-Sp-AOi"/>
+                <constraint firstItem="lZ0-pY-0Mo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ZDi-hQ-6cT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lZ0-pY-0Mo" secondAttribute="trailing" id="yKG-L8-elY"/>
             </constraints>
             <point key="canvasLocation" x="132" y="-11"/>
         </view>

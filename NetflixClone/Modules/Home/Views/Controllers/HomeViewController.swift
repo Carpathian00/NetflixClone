@@ -238,7 +238,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .popularMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: popularMovies)
+            cell.configure(modelData: popularMovies, isTopRated: false)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -246,7 +246,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .popularTvShows:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: popularTvShows)
+            cell.configure(modelData: popularTvShows, isTopRated: false)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -254,7 +254,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .topRatedMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: TopRatedMovies)
+            cell.configure(modelData: TopRatedMovies, isTopRated: true)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -262,7 +262,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .topRatedTvShows:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: topRatedTvShows)
+            cell.configure(modelData: topRatedTvShows, isTopRated: true)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell

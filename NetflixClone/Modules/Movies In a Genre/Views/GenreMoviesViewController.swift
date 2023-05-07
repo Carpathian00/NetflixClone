@@ -80,7 +80,7 @@ extension GenreMoviesViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = genreMoviesTable.dequeueReusableCell(withIdentifier: ViewAllMoviesTableCell.identifier, for: indexPath) as? ViewAllMoviesTableCell else { return UITableViewCell() }
-        cell.configure(itemModel: items[indexPath.row])
+        cell.configure(itemModel: items[indexPath.row], section: 0, index: indexPath.row + 1)
         return cell
     }
     

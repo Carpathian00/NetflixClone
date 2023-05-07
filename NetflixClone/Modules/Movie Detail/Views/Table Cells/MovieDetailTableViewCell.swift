@@ -17,7 +17,6 @@ class MovieDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var releaseDate: UILabel!
     @IBOutlet weak var overview: UILabel!
     @IBOutlet weak var optionButtonStackView: UIStackView!
-    @IBOutlet weak var scoreBar: CircularScoreBar!
     
     
     override func awakeFromNib() {
@@ -77,13 +76,15 @@ class MovieDetailTableViewCell: UITableViewCell {
 
         scoreBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scoreBar.topAnchor.constraint(equalTo: releaseDate.bottomAnchor, constant: 10),
-            scoreBar.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            scoreBar.heightAnchor.constraint(equalToConstant: 70),
-            scoreBar.widthAnchor.constraint(equalToConstant: 70),
-            overview.topAnchor.constraint(equalTo: scoreBar.bottomAnchor, constant: 10),
-            overview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            overview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            scoreBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            scoreBar.leadingAnchor.constraint(equalTo: itemTitle.trailingAnchor, constant: 8),
+            scoreBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            scoreBar.heightAnchor.constraint(equalToConstant: 75),
+            scoreBar.widthAnchor.constraint(equalToConstant: 75),
+            itemGenres.trailingAnchor.constraint(equalTo: scoreBar.leadingAnchor, constant: -8)
+            
+            
         ])
     }
 }

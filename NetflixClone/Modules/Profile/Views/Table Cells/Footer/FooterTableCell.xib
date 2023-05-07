@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="destructive" translatesAutoresizingMaskIntoConstraints="NO" id="djQ-re-K6s">
-                        <rect key="frame" x="8" y="50" width="304" height="50"/>
+                        <rect key="frame" x="8" y="16" width="304" height="50"/>
                         <color key="backgroundColor" name="themeColor1"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="pk8-Dk-3em"/>
@@ -34,10 +34,11 @@
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="djQ-re-K6s" secondAttribute="trailing" constant="8" id="29b-at-EVn"/>
-                    <constraint firstAttribute="bottom" secondItem="djQ-re-K6s" secondAttribute="bottom" constant="5" id="Q9z-he-Qhn"/>
-                    <constraint firstItem="djQ-re-K6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="50" id="e1H-5S-pLP"/>
+                    <constraint firstAttribute="bottom" secondItem="djQ-re-K6s" secondAttribute="bottom" constant="16" id="5OP-gO-lxD"/>
+                    <constraint firstItem="djQ-re-K6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="e1H-5S-pLP"/>
                     <constraint firstItem="djQ-re-K6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="i9b-Wf-5KL"/>
                 </constraints>
             </tableViewCellContentView>
@@ -53,6 +54,9 @@
         <namedColor name="themeColor1">
             <color red="0.85098039215686272" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -12,6 +12,8 @@ import FirebaseFirestore
 
 class SignUpViewController: UIViewController {
 
+    let db = Firestore.firestore()
+    
     @IBOutlet weak var verticalStackView: UIStackView!
     @IBOutlet weak var firstNameField: UITextField! 
     @IBOutlet weak var lastNameField: UITextField!
@@ -96,25 +98,20 @@ class SignUpViewController: UIViewController {
             
             //create the user
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-                //check for error in firebase
                 if err != nil {
-                    //there was an error creating a user
                     self.setupError(text: "There was an error creating a user")
                 } else {
-                    
-                    let db = Firestore.firestore()
-                    
-                    db.collection("users").addDocument(data:
+                    self.db.collection("users").addDocument(data:
                     [
-                        "firstName":firstName,
-                        "lastName":lastName,
-                        "uid":result!.user.uid
+                        "firstName": firstName,
+                        "lastName": lastName,
+                        "uid": result!.user.uid
                     ]) { (error) in
                         
                         if error != nil {
                             self.setupError(text: "Error saving user data")
+                            print("Error saving user data")
                             }
-                        
                         }
                     self.moveToHomePage()
                     }

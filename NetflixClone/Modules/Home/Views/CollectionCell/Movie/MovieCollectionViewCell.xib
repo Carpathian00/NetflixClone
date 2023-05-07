@@ -24,12 +24,14 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WVQ-ij-ngF">
                                 <rect key="frame" x="0.0" y="0.0" width="82" height="114"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="yu3-d7-E3H"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="WVQ-ij-ngF" secondAttribute="bottom" id="GYR-yO-N3V"/>
                             <constraint firstItem="WVQ-ij-ngF" firstAttribute="leading" secondItem="wT8-Xn-lVg" secondAttribute="leading" id="KYi-0G-E18"/>
-                            <constraint firstAttribute="trailing" secondItem="WVQ-ij-ngF" secondAttribute="trailing" id="bcT-W1-3id"/>
                             <constraint firstItem="WVQ-ij-ngF" firstAttribute="top" secondItem="wT8-Xn-lVg" secondAttribute="top" id="qoS-Uj-y02"/>
                         </constraints>
                     </view>

@@ -16,7 +16,8 @@ class CircularScoreBar: UIView {
     
     var percentage: CGFloat = 0 {
         didSet {
-            percentageLabel.text = "\(Int(percentage * 100))%"
+            percentageLabel.text = "Scores: \(Int(percentage * 100))%"
+            percentageLabel.numberOfLines = 0
             setNeedsDisplay()
         }
     }
@@ -26,29 +27,30 @@ class CircularScoreBar: UIView {
         
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let radius = min(bounds.width, bounds.height) / 2
-        let lineWidth = radius * 0.2
+        let lineWidth = radius * 0.1
         
         // Draw track layer
         let trackPath = UIBezierPath(arcCenter: center, radius: radius - lineWidth/2, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi, clockwise: true)
         trackLayer.path = trackPath.cgPath
         trackLayer.lineWidth = lineWidth
         trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.strokeColor = UIColor.clear.cgColor
+        trackLayer.strokeColor = UIColor.systemGray5.cgColor
         layer.addSublayer(trackLayer)
         
         // Draw progress layer
         let progressPath = UIBezierPath(arcCenter: center, radius: radius - lineWidth/2, startAngle: -CGFloat.pi/2, endAngle: 2 * CGFloat.pi * percentage - CGFloat.pi/2, clockwise: true)
         progressLayer.path = progressPath.cgPath
+        progressLayer.lineCap = CAShapeLayerLineCap.round
         progressLayer.lineWidth = lineWidth
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor.systemRed.cgColor
         layer.addSublayer(progressLayer)
         
         // Add percentage label
-        percentageLabel.frame = CGRect(x: 0, y: 0, width: radius*2, height: radius*2)
+        percentageLabel.frame = CGRect(x: 0, y: 0, width: radius*1.7, height: radius*1.7)
         percentageLabel.center = center
         percentageLabel.textAlignment = .center
-        percentageLabel.font = UIFont.boldSystemFont(ofSize: radius * 0.4)
+        percentageLabel.font = UIFont.systemFont(ofSize: radius * 0.35, weight: .medium)
         addSubview(percentageLabel)
     }
     
