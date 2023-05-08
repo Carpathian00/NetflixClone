@@ -39,7 +39,6 @@ class TabBarController: UITabBarController {
         self.viewControllers = [
             createController(for: homeVC, title: "Home", image: UIImage(systemName: "house")!),
             createController(for: searchVC, title: "Search", image: UIImage(systemName: "magnifyingglass")!),
-//            createController(for: SavedViewController(), title: "Saved", image: UIImage(systemName: "bookmark")!),
             createController(for: profileVC, title: "Profile", image: UIImage(systemName: "person")!)
         ]
     }

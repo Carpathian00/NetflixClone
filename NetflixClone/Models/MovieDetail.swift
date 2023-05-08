@@ -57,7 +57,6 @@ struct MovieDetail: Codable {
     
 }
 
-// MARK: - Genre
 struct GenreDetail: Codable {
     let id: Int?
     let name: String?

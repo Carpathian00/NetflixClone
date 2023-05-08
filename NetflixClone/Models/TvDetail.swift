@@ -8,7 +8,6 @@
 import Foundation
 
 
-// MARK: - Welcome
 struct TvDetail: Codable {
     let backdropPath: String?
     let createdBy: [CreatedBy]?
@@ -79,7 +78,6 @@ struct TvDetail: Codable {
     }
 }
 
-// MARK: - CreatedBy
 struct CreatedBy: Codable {
     let id: Int?
     let creditID, name: String?
@@ -94,7 +92,6 @@ struct CreatedBy: Codable {
     }
 }
 
-// MARK: - LastEpisodeToAir
 struct LastEpisodeToAir: Codable {
     let airDate: String?
     let episodeNumber, id: Int?
@@ -116,7 +113,6 @@ struct LastEpisodeToAir: Codable {
     }
 }
 
-// MARK: - Network
 struct Network: Codable {
     let name: String?
     let id: Int?
@@ -130,7 +126,6 @@ struct Network: Codable {
     }
 }
 
-// MARK: - ProductionCountry
 struct ProductionCountry: Codable {
     let iso3166_1, name: String?
 
@@ -140,7 +135,6 @@ struct ProductionCountry: Codable {
     }
 }
 
-// MARK: - Season
 struct Season: Codable {
     let airDate: String?
     let episodeCount, id: Int?
@@ -156,7 +150,6 @@ struct Season: Codable {
     }
 }
 
-// MARK: - SpokenLanguage
 struct SpokenLanguage: Codable {
     let englishName, iso639_1, name: String?
 

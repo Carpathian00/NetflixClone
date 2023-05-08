@@ -40,7 +40,6 @@ class ProfileViewModel {
     
     private func fetchUserEmail() -> String? {
         guard let currentUser = Auth.auth().currentUser else {
-                // User is not authenticated, handle error accordingly
             return ""
         }
             
@@ -50,7 +49,6 @@ class ProfileViewModel {
     
     private func fetchUserId() -> String? {
         guard let currentUser = Auth.auth().currentUser else {
-                // User is not authenticated, handle error accordingly
             return ""
         }
             

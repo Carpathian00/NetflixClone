@@ -31,14 +31,7 @@ class MovieDetailViewController: UIViewController {
         
         return table
     }()
-    
-//    private lazy var imageView: UIImageView = {
-//        let imgView = UIImageView()
-//        imgView.translatesAutoresizingMaskIntoConstraints = false
-//        imgView.contentMode = .scaleAspectFill
-//        return imgView
-//    }()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         videoPlayer.configuration.mediaTypesRequiringUserActionForPlayback = []
@@ -47,7 +40,6 @@ class MovieDetailViewController: UIViewController {
         setupTableView()
         addImage()
 
-//        callApi()
     }
     
     

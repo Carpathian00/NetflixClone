@@ -18,17 +18,6 @@ enum searchResultTableSections: Int {
 
 class SearchResultViewController: UIViewController {
 
-//    public lazy var searchResultsCollectionView: UICollectionView = {
-//
-//        let layout = UICollectionViewFlowLayout()
-//        //for dynamic scalling
-//        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 - 10, height: 200)
-//        layout.minimumInteritemSpacing = 0
-//
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-//        return collectionView
-//    }()
     var delegate: SearchResultVCDelegate?
     public var movieResults: [Item]? = [Item]()
     public var tvShowResults: [Item]? = [Item]()
@@ -70,13 +59,6 @@ class SearchResultViewController: UIViewController {
         searchResultsCollectionView.delegate = self
         searchResultsCollectionView.dataSource = self
     }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        searchResultsCollectionView.frame = view.bounds
-//    }
-
-
 
 }
 
@@ -98,7 +80,6 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchResultCollectionSectionCell.identifier, for: indexPath) as! SearchResultCollectionSectionCell
-            // Customize the header view as needed, based on the section that it will represent
             headerView.addSubviews()
             headerView.configure(title: self.section[indexPath.section])
             return headerView
@@ -108,7 +89,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 60) // Customize the size of the header view as needed
+        return CGSize(width: collectionView.bounds.width, height: 60) 
     }
 
     
