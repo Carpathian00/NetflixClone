@@ -7,46 +7,6 @@
 
 import Foundation
 
-//
-//struct MovieDetail: Codable {
-//
-//    let genres: [genre]?
-//    let id: Int?
-//    let overview: String?
-//    let popularity: Int?
-//    let releaseDate: String?
-//    let runtime: Int?
-//
-//    var releaseYear: String? {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd"
-//            if let date = dateFormatter.date(from: releaseDate ?? "") {
-//                dateFormatter.dateFormat = "yyyy"
-//                return dateFormatter.string(from: date)
-//            }
-//            return nil
-//        }
-//
-//    enum CodingKeys: String, CodingKey {
-//        case genres
-//        case id
-//        case overview
-//        case popularity
-//        case releaseDate = "release_date"
-//        case runtime
-//    }
-//
-//}
-//
-//struct genre: Codable {
-//
-//    let id: Int?
-//    let name: String?
-//}
-//
-
-
-
 struct MovieDetail: Codable {
     let adult: Bool?
     let budget: Int?

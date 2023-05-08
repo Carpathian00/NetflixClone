@@ -61,7 +61,7 @@ class ViewAllMoviesTableCell: UITableViewCell {
     
     private func createScore(score: Double) {
         let percentage: CGFloat = score
-        scoreLabel.text = "Scores: \(Int(percentage * 10 - 1))%"
+        scoreLabel.text = "Scores: \(Int(percentage * 10))%"
     }
     
     func cancelImageLoad() {

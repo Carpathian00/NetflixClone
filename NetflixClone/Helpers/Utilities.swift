@@ -15,6 +15,7 @@ class Utilities {
         label.text = text
         label.textAlignment = .center
         label.textColor = .systemRed
+        label.numberOfLines = 0
         return label
     }
     

@@ -25,7 +25,7 @@ class ProfileViewModel {
                     let data = documentSnapshot?.documents[0].data()
                     let userEmail = self.fetchUserEmail()
                     let firstName = data?["firstName"] as? String ?? ""
-                    let lastName = data?["last    Name"] as? String ?? ""
+                    let lastName = data?["lastName"] as? String ?? ""
                     let userName = firstName + " " + lastName
                     let profileData = Profile(userName: userName, userEmail: userEmail)
                     completion(.success(profileData))

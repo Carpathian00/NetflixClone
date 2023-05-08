@@ -22,7 +22,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     private lazy var rankingLabel: UILabel = {
         let rankingLabel = UILabel()
         
-        rankingLabel.textColor = .white
+        rankingLabel.textColor = .secondaryLabel
         rankingLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         rankingLabel.translatesAutoresizingMaskIntoConstraints = false
         return rankingLabel
@@ -44,7 +44,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     func addRankingLabels(rank: Int, voteAverage: CGFloat) {
         rankingLabel.text = "#\(rank)"
-        voteAverageLabel.text = "\(Int(voteAverage * 10) - 1)%"
+        voteAverageLabel.text = "\(Int(voteAverage * 10))%"
         contentView.addSubview(rankingLabel)
         contentView.addSubview(voteAverageLabel)
         

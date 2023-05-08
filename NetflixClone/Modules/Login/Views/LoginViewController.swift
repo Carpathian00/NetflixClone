@@ -74,8 +74,14 @@ class LoginViewController: UIViewController {
             let password = passField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] (result, err) in
-                guard let strongSelf = self else { return }
-                strongSelf.moveToHomePage()
+                if err != nil {
+                    self?.setupError(text: "No account found")
+
+                } else {
+                    guard let strongSelf = self else { return }
+                    strongSelf.moveToHomePage()
+                }
+               
                 
             }
             
@@ -95,12 +101,12 @@ class LoginViewController: UIViewController {
 
         if errorShown == false {
             errorShown = true
-            topStackView.insertArrangedSubview(errorMessage, at: 5)
+            topStackView.insertArrangedSubview(errorMessage, at: 2)
         } else {
-            let existingErrorMessage = topStackView.arrangedSubviews[5]
+            let existingErrorMessage = topStackView.arrangedSubviews[2]
             topStackView.removeArrangedSubview(existingErrorMessage)
             existingErrorMessage.removeFromSuperview()
-            topStackView.insertArrangedSubview(errorMessage, at: 5)
+            topStackView.insertArrangedSubview(errorMessage, at: 2)
         }
     }
 
