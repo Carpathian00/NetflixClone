@@ -6,8 +6,7 @@
 //
 
 import UIKit
-
-
+import RxSwift
 
 enum TableSections: Int {
     case genres = 0
@@ -20,12 +19,12 @@ enum TableSections: Int {
 
 class HomeViewController: UIViewController {
     
-    
+    private let disposeBag = DisposeBag()
     private let homeVM = HomeViewModel()
-    private var popularMovies: [Item]?
-    private var popularTvShows: [Item]?
-    private var TopRatedMovies: [Item]?
-    private var topRatedTvShows: [Item]?
+    private var popularMovies: [ItemData]?
+    private var popularTvShows: [ItemData]?
+    private var TopRatedMovies: [ItemData]?
+    private var topRatedTvShows: [ItemData]?
     private var genres: [Genre]?
     private var headerMovie: HeroHeaderView?
     var tabBarDelegate: TabBarControllerDelegate?
@@ -47,18 +46,16 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupTable()
         setupTableHeader()
+        bindVM()
         callApi()
     }
     
     private func setupNavigationBar() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        navigationController?.hidesBarsOnSwipe = true
         
         let leftNavigationBarItems = LeftNavBarItems()
         leftNavigationBarItems.setupLeftNavBarItems()
@@ -78,7 +75,6 @@ class HomeViewController: UIViewController {
         homeTable.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
-        
         view.addSubview(homeTable)
         
         homeTable.backgroundColor = .systemBackground
@@ -92,12 +88,9 @@ class HomeViewController: UIViewController {
             homeTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             homeTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-       
-        
+ 
         homeTable.delegate = self
         homeTable.dataSource = self
-
     }
     
     @objc func refreshData() {
@@ -114,80 +107,30 @@ class HomeViewController: UIViewController {
     }
     
     private func callApi() {
-        self.homeVM.fetchPopularMoviesData(currentPage: 1)
-        self.homeVM.bindPopularMoviesData = { movieModel in
-            if let model = movieModel {
-                let selectedTitle = model.randomElement()
-                guard let selectedTitle = selectedTitle else { return }
-                self.headerMovie?.configure(with: selectedTitle)
-                
-                self.popularMovies = model
-                DispatchQueue.main.async { [weak self] in
-                    if self?.popularMovies != nil {
-                        self?.homeTable.reloadData()
-                    }
-                }
-            }
-            
-        }
-        
-        self.homeVM.fetchGenresData()
-        self.homeVM.bindGenreData = { genreModel in
-            if let model = genreModel {
-                self.genres = model
-                DispatchQueue.main.async { [weak self] in
-                    if self?.genres != nil {
-                        self?.homeTable.reloadData()
-                    }
-                }
-            }
-        }
-        
-        self.homeVM.fetchPopularTvShowsData(currentPage: 1)
-        self.homeVM.bindPopularTvShowsData = { popularTvShows in
-            if let model = popularTvShows {
-                self.popularTvShows = model
-                DispatchQueue.main.async { [weak self] in
-                    if self?.popularTvShows != nil {
-                        self?.homeTable.reloadData()
-                    }
-                }
-            }
-
-        }
-        
-        self.homeVM.fetchTopRatedMoviesData(currentPage: 1)
-        self.homeVM.bindtopRatedMoviesData = { topRatedMovies in
-            if let model = topRatedMovies {
-                self.TopRatedMovies = model
-                DispatchQueue.main.async { [weak self] in
-                    if self?.TopRatedMovies != nil {
-                        self?.homeTable.reloadData()
-                    }
-                }
-            }
-
-        }
-
-        self.homeVM.fetchTopRatedTvShowsData(currentPage: 1)
-        self.homeVM.bindTopRatedTvShowsData = { topRatedTvShows in
-            if let model = topRatedTvShows {
-                self.topRatedTvShows = model
-                DispatchQueue.main.async { [weak self] in
-                    if self?.topRatedTvShows != nil {
-                        self?.homeTable.reloadData()
-                    }
-                }
-            }
-
-        }
-
-        
+        self.homeVM.getPopularMoviesData(currentPage: 1)
+        self.homeVM.getGenresData()
+        self.homeVM.getPopularTvShowsData(currentPage: 1)
+        self.homeVM.getTopRatedMoviesData(currentPage: 1)
+        self.homeVM.getTopRatedTvShowsData(currentPage: 1)
     }
     
+    private func bindVM() {
+        self.homeVM.onReloadSection.subscribe { [weak self] section in
+            guard let `self` = self else { return }
+            
+            let indexes = IndexSet(integer: section.rawValue)
+            
+            DispatchQueue.main.async {
+                self.homeTable.reloadSections(indexes, with: .automatic)
+            }
+        }.disposed(by: disposeBag)
         
-}
+        self.homeVM.onSetHeader.subscribe { selectedTitle in
+            self.headerMovie?.configure(with: selectedTitle)
 
+        }.disposed(by: disposeBag)
+    }
+}
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -208,8 +151,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             return UITableView.automaticDimension
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -230,7 +171,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .genres:
             guard let genre = homeTable.dequeueReusableCell(withIdentifier: GenresTableCell.identifier, for: indexPath) as? GenresTableCell else { return UITableViewCell() }
             genre.setupCollectionView()
-            genre.configure(genreModel: genres)
+            genre.configure(genreModel: homeVM.genreData)
             genre.homeVCDelegate = self.tabBarDelegate
             genre.navigationController = self.navigationController
             return genre
@@ -238,7 +179,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .popularMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: popularMovies, isTopRated: false)
+            cell.configure(modelData: homeVM.popularMoviesData, isTopRated: false)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -246,7 +187,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .popularTvShows:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: popularTvShows, isTopRated: false)
+            cell.configure(modelData: homeVM.popularTvShowsData, isTopRated: false)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -254,7 +195,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .topRatedMovies:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: TopRatedMovies, isTopRated: true)
+            cell.configure(modelData: homeVM.topRatedMoviesData, isTopRated: true)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
@@ -262,14 +203,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .topRatedTvShows:
             guard let cell = homeTable.dequeueReusableCell(withIdentifier: MainTableCell.identifier, for: indexPath) as? MainTableCell else { return UITableViewCell() }
             cell.setupCollectionView()
-            cell.configure(modelData: topRatedTvShows, isTopRated: true)
+            cell.configure(modelData: homeVM.topRatedTvShowsData, isTopRated: true)
             cell.homeVCDelegate = self.tabBarDelegate
             cell.navigationController = self.navigationController
             return cell
 
         default:
-            return UITableViewCell()
+            return getBlankCell()
         }
+    }
     
+    private func getBlankCell() -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.backgroundColor = .clear
+        return cell
     }
 }

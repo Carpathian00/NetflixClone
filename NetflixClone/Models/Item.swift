@@ -8,12 +8,10 @@
 import Foundation
 
 struct ApiResponse:Codable {
-    
     let page: Int?
-    let results: [Item]
+    let results: [ItemData]
     let totalPages: Int?
     let totalResults: Int?
-
     
     enum CodingKeys: String, CodingKey {
         case page
@@ -21,11 +19,9 @@ struct ApiResponse:Codable {
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
-
 }
 
-struct Item: Codable {
-    
+struct ItemData: Codable {
     let id: Int?
     let originalTitle: String?
     let originalName: String?
@@ -41,7 +37,5 @@ struct Item: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-    
-    
 }
 

@@ -6,137 +6,120 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import RxRelay
 
-protocol HomeVMProtocol {
-    var bindPopularMoviesData: (([Item]?) -> ())? { get set }
-    var bindGenreData: (([Genre]?) -> ())? { get set }
-    var bindtopRatedMoviesData: (([Item]?) -> ())? { get set }
-    var bindPopularTvShowsData: (([Item]?) -> ())? { get set }
-    var bindTopRatedTvShowsData: (([Item]?) -> ())? { get set }
-    func fetchPopularMoviesData(currentPage: Int)
-    func fetchAPopularMovieInAGenre(with genreId: Int, completion: @escaping (Item?) -> Void)
-    func fetchGenresData()
-    func fetchTopRatedMoviesData(currentPage: Int)
-    func fetchPopularTvShowsData(currentPage: Int)
-    func fetchTopRatedTvShowsData(currentPage: Int)
-}
-
-class HomeViewModel: HomeVMProtocol {
-    
+class HomeViewModel {
     
     private var apiServiceProtocol: APIServiceProtocol?
+    private var useCase: HomeUseCaseProtocol
+    private let disposeBag = DisposeBag()
     
-    var bindPopularMoviesData: (([Item]?) -> ())?
-    var bindGenreData: (([Genre]?) -> ())?
-    var bindtopRatedMoviesData: (([Item]?) -> ())?
-    var bindPopularTvShowsData: (([Item]?) -> ())?
-    var bindTopRatedTvShowsData: (([Item]?) -> ())?
+    internal var onReloadSection = PublishSubject<TableSections>()
+    internal var onSetHeader = PublishSubject<ItemData>()
+    internal var popularMoviesData: [ItemData]?
+    internal var genreData: [Genre]?
+    internal var topRatedMoviesData: [ItemData]?
+    internal var popularTvShowsData: [ItemData]?
+    internal var topRatedTvShowsData: [ItemData]?
     
     init() {
         self.apiServiceProtocol = APIService()
+        self.useCase = HomeUseCase()
     }
     
-    
-    func fetchGenresData() {
-        let genreUrl = APIConfig.baseUrl + "/genre/movie/list" + "?api_key=\(APIConfig.API_KEY)"
-        
-        self.apiServiceProtocol?.callApi(with: genreUrl, model: GenreApiResponse.self, completion: { result in
-            switch result {
-            case .success(let genreResponse):
+    func getGenresData() {
+        useCase.fetchMoviesGenres()
+            .observe(on: MainScheduler.instance)
+            .compactMap({ $0?.genres })
+            .flatMap({ genres -> Observable<[Genre]> in
                 
-                var genres = genreResponse.genres
-                
-                for i in 0..<genres.count {
-                    let genreId = genres[i].id
-                    self.fetchAPopularMovieInAGenre(with: genreId ?? 0) { firstMovie in
-                        if let firstMovie = firstMovie {
-                            genres[i].imagePath = firstMovie.posterPath
-                            self.bindGenreData?(genres)
-                        } else {
-                            self.bindGenreData?(nil)
+                let genreObservables = genres.map { genre in
+                    return self.useCase.fetchPopularMoviesInAGenre(genreId: genre.id ?? 0)
+                        .map { movie -> Genre in
+                            var updatedGenre = genre
+                                  updatedGenre.imagePath = movie?.posterPath
+                                  return updatedGenre
                         }
-                    }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.bindGenreData?(nil)
-            }
-        })
-    }
-    
-    func fetchAPopularMovieInAGenre(with genreId: Int, completion: @escaping (Item?) -> Void) {
-        let popularMoviesGenre = APIConfig.baseUrl + "/movie/popular" + "?api_key=\(APIConfig.API_KEY)" + "&page=1" + "&with_genres=\(genreId)"
-        
-        self.apiServiceProtocol?.callApi(with: popularMoviesGenre, model: ApiResponse.self, completion: { result in
-            switch result {
-            case .success(let apiResponse):
                 
-                if apiResponse.results.count >= 5 {
-                    completion(apiResponse.results[4])
-                } else {
-                    completion(nil)
-                }
-                    
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion(nil)
-            }
-        })
-    }
-    
-    func fetchPopularMoviesData(currentPage: Int) {
-        let url = APIConfig.baseUrl + "/movie/popular" + "?api_key=\(APIConfig.API_KEY)" + "&page=\(currentPage)"
-
-            self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
-                switch result {
-                case .success(let success):
-                    self.bindPopularMoviesData?(success.results)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+                return Observable.zip(genreObservables)
             })
+            .subscribe(
+                onNext: { [weak self] updatedGenre in
+                    self?.genreData = updatedGenre
+                    self?.onReloadSection.onNext(.genres)
+                },
+                onError: { err in
+                    print(err.localizedDescription)
+                }).disposed(by: disposeBag)
     }
     
-    func fetchPopularTvShowsData(currentPage: Int) {
-        let url = APIConfig.baseUrl + "/tv/popular" + "?api_key=\(APIConfig.API_KEY)" + "&page=\(currentPage)"
-        
-        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
-            switch result {
-            case .success(let success):
-                self.bindPopularTvShowsData?(success.results)
-            case .failure(let error):
+    func getPopularMoviesData(currentPage: Int) {
+        useCase.fetchPopularMovies(page: currentPage)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] response in
+                guard let self = self,
+                      let movies = response,
+                      !movies.results.isEmpty else { return }
+                
+                if let headerTitle = movies.results.randomElement() {
+                    self.onSetHeader.onNext(headerTitle)
+                }
+                self.popularMoviesData = movies.results
+                self.onReloadSection.onNext(.popularMovies)
+            }, onError: { error in
                 print(error.localizedDescription)
-            }
-        })
+            })
+            .disposed(by: disposeBag)
     }
     
-    
-    
-    func fetchTopRatedMoviesData(currentPage: Int) {
-        let url = APIConfig.baseUrl + "/discover/movie" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US" + "&sort_by=popularity.desc" + "&page=\(currentPage)&vote_average.gte=7.4" + "&release_date.gte=2020" + "&vote_count.gte=1200" + "&release_date.lte=2023"
-        
-        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
-            switch result {
-            case .success(let topMovies):
-                self.bindtopRatedMoviesData?(topMovies.results)
-            case .failure(let error):
+    func getPopularTvShowsData(currentPage: Int) {
+        useCase.fetchPopularTvShows(page: currentPage)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] response in
+                guard let self = self,
+                      let shows = response,
+                      !shows.results.isEmpty else { return }
+                
+                self.popularTvShowsData = shows.results
+                self.onReloadSection.onNext(.popularTvShows)
+            }, onError: { error in
                 print(error.localizedDescription)
-            }
-        })
+            })
+            .disposed(by: disposeBag)
     }
     
-    func fetchTopRatedTvShowsData(currentPage: Int) {
-        let url = APIConfig.baseUrl + "/discover/tv" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US" + "&sort_by=popularity.desc" + "&page=\(currentPage)&vote_average.gte=7.4" + "&release_date.gte=2020" + "&vote_count.gte=1200" + "&release_date.lte=2023"
-        
-        self.apiServiceProtocol?.callApi(with: url, model: ApiResponse.self, completion: { result in
-            switch result {
-            case .success(let topMovies):
-                self.bindTopRatedTvShowsData?(topMovies.results)
-            case .failure(let error):
+    func getTopRatedMoviesData(currentPage: Int) {
+        useCase.fetchTopRatedMovies(page: currentPage)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] response in
+                guard let self = self,
+                      let movies = response,
+                      !movies.results.isEmpty else { return }
+                
+                self.topRatedMoviesData = movies.results
+                self.onReloadSection.onNext(.topRatedMovies)
+            }, onError: { error in
                 print(error.localizedDescription)
-            }
-        })
+            })
+            .disposed(by: disposeBag)
     }
     
-
+    func getTopRatedTvShowsData(currentPage: Int) {
+        useCase.fetchTopRatedTvShows(page: currentPage)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] response in
+                guard let self = self,
+                      let shows = response,
+                      !shows.results.isEmpty else { return }
+                
+                self.topRatedTvShowsData = shows.results
+                self.onReloadSection.onNext(.topRatedTvShows)
+            }, onError: { error in
+                print(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
+    }
 }
