@@ -25,7 +25,7 @@ class MovieDetailTableViewCell: UITableViewCell {
         
     }
 
-    func configureByMovie(dataModel: Item?, detailModel: MovieDetail?) {
+    func configureByMovie(dataModel: ItemData?, detailModel: MovieDetail?) {
         if dataModel?.originalTitle == nil {
             self.itemTitle.text = dataModel?.originalName
         } else {
@@ -47,7 +47,7 @@ class MovieDetailTableViewCell: UITableViewCell {
         }
     }
    
-    func configureByTv(dataModel: Item?, detailModel: TvDetail?) {
+    func configureByTv(dataModel: ItemData?, detailModel: TvDetail?) {
         if dataModel?.originalTitle == nil {
             self.itemTitle.text = dataModel?.originalName
         } else {

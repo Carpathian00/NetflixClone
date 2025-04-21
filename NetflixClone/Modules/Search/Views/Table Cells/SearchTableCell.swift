@@ -27,7 +27,7 @@ class SearchTableCell: UITableViewCell {
     }
 
     
-    func configure(itemModel: Item?) {
+    func configure(itemModel: ItemData?) {
         guard let imagePath = itemModel?.posterPath else { return }
         
         let url = URL(string: "https://image.tmdb.org/t/p/w500\(imagePath)")

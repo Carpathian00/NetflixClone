@@ -66,7 +66,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     
     
-    func configure(model: Item?, isTopRated: Bool, rank: Int) {
+    func configure(model: ItemData?, isTopRated: Bool, rank: Int) {
         guard let imageUrl = model?.posterPath else { return }
         
         let url = URL(string: "https://image.tmdb.org/t/p/w500\(imageUrl)")

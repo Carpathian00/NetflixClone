@@ -11,7 +11,7 @@ import SDWebImage
 class HeroHeaderView: UIView {
     
     var homeVCDelegate: TabBarControllerDelegate?
-    private var headerItem: Item?
+    private var headerItem: ItemData?
     var navigationController: UINavigationController?
 
     
@@ -148,7 +148,7 @@ class HeroHeaderView: UIView {
         NSLayoutConstraint.activate(saveButtonConstraints)
     }
     
-    public func configure(with model: Item) {
+    public func configure(with model: ItemData) {
         self.headerItem = model
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath ?? "")") else {
             return

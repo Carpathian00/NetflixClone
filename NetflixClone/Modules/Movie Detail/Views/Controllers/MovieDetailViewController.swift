@@ -13,7 +13,7 @@ class MovieDetailViewController: UIViewController {
     
     private var isPlayOnly: Bool? = true
     private var fromTableHeader: Bool?
-    private var item: Item?
+    private var item: ItemData?
     private var movieDetail: MovieDetail?
     private var tvShowDetail: TvDetail?
     private var trailer: TrailerResult?
@@ -169,7 +169,7 @@ class MovieDetailViewController: UIViewController {
             
     }
     
-    func configure(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool) {
+    func configure(model: ItemData?, fromTableHeader: Bool, isPlayOnly: Bool) {
         self.item = model
         self.fromTableHeader = fromTableHeader
         self.isPlayOnly = isPlayOnly

@@ -27,65 +27,81 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
         self.apiServiceProtocol = APIService()
     }
     
-    
     func fetchTrailerData(with id: Int?) {
-        let url = APIConfig.baseUrl + "/movie/\(id ?? 0)/videos" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+        let url = APIConfig.baseUrl + "/movie/\(id ?? 0)/videos"
+        let params = [
+            "api_key": APIConfig.API_KEY,
+            "language": "en-US"
+        ]
         
-        self.apiServiceProtocol?.callApi(with: url, model: MovieTrailer.self, completion: { result in
+        self.apiServiceProtocol?.callApi(method: .GET, url: url, headers: nil, requestBodyParams: params) { [weak self] result in
             switch result {
-            case .success(let success):
-                var trailerData = [TrailerResult]()
-                success.results.forEach { trailer in
-                    if trailer.type == "Trailer" && trailer.site == "YouTube" {
-                        trailerData.append(trailer)
-                        return
+            case .success(let data):
+                if let data = data,
+                   let trailerResponse = try? JSONDecoder().decode(MovieTrailer.self, from: data) {
+                    DispatchQueue.main.async {
+                        var trailerData = [TrailerResult]()
+                        trailerResponse.results.forEach { trailer in
+                            if trailer.type == "Trailer" && trailer.site == "YouTube" {
+                                trailerData.append(trailer)
+                                return
+                            }
+                        }
+                        if !trailerData.isEmpty {
+                            self?.bindTrailerData?(trailerData.first)
+                        } else {
+                            self?.bindTrailerData?(nil)
+                        }
                     }
-                }
-                guard let bindTrailerData = self.bindTrailerData else { return }
-                if !trailerData.isEmpty {
-                    bindTrailerData(trailerData.first)
-                } else {
-                    self.bindTrailerData?(nil)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                self.bindTrailerData?(nil)
-
+                self?.bindTrailerData?(nil)
             }
-        })
+        }
     }
     
     func fetchMovieDetail(with movieId: Int?) {
-        let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+        let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)"
+        let params = [
+            "api_key": APIConfig.API_KEY,
+            "language": "en-US"
+        ]
         
-        self.apiServiceProtocol?.callApi(with: url, model: MovieDetail.self, completion: { result in
+        self.apiServiceProtocol?.callApi(method: .GET, url: url, headers: nil, requestBodyParams: params) { [weak self] result in
             switch result {
-            case .success(let movieDetail):
-                self.bindMovieDetailData?(movieDetail)
+            case .success(let data):
+                if let data = data,
+                   let movieDetail = try? JSONDecoder().decode(MovieDetail.self, from: data) {
+                    DispatchQueue.main.async {
+                        self?.bindMovieDetailData?(movieDetail)
+                    }
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        })
+        }
     }
     
     func fetchTvDetail(with tvId: Int?) {
-        let url = APIConfig.baseUrl + "/tv/\(tvId ?? 0)" + "?api_key=\(APIConfig.API_KEY)" + "&language=en-US"
+        let url = APIConfig.baseUrl + "/tv/\(tvId ?? 0)"
+        let params = [
+            "api_key": APIConfig.API_KEY,
+            "language": "en-US"
+        ]
         
-        self.apiServiceProtocol?.callApi(with: url, model: TvDetail.self, completion: { result in
-
+        self.apiServiceProtocol?.callApi(method: .GET, url: url, headers: nil, requestBodyParams: params) { [weak self] result in
             switch result {
-            case .success(let tvDetail):
-                self.bindTvShowsData?(tvDetail)
+            case .success(let data):
+                if let data = data,
+                   let tvDetail = try? JSONDecoder().decode(TvDetail.self, from: data) {
+                    DispatchQueue.main.async {
+                        self?.bindTvShowsData?(tvDetail)
+                    }
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        })
-
-
+        }
     }
-    
-
-    
-    
 }
-

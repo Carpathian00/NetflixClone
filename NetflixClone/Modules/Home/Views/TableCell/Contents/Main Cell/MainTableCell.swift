@@ -14,7 +14,7 @@ class MainTableCell: UITableViewCell {
     var homeVCDelegate: TabBarControllerDelegate?
     var navigationController: UINavigationController?
     private var isTopRated: Bool?
-    private var items: [Item]?
+    private var items: [ItemData]?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
 
@@ -30,7 +30,7 @@ class MainTableCell: UITableViewCell {
           
     }
     
-    func configure(modelData: [Item]?, isTopRated: Bool) {
+    func configure(modelData: [ItemData]?, isTopRated: Bool) {
         self.isTopRated = isTopRated
         self.items = modelData
         DispatchQueue.main.async { [weak self] in

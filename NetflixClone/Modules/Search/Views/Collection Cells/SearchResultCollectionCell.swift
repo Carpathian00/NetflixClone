@@ -27,7 +27,7 @@ class SearchResultCollectionCell: UICollectionViewCell {
         contentView.addSubview(posterImageView)
     }
     
-    func configure(itemModel: Item?) {
+    func configure(itemModel: ItemData?) {
         
     }
 

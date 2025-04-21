@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchResultVCDelegate {
-    func didTapSearchResultCell(itemModel: Item?)
+    func didTapSearchResultCell(itemModel: ItemData?)
 }
 
 enum searchResultTableSections: Int {
@@ -19,8 +19,8 @@ enum searchResultTableSections: Int {
 class SearchResultViewController: UIViewController {
 
     var delegate: SearchResultVCDelegate?
-    public var movieResults: [Item]? = [Item]()
-    public var tvShowResults: [Item]? = [Item]()
+    public var movieResults: [ItemData]? = [ItemData]()
+    public var tvShowResults: [ItemData]? = [ItemData]()
     private let section = ["Movies", "Tv Shows"]
 
 
@@ -87,11 +87,11 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
             return UICollectionReusableView()
         }
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 60) 
+        return CGSize(width: collectionView.bounds.width, height: 60)
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -119,13 +119,13 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
             print("error search result cell")
             
             return UICollectionViewCell()
-
+            
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let resultSections = searchResultTableSections(rawValue: indexPath.section)
-
+        
         switch resultSections {
         case .movies:
             self.delegate?.didTapSearchResultCell(itemModel: self.movieResults?[indexPath.row])
@@ -134,12 +134,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout, UIColl
         default:
             print("search result delegate error")
         }
-        
-        
-            
-        
     }
-    
     
     
 }

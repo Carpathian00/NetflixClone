@@ -33,7 +33,7 @@ class ViewAllMoviesTableCell: UITableViewCell {
         ])
     }
 
-    func configure(itemModel: Item?, section: Int?, index: Int?) {
+    func configure(itemModel: ItemData?, section: Int?, index: Int?) {
         guard let imagePath = itemModel?.posterPath else { return }
         
         let url = URL(string: "https://image.tmdb.org/t/p/w500\(imagePath)")

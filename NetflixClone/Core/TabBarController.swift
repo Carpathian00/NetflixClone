@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TabBarControllerDelegate {
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool, navCon: UINavigationController)
+    func moveToDetailPage(model: ItemData?, fromTableHeader: Bool, isPlayOnly: Bool, navCon: UINavigationController)
     func moveToViewAllPage(section: Int, navCon: UINavigationController)
     func moveToGenreMoviesPage(genre: Genre?, navCon: UINavigationController)
     func moveToLoginPage(navCon: UINavigationController)
@@ -56,7 +56,7 @@ class TabBarController: UITabBarController {
 
 extension TabBarController: TabBarControllerDelegate {
     
-    func moveToDetailPage(model: Item?, fromTableHeader: Bool, isPlayOnly: Bool, navCon: UINavigationController) {
+    func moveToDetailPage(model: ItemData?, fromTableHeader: Bool, isPlayOnly: Bool, navCon: UINavigationController) {
         let vc = MovieDetailViewController()
         vc.configure(model: model, fromTableHeader: fromTableHeader, isPlayOnly: isPlayOnly)
         

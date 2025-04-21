@@ -11,7 +11,7 @@ class GenreMoviesViewController: UIViewController {
 
     private var genreMoviesVM = GenreMoviesViewModel()
     private var genre: Genre?
-    private var items = [Item]()
+    private var items = [ItemData]()
     private var currentPage = 1
     var homeVCDelegate: TabBarControllerDelegate?
     

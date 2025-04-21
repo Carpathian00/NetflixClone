@@ -12,7 +12,7 @@ class ViewAllViewController: UIViewController {
     var selectedSection: Int?
     var homeVCDelegate: TabBarControllerDelegate?
     private var viewAllVM: ViewAllViewModel?
-    private var items = [Item]()
+    private var items = [ItemData]()
     private var currentPage = 1
     
     private lazy var viewAllTable: UITableView = {

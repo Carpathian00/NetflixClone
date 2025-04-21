@@ -20,8 +20,8 @@ enum SearchRequestType: String {
 class SearchViewController: UIViewController {
 
     private var searchVM = SearchViewModel()
-    private var trendingMovies: [Item]?
-    private var trendingTVs: [Item]?
+    private var trendingMovies: [ItemData]?
+    private var trendingTVs: [ItemData]?
     var tabBarDelegate: TabBarControllerDelegate?
     
     private lazy var searchTable: UITableView = {
@@ -206,7 +206,7 @@ extension SearchViewController: UISearchResultsUpdating, SearchResultVCDelegate 
         
     }
     
-    func didTapSearchResultCell(itemModel: Item?) {
+    func didTapSearchResultCell(itemModel: ItemData?) {
         guard let navCon = self.navigationController else { return }
         self.tabBarDelegate?.moveToDetailPage(model: itemModel, fromTableHeader: false, isPlayOnly: false, navCon: navCon)
     }
