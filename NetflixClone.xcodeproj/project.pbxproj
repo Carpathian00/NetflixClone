@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B570145B2D87F99A00F426BF /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B570145A2D87F99A00F426BF /* HomeUseCase.swift */; };
 		C60922732A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922722A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift */; };
 		C60922752A066AE90076E7E8 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922742A066AE90076E7E8 /* MovieDetail.swift */; };
 		C60922772A0696770076E7E8 /* TvDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60922762A0696770076E7E8 /* TvDetail.swift */; };
@@ -37,7 +38,6 @@
 		C64C33A929E797CA00029ABC /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33A829E797CA00029ABC /* APIService.swift */; };
 		C64C33AB29E7984200029ABC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33AA29E7984200029ABC /* Item.swift */; };
 		C64C33AE29E7A30B00029ABC /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33AD29E7A30B00029ABC /* HomeViewModel.swift */; };
-		C64C33B329E7C41000029ABC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = C64C33B229E7C41000029ABC /* SDWebImage */; };
 		C64C33B529E933CB00029ABC /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33B429E933CB00029ABC /* Genre.swift */; };
 		C64C33B829E946DB00029ABC /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64C33B729E946DB00029ABC /* MovieDetailViewModel.swift */; };
 		C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C9EECC29F9720300759A6A /* ViewAllViewModel.swift */; };
@@ -87,6 +87,7 @@
 		1B5DFDDFDA0D15B536D5786E /* Pods_NetflixClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetflixClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C8200695D2684E1089027DF /* Pods-NetflixClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixClone.debug.xcconfig"; path = "Target Support Files/Pods-NetflixClone/Pods-NetflixClone.debug.xcconfig"; sourceTree = "<group>"; };
 		B1593A984EAC966AAD114464 /* Pods-NetflixClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixClone.release.xcconfig"; path = "Target Support Files/Pods-NetflixClone/Pods-NetflixClone.release.xcconfig"; sourceTree = "<group>"; };
+		B570145A2D87F99A00F426BF /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
 		C60922722A06511E0076E7E8 /* SearchResultCollectionSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionSectionCell.swift; sourceTree = "<group>"; };
 		C60922742A066AE90076E7E8 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		C60922762A0696770076E7E8 /* TvDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvDetail.swift; sourceTree = "<group>"; };
@@ -168,7 +169,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C64C33B329E7C41000029ABC /* SDWebImage in Frameworks */,
 				ED763FBB291A3A33EA3F83F7 /* Pods_NetflixClone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,6 +191,14 @@
 				B1593A984EAC966AAD114464 /* Pods-NetflixClone.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B57014592D87F98000F426BF /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				B570145A2D87F99A00F426BF /* HomeUseCase.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C60922712A0650E40076E7E8 /* Collection Section Cell */ = {
@@ -489,6 +497,7 @@
 		C6ED48F429DE85C20005D25F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				B57014592D87F98000F426BF /* Interactor */,
 				C64C33AC29E7A2F900029ABC /* View Models */,
 				C6ED48FC29DE89F60005D25F /* Views */,
 			);
@@ -766,7 +775,6 @@
 			);
 			name = NetflixClone;
 			packageProductDependencies = (
-				C64C33B229E7C41000029ABC /* SDWebImage */,
 			);
 			productName = NetflixClone;
 			productReference = C6ED48D829DE844A0005D25F /* NetflixClone.app */;
@@ -797,7 +805,6 @@
 			);
 			mainGroup = C6ED48CF29DE844A0005D25F;
 			packageReferences = (
-				C64C33B129E7C41000029ABC /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = C6ED48D929DE844A0005D25F /* Products */;
 			projectDirPath = "";
@@ -893,6 +900,7 @@
 				C6D54C2429F834B50034C72A /* ViewAllMoviesTableCell.swift in Sources */,
 				C61066A429E2AC4C003448A0 /* MainTableCell.swift in Sources */,
 				C6F6614E2A0245C400B09679 /* UISearchBar.swift in Sources */,
+				B570145B2D87F99A00F426BF /* HomeUseCase.swift in Sources */,
 				C6FB28B529E53E5200221FB5 /* DynamicHeightCollectionView.swift in Sources */,
 				C6FB28C829E648FC00221FB5 /* SearchViewController.swift in Sources */,
 				C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */,
@@ -1158,26 +1166,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C64C33B129E7C41000029ABC /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
-			requirement = {
-				kind = versionRange;
-				maximumVersion = 6.0.0;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C64C33B229E7C41000029ABC /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C64C33B129E7C41000029ABC /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C6ED48D029DE844A0005D25F /* Project object */;
 }
