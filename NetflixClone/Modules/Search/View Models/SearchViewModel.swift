@@ -21,7 +21,7 @@ class SearchViewModel {
     }
     
     func fetchTrendingMoviesData() {
-        let url = APIConfig.baseUrl + "/trending/movie/day"
+        let url = Endpoint.trendingMoviesDay.fullPath
         let params = ["api_key": APIConfig.API_KEY]
         
         self.apiServiceProtocol?.callApi(method: .GET, url: url, headers: nil, requestBodyParams: params) { [weak self] result in
@@ -40,7 +40,7 @@ class SearchViewModel {
     }
     
     func fetchTrendingTvsData() {
-        let url = APIConfig.baseUrl + "/trending/tv/day"
+        let url = Endpoint.trendingTVsDay.fullPath
         let params = ["api_key": APIConfig.API_KEY]
         
         self.apiServiceProtocol?.callApi(method: .GET, url: url, headers: nil, requestBodyParams: params) { [weak self] result in
@@ -61,7 +61,7 @@ class SearchViewModel {
     func fetchSearchData(query: String?, type: String) {
         guard let query = query else { return }
         
-        let url = APIConfig.baseUrl + "/search/\(type)"
+        let url = Endpoint.search(type: type).fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "query": query

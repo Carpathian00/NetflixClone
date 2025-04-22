@@ -26,7 +26,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchMoviesGenres() -> Observable<GenreApiResponse?> {
-        let genreUrl = APIConfig.baseUrl + "/genre/movie/list"
+        let genreUrl = Endpoint.genreMovieList.fullPath
         let params = ["api_key": APIConfig.API_KEY]
 
         return Observable.create { observer in
@@ -58,7 +58,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchPopularMoviesInAGenre(genreId: Int) -> Observable<ItemData?> {
-        let url = APIConfig.baseUrl + "/discover/movie"
+        let url = Endpoint.discoverMovie.fullPath
         let params: [String: Any] = [
             "api_key": APIConfig.API_KEY,
             "page": 1,
@@ -96,7 +96,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchPopularMovies(page: Int) -> Observable<ApiResponse?> {
-        let url = APIConfig.baseUrl + "/movie/popular"
+        let url = Endpoint.moviePopular.fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "page": page
@@ -127,7 +127,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchPopularTvShows(page: Int) -> Observable<ApiResponse?> {
-        let url = APIConfig.baseUrl + "/tv/popular"
+        let url = Endpoint.tvPopular.fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "page": page
@@ -158,7 +158,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchTopRatedMovies(page: Int) -> Observable<ApiResponse?> {
-        let url = APIConfig.baseUrl + "/discover/movie"
+        let url = Endpoint.discoverMovie.fullPath
         let params: [String: Any] = [
             "api_key": APIConfig.API_KEY,
             "language": "en-US",
@@ -195,7 +195,7 @@ class HomeUseCase: HomeUseCaseProtocol {
     }
     
     func fetchTopRatedTvShows(page: Int) -> Observable<ApiResponse?> {
-        let url = APIConfig.baseUrl + "/discover/tv"
+        let url = Endpoint.discoverTV.fullPath
         let params: [String: Any] = [
             "api_key": APIConfig.API_KEY,
             "language": "en-US",

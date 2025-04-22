@@ -28,7 +28,7 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
     }
     
     func fetchTrailerData(with id: Int?) {
-        let url = APIConfig.baseUrl + "/movie/\(id ?? 0)/videos"
+        let url = Endpoint.movieVideos(id: id ?? 0).fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "language": "en-US"
@@ -62,7 +62,7 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
     }
     
     func fetchMovieDetail(with movieId: Int?) {
-        let url = APIConfig.baseUrl + "/movie/\(movieId ?? 0)"
+        let url = Endpoint.movieDetail(id: movieId ?? 0).fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "language": "en-US"
@@ -84,7 +84,7 @@ class MovieDetailViewModel: MovieDetailVMProtocol {
     }
     
     func fetchTvDetail(with tvId: Int?) {
-        let url = APIConfig.baseUrl + "/tv/\(tvId ?? 0)"
+        let url = Endpoint.tvDetail(id: tvId ?? 0).fullPath
         let params = [
             "api_key": APIConfig.API_KEY,
             "language": "en-US"
