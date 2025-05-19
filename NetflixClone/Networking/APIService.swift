@@ -22,23 +22,6 @@ enum HTTPRequestMethod: String {
     case PATCH = "PATCH"
 }
 
-//class APIService: APIServiceProtocol {
-//    
-//    func callApi<T>(with url: String, model: T.Type, completion: @escaping (Result<T, Error>) -> ()) where T : Decodable, T : Encodable {
-//        guard let url = URL(string: url) else { return }
-//        URLSession.shared.dataTask(with: url) { data, urlResponse, error in
-//            if let data = data {
-//                do {
-//                    let modelData = try JSONDecoder().decode(T.self, from: data)
-//                    completion(.success(modelData))
-//                } catch let error {
-//                    completion(.failure(error))
-//                }
-//            }
-//        }.resume()
-//    }
-//}
-
 class APIService: APIServiceProtocol {
     
     public func callApi(method: HTTPRequestMethod, url: String, headers: [String: String]? = nil, requestBodyParams: [String: Any]? = nil, completion: @escaping ((Result<Data?, Error>) -> Void)) {

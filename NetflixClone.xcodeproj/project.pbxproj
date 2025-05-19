@@ -25,7 +25,6 @@
 		C636120929F0555D004335E3 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C636120829F0555D004335E3 /* APIConfig.swift */; };
 		C637E61B29FFDA1700896DFB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C637E61929FFDA1700896DFB /* LoginViewController.swift */; };
 		C637E61C29FFDA1700896DFB /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C637E61A29FFDA1700896DFB /* LoginViewController.xib */; };
-		C637E61E29FFDA2700896DFB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C637E61D29FFDA2700896DFB /* LoginViewModel.swift */; };
 		C637E62129FFDA3600896DFB /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C637E61F29FFDA3600896DFB /* SignUpViewController.swift */; };
 		C637E62229FFDA3600896DFB /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C637E62029FFDA3600896DFB /* SignUpViewController.xib */; };
 		C637E62429FFDA4700896DFB /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C637E62329FFDA4700896DFB /* SignUpViewModel.swift */; };
@@ -105,7 +104,6 @@
 		C636120829F0555D004335E3 /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
 		C637E61929FFDA1700896DFB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C637E61A29FFDA1700896DFB /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		C637E61D29FFDA2700896DFB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		C637E61F29FFDA3600896DFB /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		C637E62029FFDA3600896DFB /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
 		C637E62329FFDA4700896DFB /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -269,14 +267,6 @@
 				C637E61A29FFDA1700896DFB /* LoginViewController.xib */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		C637E61629FFD9E400896DFB /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-				C637E61D29FFDA2700896DFB /* LoginViewModel.swift */,
-			);
-			path = "View Models";
 			sourceTree = "<group>";
 		};
 		C637E61729FFD9EC00896DFB /* Views */ = {
@@ -515,7 +505,6 @@
 		C6ED48F629DE85D80005D25F /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				C637E61629FFD9E400896DFB /* View Models */,
 				C637E61529FFD9D300896DFB /* Views */,
 			);
 			path = Login;
@@ -905,7 +894,6 @@
 				C6FB28C829E648FC00221FB5 /* SearchViewController.swift in Sources */,
 				C6C9EECD29F9720300759A6A /* ViewAllViewModel.swift in Sources */,
 				C6EBD81A2A00C6AB00E27F14 /* GenreMoviesViewController.swift in Sources */,
-				C637E61E29FFDA2700896DFB /* LoginViewModel.swift in Sources */,
 				C6DED6CB2A03980B00C4E586 /* Utilities.swift in Sources */,
 				C61066A829E3B213003448A0 /* SectionCellHeader.swift in Sources */,
 				C6FB28D229E651C600221FB5 /* ProfileHeaderTableCell.swift in Sources */,
