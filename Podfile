@@ -15,5 +15,6 @@ pod 'RxDataSources'
 pod 'FloatingPanel'
 pod 'SkeletonView', '1.29.2'
 pod 'SDWebImage', '~> 5.21.0'
+pod 'netfox'
 
 end

@@ -59,15 +59,16 @@ class HomeViewModel {
     func getPopularMoviesData(currentPage: Int) {
         useCase.fetchPopularMovies(page: currentPage)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] response in
+            .subscribe(
+                onNext: { [weak self] response in
                 guard let self = self,
-                      let movies = response,
-                      !movies.results.isEmpty else { return }
+                      let movies = response?.results,
+                      !(movies.isEmpty) else { return }
                 
-                if let headerTitle = movies.results.randomElement() {
+                if let headerTitle = movies.randomElement() {
                     self.onSetHeader.onNext(headerTitle)
                 }
-                self.popularMoviesData = movies.results
+                self.popularMoviesData = movies
                 self.onReloadSection.onNext(.popularMovies)
             }, onError: { error in
                 print(error.localizedDescription)
@@ -78,12 +79,13 @@ class HomeViewModel {
     func getPopularTvShowsData(currentPage: Int) {
         useCase.fetchPopularTvShows(page: currentPage)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] response in
+            .subscribe(
+                onNext: { [weak self] response in
                 guard let self = self,
-                      let shows = response,
-                      !shows.results.isEmpty else { return }
+                      let shows = response?.results,
+                      !shows.isEmpty else { return }
                 
-                self.popularTvShowsData = shows.results
+                self.popularTvShowsData = shows
                 self.onReloadSection.onNext(.popularTvShows)
             }, onError: { error in
                 print(error.localizedDescription)
@@ -94,12 +96,13 @@ class HomeViewModel {
     func getTopRatedMoviesData(currentPage: Int) {
         useCase.fetchTopRatedMovies(page: currentPage)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] response in
+            .subscribe(
+                onNext: { [weak self] response in
                 guard let self = self,
-                      let movies = response,
-                      !movies.results.isEmpty else { return }
+                      let movies = response?.results,
+                      !movies.isEmpty else { return }
                 
-                self.topRatedMoviesData = movies.results
+                self.topRatedMoviesData = movies
                 self.onReloadSection.onNext(.topRatedMovies)
             }, onError: { error in
                 print(error.localizedDescription)
@@ -110,12 +113,13 @@ class HomeViewModel {
     func getTopRatedTvShowsData(currentPage: Int) {
         useCase.fetchTopRatedTvShows(page: currentPage)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] response in
+            .subscribe(
+                onNext: { [weak self] response in
                 guard let self = self,
-                      let shows = response,
-                      !shows.results.isEmpty else { return }
+                      let shows = response?.results,
+                      !shows.isEmpty else { return }
                 
-                self.topRatedTvShowsData = shows.results
+                self.topRatedTvShowsData = shows
                 self.onReloadSection.onNext(.topRatedTvShows)
             }, onError: { error in
                 print(error.localizedDescription)

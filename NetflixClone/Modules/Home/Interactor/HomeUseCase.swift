@@ -76,9 +76,10 @@ class HomeUseCase: HomeUseCaseProtocol {
                     if let data = data {
                         do {
                             let response = try JSONDecoder().decode(ApiResponse.self, from: data)
-                            if response.results.count >= 5 {
+                            guard let movies = response.results else { return }
+                            if movies.count >= 5 {
                                 let index = Int.random(in: 0..<5)
-                                observer.onNext(response.results[index])
+                                observer.onNext(movies[index])
                             } else {
                                 observer.onNext(nil)
                             }

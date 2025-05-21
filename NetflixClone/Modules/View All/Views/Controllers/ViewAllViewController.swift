@@ -20,7 +20,7 @@ class ViewAllViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(UINib(nibName: "ViewAllMoviesTableCell", bundle: nil), forCellReuseIdentifier: ViewAllMoviesTableCell.identifier)
         return table
-    }() 
+    }()
     
     
     
@@ -77,8 +77,9 @@ class ViewAllViewController: UIViewController {
         self.viewAllVM?.getData(currentPage: 1)
         
         self.viewAllVM?.bindItemData = { result in
+            
             guard let resultItems = result else { return }
-                self.items.append(contentsOf: resultItems)
+            self.items.append(contentsOf: resultItems)
             DispatchQueue.main.async {
                 
                 self.viewAllTable.reloadData()
@@ -89,7 +90,6 @@ class ViewAllViewController: UIViewController {
     func configure(section: Int) {
         self.selectedSection = section
     }
-    
 }
 
 extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
@@ -99,12 +99,9 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         guard let cell = viewAllTable.dequeueReusableCell(withIdentifier: ViewAllMoviesTableCell.identifier, for: indexPath) as? ViewAllMoviesTableCell else { return UITableViewCell() }
         cell.configure(itemModel: self.items[indexPath.row], section: self.selectedSection, index: indexPath.row + 1)
         return cell
-      
-    
     }
     
     func createSpinnerView() -> UIView {
@@ -120,7 +117,7 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.viewAllTable.tableFooterView = self.createSpinnerView()
-
+        
         let lastIndex = self.items.count-1
         if indexPath.row == lastIndex {
             currentPage += 1
@@ -134,9 +131,8 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
                 })
             }
         }
-        
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let navigationController = self.navigationController else { return }
         self.homeVCDelegate?.moveToDetailPage(model: self.items[indexPath.row], fromTableHeader: false, isPlayOnly: false, navCon: navigationController)
@@ -147,6 +143,5 @@ extension ViewAllViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = cell as? ViewAllMoviesTableCell {
             cell.cancelImageLoad()
         }
-        
     }
 }

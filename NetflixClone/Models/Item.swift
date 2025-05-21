@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct ApiResponse:Codable {
+struct ApiResponse: Codable, MediaResponseProtocol {
     let page: Int?
-    let results: [ItemData]
+    var results: [ItemData]?
     let totalPages: Int?
     let totalResults: Int?
     
